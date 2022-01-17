@@ -1,0 +1,4 @@
+rootProject.name = "Spartans"
+include "Spartan","HyperLethal"
+include 'Spartan:HaloReach'
+

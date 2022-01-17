@@ -1,0 +1,17 @@
+{
+  "required": false,
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.7",
+  "package": "net.spartanb312.render.mixin",
+  "refmap": "mixins.spartan.refmap.json",
+  "client": [
+    "accessor.AccessorMinecraft",
+    "mc.MixinMinecraft",
+    "render.MixinEntityRenderer",
+    "render.MixinGuiSubtitleOverlay"
+  ],
+  "mixins": [
+    "mc.MixinFMLCommonHandler",
+    "network.MixinNetworkManager"
+  ]
+}

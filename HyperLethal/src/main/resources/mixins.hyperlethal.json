@@ -1,0 +1,7 @@
+{
+  "required": false,
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.7",
+  "package": "net.spartanb312.hyperlethal.mixin",
+  "refmap": "mixins.hyperlethal.refmap.json"
+}
