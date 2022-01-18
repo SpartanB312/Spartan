@@ -5,14 +5,14 @@ import net.spartanb312.render.core.common.math.Vec2d
 
 interface I2DRenderer {
 
-    fun drawPoint(
+    fun drawPoint0(
         x: Double,
         y: Double,
         size: Float = 1F,
         color: ColorRGB
     )
 
-    fun drawLine(
+    fun drawLine0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -22,19 +22,19 @@ interface I2DRenderer {
         color2: ColorRGB
     )
 
-    fun drawLinesStrip(
+    fun drawLinesStrip0(
         vertexArray: Array<Vec2d>,
         width: Float = 1F,
         color: ColorRGB
     )
 
-    fun drawLinesLoop(
+    fun drawLinesLoop0(
         vertexArray: Array<Vec2d>,
         width: Float = 1F,
         color: ColorRGB
     )
 
-    fun drawTriangle(
+    fun drawTriangle0(
         pos1X: Double,
         pos1Y: Double,
         pos2X: Double,
@@ -44,7 +44,7 @@ interface I2DRenderer {
         color: ColorRGB
     )
 
-    fun drawTriangleOutline(
+    fun drawTriangleOutline0(
         pos1X: Double,
         pos1Y: Double,
         pos2X: Double,
@@ -55,7 +55,7 @@ interface I2DRenderer {
         color: ColorRGB
     )
 
-    fun drawRect(
+    fun drawRect0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -63,7 +63,7 @@ interface I2DRenderer {
         color: ColorRGB
     )
 
-    fun drawGradientRect(
+    fun drawGradientRect0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -74,7 +74,7 @@ interface I2DRenderer {
         color4: ColorRGB
     )
 
-    fun drawRectOutline(
+    fun drawRectOutline0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -86,7 +86,7 @@ interface I2DRenderer {
         color4: ColorRGB = color1
     )
 
-    fun drawRoundedRect(
+    fun drawRoundedRect0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -96,7 +96,7 @@ interface I2DRenderer {
         color: ColorRGB
     )
 
-    fun drawRoundedRectOutline(
+    fun drawRoundedRectOutline0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -107,7 +107,7 @@ interface I2DRenderer {
         color: ColorRGB
     )
 
-    fun drawArc(
+    fun drawArc0(
         centerX: Double,
         centerY: Double,
         radius: Float,

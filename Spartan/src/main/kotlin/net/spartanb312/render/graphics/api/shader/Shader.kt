@@ -50,17 +50,11 @@ open class Shader(
         return shaderId
     }
 
-    override fun bind() {
-        GLStateManager.useProgram(id)
-    }
+    override fun bind() = GLStateManager.useProgram(id)
 
-    override fun unbind() {
-        GLStateManager.useProgram(0)
-    }
+    override fun unbind() = GLStateManager.useProgram(0)
 
-    override fun destroy() {
-        glDeleteProgram(id)
-    }
+    override fun destroy() = glDeleteProgram(id)
 
 }
 

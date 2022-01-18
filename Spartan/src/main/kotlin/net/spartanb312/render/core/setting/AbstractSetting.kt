@@ -2,9 +2,10 @@ package net.spartanb312.render.core.setting
 
 import net.spartanb312.render.core.common.delegate.AsyncUpdateValue
 import net.spartanb312.render.core.common.interfaces.Nameable
+import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-abstract class AbstractSetting<T> : Nameable {
+abstract class AbstractSetting<T> : Nameable, ReadWriteProperty<Any?, T> {
 
     abstract override val name: String
     abstract val defaultValue: T
@@ -13,6 +14,7 @@ abstract class AbstractSetting<T> : Nameable {
 
     val visibilities = mutableListOf<() -> Boolean>()
     val currentVisibility = visibilities.all { it.invoke() }
+
     //Async update Visibility
     private val isVisible0 = AsyncUpdateValue { currentVisibility }
     val isVisible by isVisible0
@@ -24,8 +26,12 @@ abstract class AbstractSetting<T> : Nameable {
     val listeners = ArrayList<() -> Unit>()
     val valueListeners = ArrayList<(prev: T, input: T) -> Unit>()
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+    override operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
         return value
+    }
+
+    override operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        this.value = value
     }
 
     open fun reset() {

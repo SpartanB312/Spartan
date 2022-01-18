@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11.*
  */
 object Legacy2DRenderer : I2DRenderer {
 
-    override fun drawPoint(x: Double, y: Double, size: Float, color: ColorRGB) {
+    override fun drawPoint0(x: Double, y: Double, size: Float, color: ColorRGB) {
         GLStateManager.pointSmooth(true)
         glPointSize(size)
         VertexBuffer.begin(GL_POINT)
@@ -23,7 +23,7 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.pointSmooth(false)
     }
 
-    override fun drawLine(
+    override fun drawLine0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -41,7 +41,7 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawLinesStrip(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
+    override fun drawLinesStrip0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         VertexBuffer.begin(GL_LINE_STRIP)
@@ -52,7 +52,7 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawLinesLoop(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
+    override fun drawLinesLoop0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         VertexBuffer.begin(GL_LINE_LOOP)
@@ -63,7 +63,7 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawTriangle(
+    override fun drawTriangle0(
         pos1X: Double,
         pos1Y: Double,
         pos2X: Double,
@@ -79,7 +79,7 @@ object Legacy2DRenderer : I2DRenderer {
         VertexBuffer.end()
     }
 
-    override fun drawTriangleOutline(
+    override fun drawTriangleOutline0(
         pos1X: Double,
         pos1Y: Double,
         pos2X: Double,
@@ -99,16 +99,16 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawRect(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB) {
+    override fun drawRect0(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB) {
         VertexBuffer.begin(GL_TRIANGLE_STRIP)
         VertexBuffer.put(endX, startY, color)
         VertexBuffer.put(startX, startY, color)
-        VertexBuffer.put(startX, endY, color)
         VertexBuffer.put(endX, endY, color)
+        VertexBuffer.put(startX, endY, color)
         VertexBuffer.end()
     }
 
-    override fun drawGradientRect(
+    override fun drawGradientRect0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -126,7 +126,7 @@ object Legacy2DRenderer : I2DRenderer {
         VertexBuffer.end()
     }
 
-    override fun drawRectOutline(
+    override fun drawRectOutline0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -148,7 +148,7 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawRoundedRect(
+    override fun drawRoundedRect0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -160,7 +160,7 @@ object Legacy2DRenderer : I2DRenderer {
 
     }
 
-    override fun drawRoundedRectOutline(
+    override fun drawRoundedRectOutline0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -173,7 +173,7 @@ object Legacy2DRenderer : I2DRenderer {
 
     }
 
-    override fun drawArc(
+    override fun drawArc0(
         centerX: Double,
         centerY: Double,
         radius: Float,

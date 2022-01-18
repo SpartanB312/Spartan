@@ -58,13 +58,21 @@ object Spartan : Loadable, Extendable {
                 readImageToBuffer(getResourceAsStream("assets/spartan/icon/logo16.png"))
             )
         )
-        //Load managers
+
+        //Primitive Managers
         CommandManager.subscribe()
         ModuleManager.subscribe()
         InputManager.subscribe()
+
+        //Player Managers
+        InventoryManager.subscribe()
         MessageManager.subscribe()
+
+        //Renderer managers
         ResolutionHelper.subscribe()
-        DisplayManager.subscribe()
+        MenuDisplayManager.subscribe()
+        Render2DManager.subscribe()
+
         ConfigManager
     }
 

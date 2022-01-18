@@ -8,7 +8,8 @@ import net.spartanb312.render.util.mc
 
 object ResolutionHelper {
 
-    private val resolution0 = AsyncUpdateValue {
+    @JvmStatic
+    var resolution by AsyncUpdateValue {
         ScaledResolution(mc)
     }.also { r ->
         listener<AsyncTickEvent> {
@@ -17,10 +18,5 @@ object ResolutionHelper {
             }
         }
     }
-
-    val resolution by resolution0
-
-    @JvmStatic
-    fun update(resolution: ScaledResolution? = null) = resolution0.update(resolution)
 
 }

@@ -15,7 +15,7 @@ public class MixinGuiSubtitleOverlay {
 
     @Inject(method = "renderSubtitles", at = @At("HEAD"))
     public void onRender2D(ScaledResolution resolution, CallbackInfo ci) {
-        ResolutionHelper.update(resolution);
+        ResolutionHelper.setResolution(resolution);
         MainEventBus.INSTANCE.post(new Render2DEvent(resolution));
     }
 

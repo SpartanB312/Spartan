@@ -19,8 +19,7 @@ object VAO2DRenderer : I2DRenderer {
 
     private var vertexSize = 0
 
-
-    override fun drawPoint(x: Double, y: Double, size: Float, color: ColorRGB) {
+    override fun drawPoint0(x: Double, y: Double, size: Float, color: ColorRGB) {
         GLStateManager.pointSmooth(true)
         glPointSize(size)
         put(x, y, color)
@@ -28,7 +27,7 @@ object VAO2DRenderer : I2DRenderer {
         GLStateManager.pointSmooth(false)
     }
 
-    override fun drawLine(
+    override fun drawLine0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -45,7 +44,7 @@ object VAO2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawLinesStrip(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
+    override fun drawLinesStrip0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         for (v in vertexArray) {
@@ -55,7 +54,7 @@ object VAO2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawLinesLoop(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
+    override fun drawLinesLoop0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         for (v in vertexArray) {
@@ -65,7 +64,7 @@ object VAO2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawTriangle(
+    override fun drawTriangle0(
         pos1X: Double,
         pos1Y: Double,
         pos2X: Double,
@@ -80,7 +79,7 @@ object VAO2DRenderer : I2DRenderer {
         draw(GL_TRIANGLES)
     }
 
-    override fun drawTriangleOutline(
+    override fun drawTriangleOutline0(
         pos1X: Double,
         pos1Y: Double,
         pos2X: Double,
@@ -99,15 +98,15 @@ object VAO2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawRect(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB) {
+    override fun drawRect0(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB) {
         put(endX, startY, color)
         put(startX, startY, color)
-        put(startX, endY, color)
         put(endX, endY, color)
+        put(startX, endY, color)
         draw(GL_TRIANGLE_STRIP)
     }
 
-    override fun drawGradientRect(
+    override fun drawGradientRect0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -124,7 +123,7 @@ object VAO2DRenderer : I2DRenderer {
         draw(GL_QUADS)
     }
 
-    override fun drawRectOutline(
+    override fun drawRectOutline0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -145,7 +144,7 @@ object VAO2DRenderer : I2DRenderer {
         GLStateManager.lineSmooth(false)
     }
 
-    override fun drawRoundedRect(
+    override fun drawRoundedRect0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -157,7 +156,7 @@ object VAO2DRenderer : I2DRenderer {
 
     }
 
-    override fun drawRoundedRectOutline(
+    override fun drawRoundedRectOutline0(
         startX: Double,
         startY: Double,
         endX: Double,
@@ -170,7 +169,7 @@ object VAO2DRenderer : I2DRenderer {
 
     }
 
-    override fun drawArc(
+    override fun drawArc0(
         centerX: Double,
         centerY: Double,
         radius: Float,
@@ -185,7 +184,8 @@ object VAO2DRenderer : I2DRenderer {
         draw(GL_TRIANGLE_FAN)
     }
 
-    private fun put(posX: Double, posY: Double, color: ColorRGB) {
+    @JvmStatic
+    fun put(posX: Double, posY: Double, color: ColorRGB) {
         VertexObject.buffer.apply {
             putFloat(posX.toFloat())
             putFloat(posY.toFloat())
@@ -194,7 +194,8 @@ object VAO2DRenderer : I2DRenderer {
         vertexSize++
     }
 
-    private fun draw(mode: Int) {
+    @JvmStatic
+    fun draw(mode: Int) {
         VertexObject.Pos2Color.uploadVertex(vertexSize)
 
         DrawShader.bind()

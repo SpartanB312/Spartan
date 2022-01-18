@@ -35,10 +35,11 @@ sealed class VertexObject(private val size: Int, private val builder: () -> Unit
 
     val vaoID = glGenVertexArrays()
     val vboID = glGenBuffers()
-    private var currentBufferSize = 64
+
+    private var currentBufferSize = 0
 
     init {
-        updateBufferSize(64)
+        allocateBuffer(64)
         vertexObjects.add(this)
     }
 
@@ -46,7 +47,7 @@ sealed class VertexObject(private val size: Int, private val builder: () -> Unit
         buffer.flip()
 
         if (size * this.size > currentBufferSize) {
-            updateBufferSize((size / 64.0).ceilToInt() * 64)
+            allocateBuffer((size / 64.0).ceilToInt() * 64)
         }
 
         useVbo {
@@ -56,7 +57,7 @@ sealed class VertexObject(private val size: Int, private val builder: () -> Unit
         buffer.clear()
     }
 
-    fun updateBufferSize(size: Int) {
+    fun allocateBuffer(size: Int) {
         if (currentBufferSize == size) return
         else currentBufferSize = size
         useVao {
@@ -76,7 +77,7 @@ sealed class VertexObject(private val size: Int, private val builder: () -> Unit
             listener<GameLoopEvent.Pre>(alwaysListening = true) {
                 if (timer.tick(10)) {
                     timer.reset()
-                    vertexObjects.forEach { v -> v.updateBufferSize(64) }
+                    vertexObjects.forEach { v -> v.allocateBuffer(64) }
                 }
             }
         }

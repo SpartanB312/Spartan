@@ -3,10 +3,11 @@ package net.spartanb312.render.features.hud
 import net.spartanb312.render.core.setting.invisible
 import net.spartanb312.render.features.common.AbstractModule
 import net.spartanb312.render.features.common.Category
+import net.spartanb312.render.features.common.Render2DObject
 import org.lwjgl.input.Keyboard
 
 @Suppress("LeakingThis")
-open class HUDModule(
+abstract class HUDModule(
     name: String,
     alias: Array<String> = emptyArray(),
     category: Category,
@@ -19,38 +20,30 @@ open class HUDModule(
     layer: Int = 0,
     visibility: Boolean = false,
     keyBind: Int = Keyboard.KEY_NONE
-) : AbstractModule(name, alias, category, description, priority, keyBind, visibility) {
+) : AbstractModule(name, alias, category, description, priority, keyBind, visibility), Render2DObject {
+
+    override var renderPriority by setting("Layer", layer).invisible()
 
     /**
-     * Position values
+     * Position values delegate
      */
-    private val x0 = setting("HUD_X", x).invisible()
-    private val y0 = setting("HUD_Y", y).invisible()
-    private val width0 = setting("HUD_WIDTH", width).invisible()
-    private val height0 = setting("HUD_HEIGHT", height).invisible()
-    private val layer0 = setting("Layer", layer).invisible()
-
-    /**
-     * Delegate getter of position values
-     */
-    val x by x0
-    val y by y0
-    val width by width0
-    val height by height0
-    val layer by layer0
+    var x by setting("HUD_X", x).invisible()
+    var y by setting("HUD_Y", y).invisible()
+    var width by setting("HUD_WIDTH", width).invisible()
+    var height by setting("HUD_HEIGHT", height).invisible()
 
     fun resize(width: Int, height: Int) {
-        width0.value = width
-        height0.value = height
+        this.width = width
+        this.height = height
     }
 
     fun moveTo(x: Int, y: Int) {
-        x0.value = x
-        y0.value = y
+        this.x = x
+        this.y = y
     }
 
     fun layer(layer: Int) {
-        layer0.value = layer
+        this.renderPriority = layer
     }
 
 }

@@ -16,7 +16,7 @@ object MainThreadExecutor {
         if (jobs.isEmpty()) return
 
         runBlocking {
-            mutex.withLock(jobs) {
+            mutex.withLock {
                 jobs.forEach {
                     it.run()
                 }
@@ -31,7 +31,7 @@ object MainThreadExecutor {
                 run()
             } else {
                 runBlocking {
-                    mutex.withLock(jobs) {
+                    mutex.withLock {
                         jobs.add(this@apply)
                     }
                 }
@@ -43,7 +43,7 @@ object MainThreadExecutor {
             if (mc.isCallingFromMinecraftThread) {
                 run()
             } else {
-                mutex.withLock(jobs) {
+                mutex.withLock {
                     jobs.add(this)
                 }
             }
