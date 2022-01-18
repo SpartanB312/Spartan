@@ -1,25 +1,30 @@
-package net.spartanb312.render.graphics.impl.legacy
+package net.spartanb312.render.graphics.impl.vao
 
 import net.spartanb312.render.core.common.graphics.ColorRGB
 import net.spartanb312.render.core.common.math.Vec2d
 import net.spartanb312.render.graphics.api.plane.I2DRenderer
+import net.spartanb312.render.graphics.api.shader.Shader
 import net.spartanb312.render.graphics.impl.GLStateManager
 import net.spartanb312.render.graphics.impl.Renderer2D
-import net.spartanb312.render.graphics.impl.legacy.vertex.VertexBuffer
+import net.spartanb312.render.graphics.impl.vao.vertex.VertexObject
+import net.spartanb312.render.graphics.impl.vao.vertex.useVao
 import org.lwjgl.opengl.GL11.*
 
 /**
- * Render in compatibility mode
- * Support since OpenGL1.1
+ * Use VAO and VBO to render
+ * NOTICE : It may cause some unpredictable bugs.And some old graphic card doesn't support shaders
+ * Only supports OpenGL3.0+
  */
-object Legacy2DRenderer : I2DRenderer {
+object VAO2DRenderer : I2DRenderer {
+
+    private var vertexSize = 0
+
 
     override fun drawPoint(x: Double, y: Double, size: Float, color: ColorRGB) {
         GLStateManager.pointSmooth(true)
         glPointSize(size)
-        VertexBuffer.begin(GL_POINT)
-        VertexBuffer.put(x, y, color)
-        VertexBuffer.end()
+        put(x, y, color)
+        draw(GL_POINT)
         GLStateManager.pointSmooth(false)
     }
 
@@ -34,32 +39,29 @@ object Legacy2DRenderer : I2DRenderer {
     ) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE)
-        VertexBuffer.put(startX, startY, color1)
-        VertexBuffer.put(endX, endY, color2)
-        VertexBuffer.end()
+        put(startX, startY, color1)
+        put(endX, endY, color2)
+        draw(GL_LINE)
         GLStateManager.lineSmooth(false)
     }
 
     override fun drawLinesStrip(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_STRIP)
         for (v in vertexArray) {
-            VertexBuffer.put(v.x, v.y, color)
+            put(v.x, v.y, color)
         }
-        VertexBuffer.end()
+        draw(GL_LINE_STRIP)
         GLStateManager.lineSmooth(false)
     }
 
     override fun drawLinesLoop(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_LOOP)
         for (v in vertexArray) {
-            VertexBuffer.put(v.x, v.y, color)
+            put(v.x, v.y, color)
         }
-        VertexBuffer.end()
+        draw(GL_LINE_LOOP)
         GLStateManager.lineSmooth(false)
     }
 
@@ -72,11 +74,10 @@ object Legacy2DRenderer : I2DRenderer {
         pos3Y: Double,
         color: ColorRGB
     ) {
-        VertexBuffer.begin(GL_TRIANGLES)
-        VertexBuffer.put(pos1X, pos1Y, color)
-        VertexBuffer.put(pos2X, pos2Y, color)
-        VertexBuffer.put(pos3X, pos3Y, color)
-        VertexBuffer.end()
+        put(pos1X, pos1Y, color)
+        put(pos2X, pos2Y, color)
+        put(pos3X, pos3Y, color)
+        draw(GL_TRIANGLES)
     }
 
     override fun drawTriangleOutline(
@@ -91,21 +92,19 @@ object Legacy2DRenderer : I2DRenderer {
     ) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_STRIP)
-        VertexBuffer.put(pos1X, pos1Y, color)
-        VertexBuffer.put(pos2X, pos2Y, color)
-        VertexBuffer.put(pos3X, pos3Y, color)
-        VertexBuffer.end()
+        put(pos1X, pos1Y, color)
+        put(pos2X, pos2Y, color)
+        put(pos3X, pos3Y, color)
+        draw(GL_LINE_STRIP)
         GLStateManager.lineSmooth(false)
     }
 
     override fun drawRect(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB) {
-        VertexBuffer.begin(GL_TRIANGLE_STRIP)
-        VertexBuffer.put(endX, startY, color)
-        VertexBuffer.put(startX, startY, color)
-        VertexBuffer.put(startX, endY, color)
-        VertexBuffer.put(endX, endY, color)
-        VertexBuffer.end()
+        put(endX, startY, color)
+        put(startX, startY, color)
+        put(startX, endY, color)
+        put(endX, endY, color)
+        draw(GL_TRIANGLE_STRIP)
     }
 
     override fun drawGradientRect(
@@ -118,12 +117,11 @@ object Legacy2DRenderer : I2DRenderer {
         color3: ColorRGB,
         color4: ColorRGB
     ) {
-        VertexBuffer.begin(GL_QUADS)
-        VertexBuffer.put(endX, startY, color1)
-        VertexBuffer.put(startX, startY, color2)
-        VertexBuffer.put(startX, endY, color3)
-        VertexBuffer.put(endX, endY, color4)
-        VertexBuffer.end()
+        put(endX, startY, color1)
+        put(startX, startY, color2)
+        put(startX, endY, color3)
+        put(endX, endY, color4)
+        draw(GL_QUADS)
     }
 
     override fun drawRectOutline(
@@ -139,12 +137,11 @@ object Legacy2DRenderer : I2DRenderer {
     ) {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_LOOP)
-        VertexBuffer.put(endX, startY, color1)
-        VertexBuffer.put(startX, startY, color2)
-        VertexBuffer.put(startX, endY, color3)
-        VertexBuffer.put(endX, endY, color4)
-        VertexBuffer.end()
+        put(endX, startY, color1)
+        put(startX, startY, color2)
+        put(startX, endY, color3)
+        put(endX, endY, color4)
+        draw(GL_LINE_LOOP)
         GLStateManager.lineSmooth(false)
     }
 
@@ -182,11 +179,35 @@ object Legacy2DRenderer : I2DRenderer {
         color: ColorRGB
     ) {
         val arcVertices = Renderer2D.getArcVertices(centerX, centerY, radius, angleRange, segments)
-        VertexBuffer.begin(GL_TRIANGLE_FAN)
         for (v in arcVertices) {
-            VertexBuffer.put(v.x, v.y, color)
+            put(v.x, v.y, color)
         }
-        VertexBuffer.end()
+        draw(GL_TRIANGLE_FAN)
     }
+
+    private fun put(posX: Double, posY: Double, color: ColorRGB) {
+        VertexObject.buffer.apply {
+            putFloat(posX.toFloat())
+            putFloat(posY.toFloat())
+            putInt(color.rgba)
+        }
+        vertexSize++
+    }
+
+    private fun draw(mode: Int) {
+        VertexObject.Pos2Color.uploadVertex(vertexSize)
+
+        DrawShader.bind()
+        VertexObject.Pos2Color.useVao {
+            glDrawArrays(mode, 0, vertexSize)
+        }
+
+        vertexSize = 0
+    }
+
+    private object DrawShader : Shader(
+        "assets/spartan/shader/vao/Pos2Color.vsh",
+        "assets/spartan/shader/vao/Pos2Color.fsh"
+    )
 
 }

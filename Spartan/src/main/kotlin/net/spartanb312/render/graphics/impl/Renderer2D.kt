@@ -9,7 +9,7 @@ import net.spartanb312.render.core.common.math.Vec2f
 import net.spartanb312.render.core.event.inner.listener
 import net.spartanb312.render.features.event.client.GameLoopEvent
 import net.spartanb312.render.graphics.impl.legacy.Legacy2DRenderer
-import net.spartanb312.render.graphics.impl.vao.VertexArrayObject2DRenderer
+import net.spartanb312.render.graphics.impl.vao.VAO2DRenderer
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
@@ -20,7 +20,7 @@ object Renderer2D {
     var currentRenderMode = RenderMode.Legacy
 
     private val renderer0 = AsyncUpdateValue {
-        if (currentRenderMode == RenderMode.Legacy) Legacy2DRenderer else VertexArrayObject2DRenderer
+        if (currentRenderMode == RenderMode.Legacy) Legacy2DRenderer else VAO2DRenderer
     }.also { r ->
         listener<GameLoopEvent.Pre> {
             r.update()

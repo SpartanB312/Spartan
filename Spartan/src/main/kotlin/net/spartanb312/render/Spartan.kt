@@ -1,6 +1,5 @@
 package net.spartanb312.render
 
-import net.minecraft.client.Minecraft
 import net.spartanb312.render.Spartan.MOD_ID
 import net.spartanb312.render.Spartan.MOD_NAME
 import net.spartanb312.render.Spartan.MOD_VERSION
