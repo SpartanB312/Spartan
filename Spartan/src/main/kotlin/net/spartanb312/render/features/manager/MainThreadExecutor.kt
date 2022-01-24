@@ -59,4 +59,10 @@ object MainThreadExecutor {
         }
     }
 
+    fun <T> onMainThread(block: () -> T) =
+        MainThreadExecutor.add(block)
+
+    suspend fun <T> onMainThreadSuspend(block: () -> T) =
+        MainThreadExecutor.addSuspend(block)
+
 }

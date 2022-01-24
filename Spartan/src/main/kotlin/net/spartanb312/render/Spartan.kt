@@ -5,6 +5,7 @@ import net.spartanb312.render.Spartan.MOD_NAME
 import net.spartanb312.render.Spartan.MOD_VERSION
 import net.spartanb312.render.features.SpartanCore.subscribe
 import net.spartanb312.render.features.manager.*
+import net.spartanb312.render.graphics.impl.FontRenderer
 import net.spartanb312.render.graphics.impl.Renderer2D
 import net.spartanb312.render.launch.Logger
 import net.spartanb312.render.launch.ResourceCenter.getResourceAsStream
@@ -72,12 +73,15 @@ object Spartan : Loadable, Extendable {
         ResolutionHelper.subscribe()
         MenuDisplayManager.subscribe()
         Render2DManager.subscribe()
+        FontManager.subscribe()
 
         ConfigManager
     }
 
     override fun postInit() {
+        //Renderer impl
         Renderer2D.subscribe()
+        FontRenderer.subscribe()
     }
 
     override fun onReady() {

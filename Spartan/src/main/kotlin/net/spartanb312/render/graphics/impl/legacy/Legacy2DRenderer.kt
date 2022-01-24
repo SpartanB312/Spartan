@@ -2,7 +2,7 @@ package net.spartanb312.render.graphics.impl.legacy
 
 import net.spartanb312.render.core.common.graphics.ColorRGB
 import net.spartanb312.render.core.common.math.Vec2d
-import net.spartanb312.render.graphics.api.plane.I2DRenderer
+import net.spartanb312.render.graphics.api.I2DRenderer
 import net.spartanb312.render.graphics.impl.GLStateManager
 import net.spartanb312.render.graphics.impl.Renderer2D
 import net.spartanb312.render.graphics.impl.legacy.vertex.VertexBuffer
@@ -14,13 +14,15 @@ import org.lwjgl.opengl.GL11.*
  */
 object Legacy2DRenderer : I2DRenderer {
 
-    override fun drawPoint0(x: Double, y: Double, size: Float, color: ColorRGB) {
+    override fun drawPoint0(x: Double, y: Double, size: Float, color: ColorRGB): I2DRenderer {
+        GLStateManager.useProgram(0)
         GLStateManager.pointSmooth(true)
         glPointSize(size)
         VertexBuffer.begin(GL_POINT)
         VertexBuffer.put(x, y, color)
         VertexBuffer.end()
         GLStateManager.pointSmooth(false)
+        return this
     }
 
     override fun drawLine0(
@@ -31,7 +33,8 @@ object Legacy2DRenderer : I2DRenderer {
         width: Float,
         color1: ColorRGB,
         color2: ColorRGB
-    ) {
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         VertexBuffer.begin(GL_LINE)
@@ -39,9 +42,11 @@ object Legacy2DRenderer : I2DRenderer {
         VertexBuffer.put(endX, endY, color2)
         VertexBuffer.end()
         GLStateManager.lineSmooth(false)
+        return this
     }
 
-    override fun drawLinesStrip0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
+    override fun drawLinesStrip0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB): I2DRenderer {
+        GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         VertexBuffer.begin(GL_LINE_STRIP)
@@ -50,9 +55,11 @@ object Legacy2DRenderer : I2DRenderer {
         }
         VertexBuffer.end()
         GLStateManager.lineSmooth(false)
+        return this
     }
 
-    override fun drawLinesLoop0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB) {
+    override fun drawLinesLoop0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB): I2DRenderer {
+        GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         VertexBuffer.begin(GL_LINE_LOOP)
@@ -61,6 +68,7 @@ object Legacy2DRenderer : I2DRenderer {
         }
         VertexBuffer.end()
         GLStateManager.lineSmooth(false)
+        return this
     }
 
     override fun drawTriangle0(
@@ -71,12 +79,14 @@ object Legacy2DRenderer : I2DRenderer {
         pos3X: Double,
         pos3Y: Double,
         color: ColorRGB
-    ) {
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
         VertexBuffer.begin(GL_TRIANGLES)
         VertexBuffer.put(pos1X, pos1Y, color)
         VertexBuffer.put(pos2X, pos2Y, color)
         VertexBuffer.put(pos3X, pos3Y, color)
         VertexBuffer.end()
+        return this
     }
 
     override fun drawTriangleOutline0(
@@ -88,7 +98,8 @@ object Legacy2DRenderer : I2DRenderer {
         pos3Y: Double,
         width: Float,
         color: ColorRGB
-    ) {
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         VertexBuffer.begin(GL_LINE_STRIP)
@@ -97,15 +108,18 @@ object Legacy2DRenderer : I2DRenderer {
         VertexBuffer.put(pos3X, pos3Y, color)
         VertexBuffer.end()
         GLStateManager.lineSmooth(false)
+        return this
     }
 
-    override fun drawRect0(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB) {
+    override fun drawRect0(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB): I2DRenderer {
+        GLStateManager.useProgram(0)
         VertexBuffer.begin(GL_TRIANGLE_STRIP)
         VertexBuffer.put(endX, startY, color)
         VertexBuffer.put(startX, startY, color)
         VertexBuffer.put(endX, endY, color)
         VertexBuffer.put(startX, endY, color)
         VertexBuffer.end()
+        return this
     }
 
     override fun drawGradientRect0(
@@ -117,13 +131,15 @@ object Legacy2DRenderer : I2DRenderer {
         color2: ColorRGB,
         color3: ColorRGB,
         color4: ColorRGB
-    ) {
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
         VertexBuffer.begin(GL_QUADS)
         VertexBuffer.put(endX, startY, color1)
         VertexBuffer.put(startX, startY, color2)
         VertexBuffer.put(startX, endY, color3)
         VertexBuffer.put(endX, endY, color4)
         VertexBuffer.end()
+        return this
     }
 
     override fun drawRectOutline0(
@@ -136,7 +152,8 @@ object Legacy2DRenderer : I2DRenderer {
         color2: ColorRGB,
         color3: ColorRGB,
         color4: ColorRGB
-    ) {
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
         VertexBuffer.begin(GL_LINE_LOOP)
@@ -146,6 +163,7 @@ object Legacy2DRenderer : I2DRenderer {
         VertexBuffer.put(endX, endY, color4)
         VertexBuffer.end()
         GLStateManager.lineSmooth(false)
+        return this
     }
 
     override fun drawRoundedRect0(
@@ -156,8 +174,9 @@ object Legacy2DRenderer : I2DRenderer {
         radius: Float,
         segments: Int,
         color: ColorRGB
-    ) {
-
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
+        return this
     }
 
     override fun drawRoundedRectOutline0(
@@ -169,8 +188,9 @@ object Legacy2DRenderer : I2DRenderer {
         width: Float,
         segments: Int,
         color: ColorRGB
-    ) {
-
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
+        return this
     }
 
     override fun drawArc0(
@@ -180,13 +200,15 @@ object Legacy2DRenderer : I2DRenderer {
         angleRange: Pair<Float, Float>,
         segments: Int,
         color: ColorRGB
-    ) {
+    ): I2DRenderer {
+        GLStateManager.useProgram(0)
         val arcVertices = Renderer2D.getArcVertices(centerX, centerY, radius, angleRange, segments)
         VertexBuffer.begin(GL_TRIANGLE_FAN)
         for (v in arcVertices) {
             VertexBuffer.put(v.x, v.y, color)
         }
         VertexBuffer.end()
+        return this
     }
 
 }
