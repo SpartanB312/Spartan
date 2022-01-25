@@ -6,8 +6,6 @@ inline fun <reified T : Any> Any?.ifType(block: (T) -> Unit) {
     if (this is T) block(this)
 }
 
-fun <T> Array<T>.getOrNull(index: Int): T? = if (index in 0 until size) this[index] else null
-
 inline fun <T : Any> T?.notNull(block: T.() -> Unit) = this?.block()
 
 fun File.isNotExist(): Boolean {

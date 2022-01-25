@@ -5,5 +5,6 @@ abstract class Command(
     val prefix: String,
     val description: String,
     val syntax: String,
-    val block: ExecutionScope.() -> Unit
-)
+) {
+    abstract fun ExecutionScope.onCall()
+}

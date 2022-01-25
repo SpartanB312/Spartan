@@ -34,6 +34,7 @@ object LanguageManager {
         } catch (ignore: Exception) {
             it.saveLanguage()
         }
+        updateLanguages()
     }
 
     fun saveLanguages() = languageStack.forEach {
@@ -41,8 +42,9 @@ object LanguageManager {
     }
 
     fun resetLanguages() {
-        ENGLISH_UK.setLanguage()
         registeredTexts.forEach(TextContainer::reset)
+        saveLanguages()
+        ENGLISH_UK.setLanguage()
     }
 
     private fun updateLanguages() = registeredTexts.forEach {
@@ -51,9 +53,9 @@ object LanguageManager {
         }
     }
 
-    private fun String.saveLanguage() = File(DEFAULT_FILE_GROUP + "language/$this.lang").apply {
+    private fun String.saveLanguage() = File(DEFAULT_FILE_GROUP + "languages/$this.lang").apply {
         if (!exists()) {
-            File(DEFAULT_FILE_GROUP + "language").mkdirs()
+            File(DEFAULT_FILE_GROUP + "languages").mkdirs()
             createNewFile()
         }
         writeText(sequence {
@@ -63,7 +65,7 @@ object LanguageManager {
         }.joinToString(separator = ""))
     }
 
-    private fun String.readLanguage() = File(DEFAULT_FILE_GROUP + "language/$this.lang").readLines().forEach { s ->
+    private fun String.readLanguage() = File(DEFAULT_FILE_GROUP + "languages/$this.lang").readLines().forEach { s ->
         s.split("=", limit = 2).let { v ->
             registeredTexts.find {
                 it.containerName == v[0]

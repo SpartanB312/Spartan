@@ -1,6 +1,5 @@
 package net.spartanb312.render.core.common.graphics
 
-import net.spartanb312.render.core.common.graphics.ColorUtils.r
 import java.awt.Color
 
 object ColorUtils {
@@ -28,6 +27,7 @@ object ColorUtils {
 
     const val RESET = "${SECTION_SIGN}r"
     const val OBFUSCATED = "${SECTION_SIGN}k"
+    const val BOLD = "${SECTION_SIGN}l"
     const val STRIKE_THROUGH = "${SECTION_SIGN}m"
     const val UNDER_LINE = "${SECTION_SIGN}n"
     const val ITALIC = "${SECTION_SIGN}o"

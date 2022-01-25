@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.2/969be7916b1ba800b33b5a4035aece5de080d8d9/mixin-0.8.2-processor.jar" />
+        </processorPath>
+        <module name="Spartans.Spartan.main" />
+        <module name="net.spartanb312.Spartans.HyperLethal.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="Spartans.HaloReach" target="1.8" />
+      <module name="Spartans.HaloReach.main" target="1.8" />
+      <module name="Spartans.HaloReach.test" target="1.8" />
+      <module name="Spartans.HyperLethal.main" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

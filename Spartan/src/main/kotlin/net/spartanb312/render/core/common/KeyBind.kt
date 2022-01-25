@@ -9,17 +9,22 @@ class KeyBind(vararg var key: Int, val action: () -> Unit) : Convertable<KeyBind
 
         fun KeyBind.converter0(): KeyBind.() -> String = {
             val str = StringBuilder()
-            key.forEach { str.append("$it+") }
+            key.forEachIndexed { index, it ->
+                if (index != key.size - 1) str.append("$it+")
+                else str.append(it)
+            }
             str.toString()
         }
 
         fun KeyBind.parser0(): String.() -> KeyBind = {
             this@parser0.reset(list {
-                split("+").forEach {
-                    kotlin.runCatching {
-                        yield(it.toInt())
+                if (contains("+")) {
+                    split("+").forEach {
+                        kotlin.runCatching {
+                            yield(it.toInt())
+                        }
                     }
-                }
+                } else yield(toInt())
             })
         }
 

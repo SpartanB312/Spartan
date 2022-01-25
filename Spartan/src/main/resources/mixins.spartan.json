@@ -11,6 +11,7 @@
     "render.MixinGuiSubtitleOverlay"
   ],
   "mixins": [
+    "accessor.network.AccessorCPacketChatMessage",
     "mc.MixinFMLCommonHandler",
     "network.MixinNetworkManager"
   ]

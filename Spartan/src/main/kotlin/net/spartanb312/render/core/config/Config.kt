@@ -9,7 +9,7 @@ abstract class Config(
     private val configName: String,
 ) {
 
-    private inline val savePath get() = "$dirPath/$configName"
+    private inline val savePath get() = "${dirPath.removeSuffix("/")}/${if (configName.contains(".")) configName else "$configName.json"}"
     private val gsonPretty: Gson = GsonBuilder().setPrettyPrinting().create()
     private val jsonParser = JsonParser()
 
@@ -17,6 +17,7 @@ abstract class Config(
 
     abstract fun saveConfig()
     abstract fun loadConfig()
+    abstract fun resetConfig()
 
     protected val configFile
         get() = file ?: File(savePath).also {

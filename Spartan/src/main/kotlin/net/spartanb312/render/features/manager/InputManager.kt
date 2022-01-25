@@ -22,7 +22,7 @@ object InputManager {
                     } && it.key.all { it3 ->
                         Keyboard.isKeyDown(it3)
                     }) it.action.invoke()
-            } else if (it.key[0] == key) {
+            } else if (it.key.size == 1 && it.key[0] == key) {
                 it.action.invoke()
             }
         }

@@ -12,7 +12,14 @@ class AreaScope(
     @Transient
     private val endX: Double,
     @Transient
-    private val endY: Double
+    private val endY: Double,
+    render2DScope: Render2DScope,
+) : Render2DScope(
+    render2DScope.mouseX,
+    render2DScope.mouseY,
+    render2DScope.scaledResolution,
+    render2DScope.renderer2D,
+    render2DScope.fontRenderer
 ) {
     val minX get() = min(startX, endX)
     val minY get() = min(startY, endY)
@@ -23,17 +30,40 @@ class AreaScope(
 }
 
 @Render2DMark
+fun Render2DScope.area(
+    startX: Double,
+    startY: Double,
+    endX: Double,
+    endY: Double,
+): AreaScope = AreaScope(startX, startY, endX, endY, this)
+
+@Render2DMark
+fun Render2DScope.area(
+    startX: Float,
+    startY: Float,
+    endX: Float,
+    endY: Float,
+): AreaScope = AreaScope(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), this)
+
+@Render2DMark
+fun Render2DScope.area(
+    startX: Int,
+    startY: Int,
+    endX: Int,
+    endY: Int,
+): AreaScope = AreaScope(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), this)
+
+@Render2DMark
 inline fun Render2DScope.area(
     startX: Double,
     startY: Double,
     endX: Double,
     endY: Double,
     block: AreaScope.() -> Unit
-) {
-    val area = AreaScope(startX, startY, endX, endY)
+): AreaScope = AreaScope(startX, startY, endX, endY, this).also {
     matrix {
-        translate(area.minX, area.minY) {
-            area.block()
+        translate(it.minX, it.minY) {
+            it.block()
         }
     }
 }
@@ -45,7 +75,7 @@ inline fun Render2DScope.area(
     endX: Float,
     endY: Float,
     block: AreaScope.() -> Unit
-) = area(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), block)
+): AreaScope = area(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), block)
 
 @Render2DMark
 inline fun Render2DScope.area(
@@ -54,4 +84,4 @@ inline fun Render2DScope.area(
     endX: Int,
     endY: Int,
     block: AreaScope.() -> Unit
-) = area(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), block)
+): AreaScope = area(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), block)

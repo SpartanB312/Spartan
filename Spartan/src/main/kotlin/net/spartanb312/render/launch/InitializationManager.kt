@@ -10,7 +10,6 @@ import net.spartanb312.render.core.common.ClassUtils.getAnnotatedClasses
 import net.spartanb312.render.core.common.extension.remove
 import net.spartanb312.render.core.event.inner.MainEventBus
 import net.spartanb312.render.core.io.*
-import net.spartanb312.render.core.reflect.findKotlinObjectInstance
 import net.spartanb312.render.core.reflect.getOrCreateKotlinInstance
 import net.spartanb312.render.features.event.client.InitEvent
 import net.spartanb312.render.launch.MixinLoader.loadMixins
@@ -22,7 +21,7 @@ import java.util.zip.ZipInputStream
 @Suppress("DEPRECATION")
 object InitializationManager {
 
-    private const val SCAN_GROUP = "net.spartanb312"
+    const val SCAN_GROUP = "net.spartanb312"
     private const val MINECRAFT_MODS_GROUP = "mods/"
     private const val SPARTAN_EXTENSIONS_GROUP = DEFAULT_FILE_GROUP + "extensions/"
     private const val SPARTAN_MODS_GROUP = DEFAULT_FILE_GROUP + "mods/"
@@ -31,9 +30,19 @@ object InitializationManager {
     private val extensions = mutableSetOf<LoadableMod.ExtensionDLC>()
 
     //Exclusions
-    private val exclusionClasses = mutableSetOf("SpartanScreen")
+    private val excludedClasses = mutableSetOf<String>()
+    private val excludedPackage = mutableSetOf("net.spartanb312.render.features.ui.wrapper")
     private val SCAN_EXCLUSION: (String) -> Boolean = {
-        exclusionClasses.none { ex -> it.contains(ex) }
+        excludedClasses.none { ex -> it.contains(ex) } && excludedPackage.none { ex -> it.startsWith(ex) }
+    }
+
+    val DEFAULT_INIT_SCAN_EXCLUSION: String.() -> Boolean = {
+        !(startsWith("java.")
+                || startsWith("sun")
+                || startsWith("org.lwjgl")
+                || startsWith("org.apache.logging")
+                || startsWith("net.minecraft")
+                || contains("mixin"))
     }
 
     var isReady = false
@@ -83,7 +92,17 @@ object InitializationManager {
                                                 split(",").forEach { unit ->
                                                     unit.apply {
                                                         if (contains("'")) {
-                                                            exclusionClasses.add(substringAfter("'").substringBefore("'"))
+                                                            excludedClasses.add(substringAfter("'").substringBefore("'"))
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else if (it.startsWith("ExcludedPackages")) {
+                                            it.substringAfter("ExcludedPackages:").apply {
+                                                split(",").forEach { unit ->
+                                                    unit.apply {
+                                                        if (contains("'")) {
+                                                            excludedPackage.add(substringAfter("'").substringBefore("'"))
                                                         }
                                                     }
                                                 }

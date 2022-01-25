@@ -31,7 +31,7 @@ abstract class AbstractSetting<T> : Nameable, ReadWriteProperty<Any?, T> {
     }
 
     override operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-        this.value = value
+        if (this is MutableSetting) this.value = value
     }
 
     open fun reset() {

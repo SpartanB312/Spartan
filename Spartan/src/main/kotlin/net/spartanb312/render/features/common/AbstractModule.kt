@@ -16,6 +16,8 @@ abstract class AbstractModule(
     visibility: Boolean,
 ) : AbstractFeature(name, alias, category, description), ToggleableFeature {
 
+    private val defaultVisibility = if (visibility) Visibility.ON else Visibility.OFF
+
     /**
      * Implements ToggleableFeature
      */
@@ -31,7 +33,7 @@ abstract class AbstractModule(
     /**
      * These are the default setting of any module that inherits from [AbstractModule]
      */
-    private val visibilitySetting by setting("Visible", Visibility.ON, "The Visibility of this feature")
+    private val visibilitySetting by setting("Visible", defaultVisibility, "The Visibility of this feature")
     private val keyBindSetting by setting("KeyBind", keyBind, "Bind a key to toggle this feature")
     private val onHold by setting("OnHold", false, "Feature functional while pressing the key")
     private val resetButton by setting("Reset", reset, "Click here to reset this feature")

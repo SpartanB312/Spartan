@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5658d5b-78a9-46a4-b2ba-f011635ecd1a" name="Changes" comment="" />
+    <list default="true" id="2a60b82f-daa2-41cb-a45d-8efc5256a0f6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +14,88 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+    <projectState path="$PROJECT_DIR$/HyperLethal">
+      <ProjectState />
+    </projectState>
   </component>
-  <component name="ProjectId" id="23vV1er06Tpvw43fYQTzCAzUvTy" />
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/Spartan">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/HyperLethal">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/Spartan.HaloReach">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/Spartan/HaloReach">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Spartans" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Spartans" type="f1a62948:ProjectNode" />
+                <item name="Spartan" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Spartans" type="f1a62948:ProjectNode" />
+                <item name="Spartan" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Spartans" type="f1a62948:ProjectNode" />
+                <item name="Spartan" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/features/manager/ModuleManager.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/graphics/api/font/setting/LinkedSettableFontRenderer.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl_util/2.9.4-nightly-20150209/2e3787f55c68a245e994f88755795b3a7684b3/lwjgl_util-2.9.4-nightly-20150209-sources.jar!/org/lwjgl/util/vector/Matrix.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/graphics/impl/GLStateManager.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/features/manager/FontManager.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/features/common/AbstractModule.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.6.0/a6284476c56bd752eb0020e062c78c930abdc168/kotlin-stdlib-1.6.0-sources.jar!/kotlin/io/Console.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/launch/ResourceManager.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/features/manager/ConfigManager.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Spartan/build.gradle.kts" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ProjectId" id="23gAmSq4S4R7jI2OkCHBZlJ3Deo" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -24,18 +104,133 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Spartan/src/main/kotlin/net/spartanb312/render/features/command/commands" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SpartanB312\Desktop\Spartans\Spartan\src\main\kotlin\net\spartanb312\render\features\command\commands" />
+      <recent name="C:\Users\SpartanB312\Desktop\Spartans\Spartan\src\main\resources\assets\spartan\font" />
+      <recent name="C:\Users\SpartanB312\Desktop\Spartans\Spartan\src\main\kotlin\net\spartanb312\render\graphics\api" />
+      <recent name="C:\Users\SpartanB312\Desktop\Spartans\Spartan\src\main\resources\assets.spartan.shader.vao" />
+      <recent name="C:\Users\SpartanB312\Desktop\Spartans\Spartan\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SpartanB312\Desktop\Spartans\Spartan" />
+      <recent name="C:\Users\SpartanB312\Desktop\Spartans\HyperLethal\src\main\resources" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="net.spartanb312.render.features.ui.wrapper" />
+      <recent name="net.spartanb312.render.core.common.math.matrix.impls" />
+      <recent name="net.spartanb312.render.core.common.math.matrix" />
+      <recent name="net.spartanb312.render.graphics.api.font.setting" />
+      <recent name="net.spartanb312.render.graphics.api" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+      <recent name="net.spartanb312.render" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="net.spartanb312.render.features.command.commands" />
+      <recent name="net.spartanb312.render.graphics.api" />
+      <recent name="net.spartanb312.render.graphics.impl.vao.xiaro" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.spartanb312.render.mixin.accessor.network" />
+      <recent name="net.spartanb312.render.icon" />
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.Spartans:Spartan [build]">
+    <configuration name="Spartans:Spartan [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Spartan" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="BoxKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.spartanb312.render.core.common.math.BoxKt" />
+      <module name="Spartans.Spartan.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CollectionKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.spartanb312.render.core.common.extension.CollectionKt" />
+      <module name="Spartans.Spartan.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CommandManagerKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.spartanb312.render.features.manager.CommandManagerKt" />
+      <module name="Spartans.Spartan.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MatrixKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.spartanb312.render.core.common.math.matrix.MatrixKt" />
+      <module name="Spartans.Spartan.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Spartans:Spartan [build]" />
+        <item itemvalue="Kotlin.CommandManagerKt" />
+        <item itemvalue="Kotlin.CollectionKt" />
+        <item itemvalue="Kotlin.MatrixKt" />
+        <item itemvalue="Kotlin.BoxKt" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a5658d5b-78a9-46a4-b2ba-f011635ecd1a" name="Changes" comment="" />
-      <created>1642614335757</created>
+      <changelist id="2a60b82f-daa2-41cb-a45d-8efc5256a0f6" name="Changes" comment="" />
+      <created>1642145516842</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1642614335757</updated>
-      <workItem from="1642614336998" duration="11000" />
+      <updated>1642145516842</updated>
+      <workItem from="1642145518076" duration="6100000" />
+      <workItem from="1642435761014" duration="1576000" />
+      <workItem from="1642440991344" duration="8818000" />
+      <workItem from="1642458484655" duration="8143000" />
+      <workItem from="1642532982615" duration="12333000" />
+      <workItem from="1642614349229" duration="18149000" />
+      <workItem from="1642732653097" duration="9145000" />
+      <workItem from="1643020109779" duration="3377000" />
+      <workItem from="1643029807244" duration="3250000" />
+      <workItem from="1643035480513" duration="6789000" />
+      <workItem from="1643121228085" duration="20360000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

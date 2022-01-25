@@ -9,6 +9,7 @@ import net.spartanb312.render.core.common.graphics.ColorRGB
 import net.spartanb312.render.core.setting.AbstractSetting
 import net.spartanb312.render.core.setting.impl.collections.ListSetting
 import net.spartanb312.render.core.setting.impl.collections.MapSetting
+import net.spartanb312.render.core.setting.impl.collections.lists.*
 import net.spartanb312.render.core.setting.impl.number.DoubleSetting
 import net.spartanb312.render.core.setting.impl.number.FloatSetting
 import net.spartanb312.render.core.setting.impl.number.IntegerSetting
@@ -17,7 +18,6 @@ import net.spartanb312.render.core.setting.impl.other.ColorSetting
 import net.spartanb312.render.core.setting.impl.other.ExtendSetting
 import net.spartanb312.render.core.setting.impl.primitive.BooleanSetting
 import net.spartanb312.render.core.setting.impl.primitive.EnumSetting
-import net.spartanb312.render.core.setting.impl.collections.lists.*
 import net.spartanb312.render.core.setting.impl.primitive.StringSetting
 
 fun JsonObject.saveSetting(setting: AbstractSetting<*>): JsonObject {
@@ -44,7 +44,11 @@ fun JsonObject.saveSetting(setting: AbstractSetting<*>): JsonObject {
 
 fun JsonObject.saveSettings(settings: List<AbstractSetting<*>>): JsonObject {
     settings.forEach { setting ->
-        saveSetting(setting)
+        try {
+            saveSetting(setting)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
     }
     return this
 }
@@ -106,7 +110,11 @@ fun Map<String, JsonElement>.readSetting(setting: AbstractSetting<*>) {
 
 fun Map<String, JsonElement>.readSettings(settings: List<AbstractSetting<*>>) {
     settings.forEach { setting ->
-        this.readSetting(setting)
+        try {
+            this.readSetting(setting)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
     }
 }
 

@@ -11,4 +11,10 @@ interface IStandaloneConfigManagerProvider<T> : IConfigContainer<T> {
         return StandaloneConfig(this, this@IStandaloneConfigManagerProvider)
     }
 
+    fun loadConfig() = configManager.loadConfig()
+
+    fun saveConfig() = configManager.saveConfig()
+
+    fun resetConfig() = configManager.resetConfig()
+
 }

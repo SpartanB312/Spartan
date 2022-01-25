@@ -10,9 +10,39 @@ inline fun <E : Any> MutableCollection<E>.add(e: E?) {
     if (e != null) this.add(e)
 }
 
-/**
- * Returns the sum of all values produced by [selector] function applied to each element in the collection.
- */
+inline fun <reified T> Array<T>.removeFirst(counts: Int): Array<T> = if (this.size < counts) this
+else if (this.size == counts) emptyArray()
+else Array(size - counts) { index ->
+    this[index + counts]
+}
+
+inline fun <reified T> Array<T>.removeLast(counts: Int): Array<T> = if (this.size <= counts) emptyArray()
+else Array(size - counts) { index ->
+    this[index]
+}
+
+inline fun <reified T> List<T>.removeFirstToArray(counts: Int): Array<T> = if (this.size < counts) this.toTypedArray()
+else if (this.size == counts) emptyArray()
+else Array(size - counts) { index ->
+    this[index + counts]
+}
+
+inline fun <reified T> List<T>.removeLastToArray(counts: Int): Array<T> = if (this.size <= counts) emptyArray()
+else Array(size - counts) { index ->
+    this[index]
+}
+
+inline fun <T> List<T>.removeFirst(counts: Int): List<T> = if (this.size < counts) this
+else if (this.size == counts) listOf()
+else List(size - counts) { index ->
+    this[index + counts]
+}
+
+inline fun <T> List<T>.removeLast(counts: Int): List<T> = if (this.size <= counts) listOf()
+else List(size - counts) { index ->
+    this[index]
+}
+
 inline fun <T> Iterable<T>.sumOfFloat(selector: (T) -> Float): Float {
     var sum = 0.0f
     for (element in this) {

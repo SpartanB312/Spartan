@@ -7,6 +7,9 @@ import net.spartanb312.render.features.event.client.ClientTickEvent
 import net.spartanb312.render.features.event.client.RenderTickEvent
 import net.spartanb312.render.features.event.render.Render2DEvent
 import net.spartanb312.render.features.event.render.Render3DEvent
+import net.spartanb312.render.util.mc
+
+fun <T, U> T.runSafe(block: (T) -> U): U? = if (mc.player != null && mc.world != null) block(this) else null
 
 fun Any.onTick(block: ClientTickEvent.() -> Unit) =
     listener<ClientTickEvent> {

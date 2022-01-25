@@ -35,6 +35,7 @@ object Spartan : Loadable, Extendable {
     const val MOD_VERSION = "0.1"
 
     const val DEFAULT_FILE_GROUP = "Spartan/"
+    const val DEFAULT_CONFIG_GROUP = "${DEFAULT_FILE_GROUP}/configs/"
 
     val mainThread: Thread = Thread.currentThread()
     override val extensions = mutableSetOf<LoadableMod.ExtensionDLC>()
@@ -75,7 +76,7 @@ object Spartan : Loadable, Extendable {
         Render2DManager.subscribe()
         FontManager.subscribe()
 
-        ConfigManager
+        ConfigManager.loadAll()
     }
 
     override fun postInit() {

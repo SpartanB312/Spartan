@@ -1,4 +1,4 @@
-package net.spartanb312.render.features.gui
+package net.spartanb312.render.features.ui.wrapper
 
 import net.minecraft.client.gui.GuiScreen
 
@@ -6,12 +6,11 @@ import net.minecraft.client.gui.GuiScreen
  * Wrapped screen renderer
  * Make it possible to migrate to another version
  */
-class SpartanScreen(
-    private val screenRenderer: ScreenRenderer,
-    private val pause: Boolean = false
-) : GuiScreen() {
+abstract class SpartanScreen : GuiScreen() {
 
-    override fun doesGuiPauseGame(): Boolean = pause
+    abstract val screenRenderer: ScreenRenderer
+
+    override fun doesGuiPauseGame(): Boolean = screenRenderer.doPause()
 
     override fun initGui() =
         screenRenderer.onInit()

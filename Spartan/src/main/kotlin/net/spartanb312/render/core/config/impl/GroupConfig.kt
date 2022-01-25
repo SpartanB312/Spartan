@@ -33,4 +33,13 @@ class GroupConfig(
         } else saveConfig()
     }
 
+    override fun resetConfig() {
+        containers.forEach { container ->
+            container.settings.forEach {
+                it.reset()
+            }
+        }
+        saveConfig()
+    }
+
 }

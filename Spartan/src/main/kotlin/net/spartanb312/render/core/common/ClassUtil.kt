@@ -1,8 +1,6 @@
 package net.spartanb312.render.core.common
 
 import net.spartanb312.render.core.common.collections.list
-import net.spartanb312.render.features.command.onFail
-import net.spartanb312.render.launch.Logger
 import java.io.File
 import java.net.URL
 import java.util.function.Predicate
@@ -50,6 +48,16 @@ object ClassUtils {
             }.forEach {
                 yield(it)
             }
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T> String.findTypedClasses(crossinline predicate: String.() -> Boolean = { true }): List<Class<T>> {
+        return list {
+            findClasses(this@findTypedClasses) { it.predicate() }
+                .forEach {
+                    if (T::class.java.isAssignableFrom(it)) yield(it as Class<T>)
+                }
         }
     }
 
@@ -136,7 +144,11 @@ object ClassUtils {
     }
 
     @Suppress("UNCHECKED_CAST")
-    inline val <T> Class<out T>.instance
-        get() = this.getDeclaredField("INSTANCE")[null] as T
+    inline val <T> Class<out T>.instance: T?
+        get() = try {
+            this.getDeclaredField("INSTANCE")[null] as T?
+        } catch (ignore: Exception) {
+            null
+        }
 
 }

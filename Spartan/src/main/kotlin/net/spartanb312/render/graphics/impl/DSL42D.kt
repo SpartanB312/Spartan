@@ -18,7 +18,7 @@ import org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP
 @DslMarker
 annotation class Render2DMark
 
-class Render2DScope(
+open class Render2DScope(
     val mouseX: Int,
     val mouseY: Int,
     val scaledResolution: ScaledResolution,

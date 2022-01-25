@@ -4,23 +4,23 @@ import net.spartanb312.render.core.common.interfaces.DisplayEnum
 
 enum class Category(
     override val displayName: String,
-    val subcategory: Subcategory = Subcategory.Undefined
+    val generalCategory: GeneralCategory = GeneralCategory.Undefined
 ) : DisplayEnum {
 
     //3D Renderer
-    Player("Player", Subcategory.Renderer),
-    World("World", Subcategory.Renderer),
+    Player("Player", GeneralCategory.Renderer),
+    World("World", GeneralCategory.Renderer),
 
     //2D HUD
-    Combat("Combat", Subcategory.HUD),
-    Information("Information", Subcategory.HUD),
-    Spartan("Spartan", Subcategory.HUD),
+    Combat("Combat", GeneralCategory.HUD),
+    Information("Information", GeneralCategory.HUD),
+    Spartan("Spartan", GeneralCategory.HUD),
 
     //Other
-    Hidden("Hidden", Subcategory.Undefined),
-    Setting("Setting", Subcategory.Setting);
+    Hidden("Hidden", GeneralCategory.Undefined),
+    Setting("Setting", GeneralCategory.Setting);
 
-    enum class Subcategory(override val displayName: CharSequence) : DisplayEnum {
+    enum class GeneralCategory(override val displayName: CharSequence) : DisplayEnum {
         Undefined("Other"),
         Setting("Setting"),
         Command("Command"),
@@ -30,8 +30,8 @@ enum class Category(
         Theme("Theme")
     }
 
-    val idHUD get() = subcategory == Subcategory.HUD
-    val isRenderer get() = subcategory == Subcategory.Renderer
-    val isScreen get() = subcategory == Subcategory.Screen
+    val idHUD get() = generalCategory == GeneralCategory.HUD
+    val isRenderer get() = generalCategory == GeneralCategory.Renderer
+    val isScreen get() = generalCategory == GeneralCategory.Screen
 
 }

@@ -25,4 +25,11 @@ class StandaloneConfig(
         } else saveConfig()
     }
 
+    override fun resetConfig() {
+        container.settings.forEach {
+            it.reset()
+        }
+        saveConfig()
+    }
+
 }
