@@ -12,19 +12,18 @@ object Config : Command(
     syntax = "config <load/save/reset>",
 ) {
     override fun ExecutionScope.onCall() {
+
         match("load") {
             ConfigManager.loadAll()
-            return
         }
 
         match("save") {
             ConfigManager.saveAll()
-            return
         }
 
-        match("reset"){
+        match("reset") {
             ConfigManager.resetAll()
-            return
         }
+
     }
 }

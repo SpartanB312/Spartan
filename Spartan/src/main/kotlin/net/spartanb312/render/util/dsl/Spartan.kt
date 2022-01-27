@@ -7,9 +7,22 @@ import net.spartanb312.render.features.event.client.ClientTickEvent
 import net.spartanb312.render.features.event.client.RenderTickEvent
 import net.spartanb312.render.features.event.render.Render2DEvent
 import net.spartanb312.render.features.event.render.Render3DEvent
-import net.spartanb312.render.util.mc
+import net.spartanb312.render.features.manager.ingame.SafeScope
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
-fun <T, U> T.runSafe(block: (T) -> U): U? = if (mc.player != null && mc.world != null) block(this) else null
+@OptIn(ExperimentalContracts::class)
+inline fun <R> runSafe(block: SafeScope.() -> R): R? {
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
+
+    val instance = SafeScope.instance
+    return instance?.block()
+}
+
+suspend fun <R> runSafeSuspend(block: suspend SafeScope.() -> R): R? = SafeScope.instance?.block()
 
 fun Any.onTick(block: ClientTickEvent.() -> Unit) =
     listener<ClientTickEvent> {

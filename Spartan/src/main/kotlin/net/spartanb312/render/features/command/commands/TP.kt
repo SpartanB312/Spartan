@@ -13,6 +13,7 @@ object TP : Command(
     syntax = "tp <x> <y> <z>",
 ) {
     override fun ExecutionScope.onCall() {
+
         double { x ->
             double { y ->
                 double { z ->
@@ -21,5 +22,6 @@ object TP : Command(
                 }
             }
         }
+
     }
 }

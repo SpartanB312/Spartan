@@ -2,8 +2,10 @@ package net.spartanb312.render.mixin.mc;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.spartanb312.render.features.event.client.GameLoopEvent;
 import net.spartanb312.render.features.event.client.TickEvent;
+import net.spartanb312.render.features.event.world.WorldEvent;
 import net.spartanb312.render.features.manager.InputManager;
 import net.spartanb312.render.features.manager.MainThreadExecutor;
 import net.spartanb312.render.launch.InitializationManager;
@@ -20,6 +22,9 @@ public class MixinMinecraft {
 
     @Shadow
     public GuiScreen currentScreen;
+
+    @Shadow
+    public WorldClient world;
 
     @Inject(method = "runTick", at = @At("HEAD"))
     private void onRunTickPre(CallbackInfo ci) {
@@ -71,6 +76,11 @@ public class MixinMinecraft {
 
         int key = Keyboard.getEventKey();
         if (key != Keyboard.KEY_NONE && Keyboard.getEventKeyState()) InputManager.onKey(key);
+    }
+
+    @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
+    public void onLoadWorld(WorldClient authenticationservice, String minecraftsessionservice, CallbackInfo ci) {
+        if (world != null) WorldEvent.postUnload(world);
     }
 
 }

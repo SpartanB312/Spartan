@@ -6,13 +6,20 @@
   "refmap": "mixins.spartan.refmap.json",
   "client": [
     "accessor.AccessorMinecraft",
+    "mc.MixinIntegratedServer",
     "mc.MixinMinecraft",
+    "network.MixinGuiConnecting",
+    "network.MixinNetHandlerPlayClient",
     "render.MixinEntityRenderer",
-    "render.MixinGuiSubtitleOverlay"
+    "render.MixinGuiSubtitleOverlay",
+    "world.MixinWorldClient"
   ],
   "mixins": [
     "accessor.network.AccessorCPacketChatMessage",
+    "mc.MixinDimensionManager",
     "mc.MixinFMLCommonHandler",
-    "network.MixinNetworkManager"
+    "mc.MixinMinecraftServer",
+    "network.MixinNetworkManager",
+    "world.MixinWorldServer"
   ]
 }

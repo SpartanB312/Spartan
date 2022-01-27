@@ -2,85 +2,50 @@ package net.spartanb312.render.core.event
 
 import kotlinx.coroutines.launch
 import net.spartanb312.render.core.common.interfaces.Nameable
+import net.spartanb312.render.core.event.inner.MainEventBus
 import net.spartanb312.render.core.event.inner.SpartanScope
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Consumer
 
 const val DEFAULT_LISTENER_PRIORITY = 0
 
-inline fun <reified E : Any> EventBus.listener(
-    function: Consumer<E>,
-) = listener(this, E::class.java, DEFAULT_LISTENER_PRIORITY, false, function)
-
-inline fun <reified E : Any> EventBus.listener(
-    priority: Int,
-    function: Consumer<E>,
-) = listener(this, E::class.java, priority, false, function)
-
-inline fun <reified E : Any> EventBus.listener(
-    alwaysListening: Boolean,
-    function: Consumer<E>,
-) = listener(this, E::class.java, DEFAULT_LISTENER_PRIORITY, alwaysListening, function)
-
-inline fun <reified E : Any> EventBus.listener(
-    priority: Int,
-    alwaysListening: Boolean,
-    function: Consumer<E>,
-) = listener(this, E::class.java, priority, alwaysListening, function)
-
-
-inline fun <reified E : Any> EventBus.parallelListener(
-    noinline function: suspend (E) -> Unit,
-) = parallelListener(this, E::class.java, false, function)
-
-inline fun <reified E : Any> EventBus.parallelListener(
-    alwaysListening: Boolean,
-    noinline function: suspend (E) -> Unit,
-) = parallelListener(this, E::class.java, alwaysListening, function)
-
-inline fun <reified E : Any> EventBus.concurrentListener(
-    noinline function: suspend (E) -> Unit,
-) = concurrentListener(this, E::class.java, false, function)
-
-inline fun <reified E : Any> EventBus.concurrentListener(
-    alwaysListening: Boolean,
-    noinline function: suspend (E) -> Unit,
-) = concurrentListener(this, E::class.java, alwaysListening, function)
-
-fun <E : Any> EventBus.listener(
+fun <E : Any> listener(
+    eventBus: EventBus,
     owner: Any,
     eventClass: Class<E>,
     priority: Int,
     alwaysListening: Boolean,
     function: Consumer<E>,
 ) {
-    Listener(owner, eventClass, priority, function).let {
-        if (alwaysListening) this.subscribe(it)
-        else this.register(owner, it)
+    with(Listener(owner, eventClass, priority, function)) {
+        if (alwaysListening) MainEventBus.subscribe(this)
+        else MainEventBus.register(owner, this)
     }
 }
 
-fun <E : Any> EventBus.parallelListener(
+fun <E : Any> parallelListener(
+    eventBus: EventBus,
     owner: Any,
     eventClass: Class<E>,
     alwaysListening: Boolean,
     function: suspend (E) -> Unit,
 ) {
-    ParallelListener(owner, eventClass, function).let {
-        if (alwaysListening) this.subscribe(it)
-        else this.register(owner, it)
+    with(ParallelListener(owner, eventClass, function)) {
+        if (alwaysListening) MainEventBus.subscribe(this)
+        else MainEventBus.register(owner, this)
     }
 }
 
-fun <E : Any> EventBus.concurrentListener(
+fun <E : Any> concurrentListener(
+    eventBus: EventBus,
     owner: Any,
     eventClass: Class<E>,
     alwaysListening: Boolean,
     function: suspend (E) -> Unit,
 ) {
-    Listener(owner, eventClass, Int.MAX_VALUE) { SpartanScope.launch { function.invoke(it) } }.let {
-        if (alwaysListening) this.subscribe(it)
-        else this.register(owner, it)
+    with(Listener(owner, eventClass, Int.MAX_VALUE) { SpartanScope.launch { function.invoke(it) } }) {
+        if (alwaysListening) MainEventBus.subscribe(this)
+        else MainEventBus.register(owner, this)
     }
 }
 

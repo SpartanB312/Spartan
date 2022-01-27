@@ -13,9 +13,11 @@ object Prefix : Command(
     syntax = "prefix <prefix>",
 ) {
     override fun ExecutionScope.onCall() {
+
         string {
             CommandManager.commandPrefix = it
             MessageManager.printInfo("Changed prefix to $it")
         }
+
     }
 }

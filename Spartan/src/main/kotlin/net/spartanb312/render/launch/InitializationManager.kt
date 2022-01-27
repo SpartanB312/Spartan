@@ -30,10 +30,17 @@ object InitializationManager {
     private val extensions = mutableSetOf<LoadableMod.ExtensionDLC>()
 
     //Exclusions
-    private val excludedClasses = mutableSetOf<String>()
-    private val excludedPackage = mutableSetOf("net.spartanb312.render.features.ui.wrapper")
+    private val excludedClasses = mutableSetOf("WorldListener")
+
+    private val excludedPackage = mutableSetOf(
+        "net.spartanb312.render.features.ui.wrapper",
+        "net.spartanb312.render.mixin"
+    )
+
     private val SCAN_EXCLUSION: (String) -> Boolean = {
-        excludedClasses.none { ex -> it.contains(ex) } && excludedPackage.none { ex -> it.startsWith(ex) }
+        excludedClasses.none { ex -> it.contains(ex) }
+                && excludedPackage.none { ex -> it.startsWith(ex) }
+                && DEFAULT_INIT_SCAN_EXCLUSION.invoke(it)
     }
 
     val DEFAULT_INIT_SCAN_EXCLUSION: String.() -> Boolean = {

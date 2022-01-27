@@ -1,5 +1,8 @@
 package net.spartanb312.render.features.common
 
+import net.spartanb312.render.features.SpartanCore
+import net.spartanb312.render.util.thread.isMainThread
+
 interface ToggleableFeature {
 
     var isEnabled: Boolean
@@ -22,14 +25,20 @@ interface ToggleableFeature {
     fun enable() {
         if (isDisabled) {
             isEnabled = true
-            onEnable()
+            if (isMainThread) onEnable()
+            else SpartanCore.addTask(SpartanCore.Executors.Main) {
+                onEnable()
+            }
         }
     }
 
     fun disable() {
         if (isEnabled) {
             isDisabled = true
-            onDisable()
+            if (isMainThread) onDisable()
+            else SpartanCore.addTask(SpartanCore.Executors.Main) {
+                onDisable()
+            }
         }
     }
 
