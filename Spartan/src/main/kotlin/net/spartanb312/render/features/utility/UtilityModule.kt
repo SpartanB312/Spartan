@@ -4,6 +4,9 @@ import net.spartanb312.render.features.common.AbstractModule
 import net.spartanb312.render.features.common.Category
 import org.lwjgl.input.Keyboard
 
+/**
+ * It's a kind of cheat.I think.
+ */
 open class UtilityModule(
     name: String,
     alias: Array<String> = emptyArray(),

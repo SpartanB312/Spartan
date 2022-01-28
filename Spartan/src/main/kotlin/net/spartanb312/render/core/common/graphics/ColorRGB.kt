@@ -2,6 +2,7 @@ package net.spartanb312.render.core.common.graphics
 
 @JvmInline
 value class ColorRGB(val rgba: Int) {
+
     constructor(r: Int, g: Int, b: Int) :
             this(r, g, b, 255)
 
@@ -106,4 +107,5 @@ value class ColorRGB(val rgba: Int) {
     override fun toString(): String {
         return "$r, $g, $b, $a"
     }
+
 }

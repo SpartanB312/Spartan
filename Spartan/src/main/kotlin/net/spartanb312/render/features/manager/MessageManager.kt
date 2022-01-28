@@ -16,10 +16,12 @@ import net.spartanb312.render.util.Helper
 import net.spartanb312.render.util.dsl.runSafe
 import net.spartanb312.render.util.mixin.setMessage
 import net.spartanb312.render.util.player.ChatFilter
+import net.spartanb312.render.util.player.ChatModifier
 
 object MessageManager : Helper {
 
     private val filters = mutableSetOf<ChatFilter>()
+    private val modifiers = mutableSetOf<ChatModifier>()
 
     init {
         listener<PacketEvent.Send> {
@@ -28,7 +30,7 @@ object MessageManager : Helper {
                 ChatEvent(it.packet.message).let { event ->
                     event.post()
                     if (event.cancelled
-                        || filters.toList().any { cf -> !cf.filter.invoke(it.packet.message) }
+                        || filters.toList().any { cf -> cf.isEnabled && !cf.filter.invoke(it.packet.message) }
                     ) it.cancel()
                     else it.packet.setMessage(event.message)
                 }
@@ -37,8 +39,11 @@ object MessageManager : Helper {
     }
 
     fun ChatFilter.addFilter(): Boolean = filters.add(this)
+    fun ChatModifier.addModifier(): Boolean = modifiers.add(this)
     fun ChatFilter.removeFilter(): Boolean = filters.remove(this)
-    fun addFilter(filter: (String) -> Boolean) = filters.add(ChatFilter(filter = filter))
+    fun ChatModifier.removeModifier(): Boolean = modifiers.remove(this)
+    fun addFilter(filter: (String) -> Boolean): Boolean = filters.add(ChatFilter(filter = filter))
+    fun removeModifier(modifier: (String) -> String): Boolean = modifiers.add(ChatModifier(modifier = modifier))
 
     private const val DELETE_ID = 69420
 
@@ -95,6 +100,5 @@ object MessageManager : Helper {
     @JvmStatic
     fun printNoSpamDebug(message: String, deleteId: Int) =
         printRawNoSpamMessage("${GRAY}[${GRAY}${BOLD}Debug${GRAY}] ${RESET}$message", deleteId)
-
 
 }

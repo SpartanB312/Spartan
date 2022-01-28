@@ -85,3 +85,12 @@ inline fun Render2DScope.area(
     endY: Int,
     block: AreaScope.() -> Unit
 ): AreaScope = area(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), block)
+
+@Render2DMark
+inline fun AreaScope.use(block: AreaScope.() -> Unit): AreaScope = this.also {
+    matrix {
+        translate(it.minX, it.minY) {
+            it.block()
+        }
+    }
+}

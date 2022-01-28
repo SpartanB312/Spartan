@@ -12,6 +12,7 @@ import net.spartanb312.render.features.SpartanCore.subscribe
 import net.spartanb312.render.features.common.AsyncLoadable
 import net.spartanb312.render.features.manager.*
 import net.spartanb312.render.features.manager.ingame.InventoryManager
+import net.spartanb312.render.features.ui.DisplayManager
 import net.spartanb312.render.graphics.impl.FontRenderer
 import net.spartanb312.render.graphics.impl.Renderer2D
 import net.spartanb312.render.launch.Logger
@@ -85,13 +86,16 @@ object Spartan : Loadable, Extendable {
         Render2DManager.subscribe()
         FontManager.subscribe()
 
+        //Renderer impl
+        Renderer2D.subscribe()
+        FontRenderer.subscribe()
+        DisplayManager.subscribe()
+
         ConfigManager.loadAll()
     }
 
     override fun postInit() {
-        //Renderer impl
-        Renderer2D.subscribe()
-        FontRenderer.subscribe()
+
     }
 
     override fun onReady() {

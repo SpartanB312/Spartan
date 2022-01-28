@@ -32,33 +32,19 @@ object ColorUtils {
     const val UNDER_LINE = "${SECTION_SIGN}n"
     const val ITALIC = "${SECTION_SIGN}o"
 
-    fun getRed(hex: Int): Int {
-        return hex shr 16 and 255
-    }
+    fun getRed(hex: Int): Int = hex shr 16 and 255
 
-    fun getGreen(hex: Int): Int {
-        return hex shr 8 and 255
-    }
+    fun getGreen(hex: Int): Int = hex shr 8 and 255
 
-    fun getBlue(hex: Int): Int {
-        return hex and 255
-    }
+    fun getBlue(hex: Int): Int = hex and 255
 
-    fun getHoovered(color: Int, isHoovered: Boolean): Int {
-        return if (isHoovered) color and 0x7F7F7F shl 1 else color
-    }
+    fun Int.getHoovered(isHoovered: Boolean): Int = if (isHoovered) this and 0x7F7F7F shl 1 else this
 
-    fun getHoovered(color: Color, isHoovered: Boolean): Int {
-        return if (isHoovered) color.rgb and 0x7F7F7F shl 1 else color.rgb
-    }
+    fun Color.getHoovered(isHoovered: Boolean): Int = if (isHoovered) this.rgb and 0x7F7F7F shl 1 else this.rgb
 
-    fun argbToRgba(argb: Int) =
-        (argb and 0xFFFFFF shl 8) or
-                (argb shr 24 and 255)
+    fun argbToRgba(argb: Int) = (argb and 0xFFFFFF shl 8) or (argb shr 24 and 255)
 
-    fun rgbaToArgb(rgba: Int) =
-        (rgba shr 8 and 0xFFFFFF) or
-                (rgba and 255 shl 24)
+    fun rgbaToArgb(rgba: Int) = (rgba shr 8 and 0xFFFFFF) or (rgba and 255 shl 24)
 
     fun rgbToHSB(r: Int, g: Int, b: Int, a: Int): ColorHSB {
         val cMax = maxOf(r, g, b)
