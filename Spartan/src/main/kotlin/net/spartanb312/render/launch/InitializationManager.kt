@@ -25,6 +25,7 @@ object InitializationManager {
     private const val MINECRAFT_MODS_GROUP = "mods/"
     private const val SPARTAN_EXTENSIONS_GROUP = DEFAULT_FILE_GROUP + "extensions/"
     private const val SPARTAN_MODS_GROUP = DEFAULT_FILE_GROUP + "mods/"
+    private const val SPARTAN_RESOURCES_GROUP = DEFAULT_FILE_GROUP + "resources/"
 
     private val mods = mutableSetOf<LoadableMod>()
     private val extensions = mutableSetOf<LoadableMod.ExtensionDLC>()
@@ -64,7 +65,6 @@ object InitializationManager {
     @Volatile
     private var called = false
 
-    @Synchronized
     private fun scanJars() {
         if (called) return else called = true
 
@@ -140,7 +140,12 @@ object InitializationManager {
                             }
                         }
                         if (launchClasses.size > 0) {
-                            cache.validate(launchClasses.first().substringAfterLast("."))
+                            val resourceManagerName = try {
+                                Class.forName(launchClasses.first()).getAnnotation(Mod::class.java)!!.id
+                            } catch (ignore: Exception) {
+                                launchClasses.first().substringAfterLast(".")
+                            }
+                            cache.validate(resourceManagerName)
                             launchClasses.forEach { it.tryInitMod() }
                         }
                     }
@@ -304,6 +309,41 @@ object InitializationManager {
         }
     }
 
+    private fun scanResources() {
+        fun File.solveResourcePack() {
+            RawResourceCache(this.name).build { cache ->
+                ZipInputStream(FileInputStream(this)).use { zipStream ->
+                    var validated = false
+                    while (true) {
+                        val zipEntry = zipStream.nextEntry
+                        if (zipEntry == null) break
+                        else {
+                            val tempBytes = zipStream.readBytes()
+                            if (zipEntry.name.endsWith(SPARTAN_RESOURCE_INFO_SUFFIX)) {
+                                tempBytes.toTempFileURL()
+                                    ?.openStream()
+                                    ?.readLines()
+                                    ?.forEach {
+                                        if (!validated && it.startsWith("Name=")) {
+                                            validated = true
+                                            cache.validate(it.substringAfter("Name="))
+                                        }
+                                    }
+                            }
+                            cache.resources[zipEntry.name] = tempBytes
+                            ResourceCenter.cacheResource(zipEntry.name, tempBytes)
+                        }
+                    }
+                }
+            }
+        }
+
+        MINECRAFT_MODS_GROUP.readFiles(SPARTAN_RESOURCE_SUFFIX) { it.solveResourcePack() }
+        SPARTAN_MODS_GROUP.readFiles(SPARTAN_RESOURCE_SUFFIX) { it.solveResourcePack() }
+        SPARTAN_EXTENSIONS_GROUP.readFiles(SPARTAN_RESOURCE_SUFFIX) { it.solveResourcePack() }
+        SPARTAN_RESOURCES_GROUP.readFiles(SPARTAN_RESOURCE_SUFFIX) { it.solveResourcePack() }
+    }
+
     @JvmStatic
     fun initMod(name: String): Boolean = !started && name.tryInitMod()
 
@@ -316,6 +356,7 @@ object InitializationManager {
     @JvmStatic
     fun onTweak() {
         scanJars()
+        scanResources()
         started = true
         mods.forEach { (it.instance ?: it.loadableInstance)?.apply { MainEventBus.subscribe(this) } }
         mods.loadMixins()

@@ -34,6 +34,9 @@ object ConfigManager {
     fun loadRenderersConfigs() = ModuleManager.renderers.forEach { it.loadConfig() }
 
     @JvmStatic
+    fun loadUtilitiesConfigs() = ModuleManager.utilities.forEach { it.loadConfig() }
+
+    @JvmStatic
     fun loadOtherConfigs() = otherConfigs.forEach { it.loadConfig() }
 
     @JvmStatic
@@ -59,6 +62,9 @@ object ConfigManager {
     fun saveRenderersConfigs() = ModuleManager.renderers.forEach { it.saveConfig() }
 
     @JvmStatic
+    fun saveUtilitiesConfigs() = ModuleManager.utilities.forEach { it.saveConfig() }
+
+    @JvmStatic
     fun saveOtherConfigs() = otherConfigs.forEach { it.saveConfig() }
 
     @JvmStatic
@@ -82,6 +88,9 @@ object ConfigManager {
 
     @JvmStatic
     fun resetRenderersConfigs() = ModuleManager.renderers.forEach { it.resetConfig() }
+
+    @JvmStatic
+    fun resetUtilitiesConfigs() = ModuleManager.utilities.forEach { it.resetConfig() }
 
     @JvmStatic
     fun resetOtherConfigs() = otherConfigs.forEach { it.resetConfig() }

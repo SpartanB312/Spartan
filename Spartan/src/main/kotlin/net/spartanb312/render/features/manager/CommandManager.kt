@@ -7,23 +7,26 @@ import net.spartanb312.render.core.common.extension.removeFirstToArray
 import net.spartanb312.render.core.config.provider.StandaloneConfigurable
 import net.spartanb312.render.features.command.Command
 import net.spartanb312.render.features.command.ExecutionScope
-import net.spartanb312.render.launch.InitializationManager.DEFAULT_INIT_SCAN_EXCLUSION
-import net.spartanb312.render.launch.InitializationManager.SCAN_GROUP
+import net.spartanb312.render.features.common.AsyncLoadable
 import net.spartanb312.render.launch.Logger
 
-object CommandManager : StandaloneConfigurable("${DEFAULT_CONFIG_GROUP}/managers/", "CommandManager") {
+object CommandManager : StandaloneConfigurable(
+    "${DEFAULT_CONFIG_GROUP}/managers/",
+    "CommandManager"
+), AsyncLoadable {
 
     val commands = mutableListOf<Command>()
 
     var commandPrefix by setting("CommandPrefix", ".")
 
-    init {
+    override suspend fun init() {
         Logger.info("Initializing CommandManager")
-        SCAN_GROUP.findTypedClasses<Command>(DEFAULT_INIT_SCAN_EXCLUSION).forEach {
+        AsyncLoadable.classes.await().findTypedClasses<Command>().forEach {
             it.instance?.let { instance -> commands.add(instance) }
         }
         commands.sortBy { it.name }
     }
+
 
     fun String.runCommand(): Boolean {
         val cachedPrefix = commandPrefix

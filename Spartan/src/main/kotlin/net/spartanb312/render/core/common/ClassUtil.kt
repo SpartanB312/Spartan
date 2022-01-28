@@ -61,6 +61,10 @@ object ClassUtils {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T> List<Class<*>>.findTypedClasses(crossinline predicate: String.() -> Boolean = { true }): List<Class<T>> =
+        filter { T::class.java.isAssignableFrom(it) && it.name.predicate() }.map { it as Class<T> }
+
     fun findClasses(
         packageName: String,
         classLoader: ClassLoader = Thread.currentThread().contextClassLoader,

@@ -27,7 +27,9 @@ object MessageManager : Helper {
                 if (it.packet.message.runCommand()) it.cancel()
                 ChatEvent(it.packet.message).let { event ->
                     event.post()
-                    if (event.cancelled) it.cancel()
+                    if (event.cancelled
+                        || filters.toList().any { cf -> !cf.filter.invoke(it.packet.message) }
+                    ) it.cancel()
                     else it.packet.setMessage(event.message)
                 }
             }

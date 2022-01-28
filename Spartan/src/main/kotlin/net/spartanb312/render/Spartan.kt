@@ -1,9 +1,15 @@
 package net.spartanb312.render
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import net.spartanb312.render.Spartan.MOD_ID
 import net.spartanb312.render.Spartan.MOD_NAME
 import net.spartanb312.render.Spartan.MOD_VERSION
+import net.spartanb312.render.features.SpartanCore
 import net.spartanb312.render.features.SpartanCore.subscribe
+import net.spartanb312.render.features.common.AsyncLoadable
 import net.spartanb312.render.features.manager.*
 import net.spartanb312.render.features.manager.ingame.InventoryManager
 import net.spartanb312.render.graphics.impl.FontRenderer
@@ -62,12 +68,14 @@ object Spartan : Loadable, Extendable {
             )
         )
 
-        //Primitive Managers
-        CommandManager.subscribe()
-        ModuleManager.subscribe()
-        InputManager.subscribe()
+        //Key Managers
+        runBlocking {
+            CommandManager.asyncLoad(this)
+            ModuleManager.asyncLoad(this)
+        }
 
         //Player Managers
+        InputManager.subscribe()
         InventoryManager.subscribe()
         MessageManager.subscribe()
 
@@ -88,6 +96,13 @@ object Spartan : Loadable, Extendable {
 
     override fun onReady() {
         isReady = true
+    }
+
+    private fun AsyncLoadable.asyncLoad(coroutineScope: CoroutineScope) {
+        SpartanCore.register(this)
+        coroutineScope.launch(Dispatchers.IO) {
+            init()
+        }
     }
 
 }

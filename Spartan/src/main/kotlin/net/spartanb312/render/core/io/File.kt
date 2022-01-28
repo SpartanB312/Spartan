@@ -9,6 +9,10 @@ const val CLASS_SUFFIX = ".class"
 const val JSON_SUFFIX = ".json"
 const val MF_SUFFIX = ".MF"
 
+//Spartan format
+const val SPARTAN_RESOURCE_SUFFIX = ".spres"
+const val SPARTAN_RESOURCE_INFO_SUFFIX = "sprinfo"
+
 private val TEMP_DIR: String = System.getProperty("java.io.tmpdir")
 
 fun String.readFiles(suffix: String, ignoreCase: Boolean = true, block: (File) -> Unit) {
