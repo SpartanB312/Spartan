@@ -5,10 +5,11 @@ import net.spartanb312.render.Spartan.MOD_NAME
 import net.spartanb312.render.Spartan.MOD_VERSION
 import net.spartanb312.render.features.SpartanCore.subscribe
 import net.spartanb312.render.features.manager.*
+import net.spartanb312.render.features.manager.ingame.InventoryManager
 import net.spartanb312.render.graphics.impl.FontRenderer
 import net.spartanb312.render.graphics.impl.Renderer2D
 import net.spartanb312.render.launch.Logger
-import net.spartanb312.render.launch.ResourceCenter.getResourceAsStream
+import net.spartanb312.render.launch.ResourceCenter.getSpartanResourceStream
 import net.spartanb312.render.launch.mod.Extendable
 import net.spartanb312.render.launch.mod.Loadable
 import net.spartanb312.render.launch.mod.LoadableMod
@@ -56,8 +57,8 @@ object Spartan : Loadable, Extendable {
         Display.setTitle("$MOD_NAME $MOD_VERSION")
         Display.setIcon(
             arrayOf(
-                readImageToBuffer(getResourceAsStream("assets/spartan/icon/logo32.png")),
-                readImageToBuffer(getResourceAsStream("assets/spartan/icon/logo16.png"))
+                readImageToBuffer(getSpartanResourceStream("icon/logo32.png")),
+                readImageToBuffer(getSpartanResourceStream("icon/logo16.png"))
             )
         )
 

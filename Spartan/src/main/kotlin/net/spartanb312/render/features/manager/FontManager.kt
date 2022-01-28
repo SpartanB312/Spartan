@@ -15,7 +15,7 @@ object FontManager {
     val mainFontSetting = FontSetting()
     private val cachedFontRenderers = mutableMapOf<String, LinkedSettableFontRenderer>()
 
-    val mainFontRenderer = ResourceCenter.getResourceAsStream("assets/spartan/font/Microsoft YaHei UI.ttc")!!
+    val mainFontRenderer = ResourceCenter.getSpartanResourceStream("font/Microsoft YaHei UI.ttc")!!
         .generateFontRenderer(
             fontName = "MainFont",
             fontSetting = mainFontSetting,

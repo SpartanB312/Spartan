@@ -2,7 +2,6 @@ package net.spartanb312.render.core.event
 
 import kotlinx.coroutines.launch
 import net.spartanb312.render.core.common.interfaces.Nameable
-import net.spartanb312.render.core.event.inner.MainEventBus
 import net.spartanb312.render.core.event.inner.SpartanScope
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Consumer
@@ -18,8 +17,8 @@ fun <E : Any> listener(
     function: Consumer<E>,
 ) {
     with(Listener(owner, eventClass, priority, function)) {
-        if (alwaysListening) MainEventBus.subscribe(this)
-        else MainEventBus.register(owner, this)
+        if (alwaysListening) eventBus.subscribe(this)
+        else eventBus.register(owner, this)
     }
 }
 
@@ -31,8 +30,8 @@ fun <E : Any> parallelListener(
     function: suspend (E) -> Unit,
 ) {
     with(ParallelListener(owner, eventClass, function)) {
-        if (alwaysListening) MainEventBus.subscribe(this)
-        else MainEventBus.register(owner, this)
+        if (alwaysListening) eventBus.subscribe(this)
+        else eventBus.register(owner, this)
     }
 }
 
@@ -44,8 +43,8 @@ fun <E : Any> concurrentListener(
     function: suspend (E) -> Unit,
 ) {
     with(Listener(owner, eventClass, Int.MAX_VALUE) { SpartanScope.launch { function.invoke(it) } }) {
-        if (alwaysListening) MainEventBus.subscribe(this)
-        else MainEventBus.register(owner, this)
+        if (alwaysListening) eventBus.subscribe(this)
+        else eventBus.register(owner, this)
     }
 }
 
