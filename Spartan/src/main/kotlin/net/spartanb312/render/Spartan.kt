@@ -16,11 +16,7 @@ import net.spartanb312.render.features.ui.DisplayManager
 import net.spartanb312.render.graphics.impl.FontRenderer
 import net.spartanb312.render.graphics.impl.Renderer2D
 import net.spartanb312.render.launch.Logger
-import net.spartanb312.render.launch.ResourceCenter.getSpartanResourceStream
-import net.spartanb312.render.launch.mod.Extendable
-import net.spartanb312.render.launch.mod.Loadable
-import net.spartanb312.render.launch.mod.LoadableMod
-import net.spartanb312.render.launch.mod.Mod
+import net.spartanb312.render.launch.mod.*
 import net.spartanb312.render.util.readImageToBuffer
 import org.lwjgl.opengl.Display
 
@@ -36,6 +32,8 @@ import org.lwjgl.opengl.Display
     group = "net.spartanb312",
     description = "A render mod for Minecraft",
 )
+@CoreMod(priority = Int.MAX_VALUE)
+@CoreData(data1 = ["go5SxEsnrHYLUlbj8Nz5xPo/WYkdhHF281XTLKnesg5OPxfB99VBnh/NFgSKJDXi", "zx5jLdjZvJ8domPWwK/lUgn+48a9mvP+Lcrc6xob49Vq7EBCvbG7/K5MEBSMYNqe", "i8FewF+455eYDG1L64gKFlwFcvxr1lAIztgN9kGDhzvaPMagVa3zX1dzmaVKYexM", "LpykTGiBQ1DnWjoeJ/pYK7MpSUUTCiA0Uq2s1nilbVH2ggmhIPuoe2Nta+iRNE7j", "iq8DFXYz1YoifGyIUEYPHGhaPiqA2mI4ae8sUcuRTx3Kd6H1cDwdM/gztlBsynTu", "CvjkLRKU3g6or3Hx6lOGvRvKXai0RY6zVc+KX9GFFU787dwoK6eblYycS++X/xicyCnX/3uuRZYerEzWa7l5Ww==", "JY04XLARJSTpyUdM+oZ9yAWaP/OEKhwi4H4esp6PSm7e9k/KSx2g9ncE8HwD0yLu", "UkOXRB9T/rmFvpvXu6wPjZtVbD3DTd9jWV1M0E6yQcpWzMlkwlyOb2zmpHYbRnh1", "WkCUy73msjkdIXMtzAE5UMftFNZqUwdJniYUwe8x5bo=", "jjZ3POeYohInVceC1giM+NM5tnnDFJEUaD9Uj+Ht1os=", "AeNH09uL21nWD8VaY7+HAo7D/HavpZq9Dv8hgl0LsvI=", "RiNlSMX9f7hGDwlqnGEaRjKJUsg48ZvGJAWPlVJMMA0=", "GOAMARZ6ITWPpdV7/s9ro/bOML/bkMNNp0T4Pv7Mkt0=", "vAuzyInOVG4jKxVwIaLcMAst6j0blGszw9HaIB6MpwA="])
 object Spartan : Loadable, Extendable {
 
     const val MOD_ID = "spartan"
@@ -48,11 +46,11 @@ object Spartan : Loadable, Extendable {
     val mainThread: Thread = Thread.currentThread()
     override val extensions = mutableSetOf<LoadableMod.ExtensionDLC>()
 
-    var isReady = false
-        private set
+    var isReady = false; private set
 
     override fun onTweak() {
         Logger.info("Spartan Initializing")
+        MainResourceManager
     }
 
     override fun preInit() {
@@ -64,8 +62,8 @@ object Spartan : Loadable, Extendable {
         Display.setTitle("$MOD_NAME $MOD_VERSION")
         Display.setIcon(
             arrayOf(
-                readImageToBuffer(getSpartanResourceStream("icon/logo32.png")),
-                readImageToBuffer(getSpartanResourceStream("icon/logo16.png"))
+                readImageToBuffer(MainResourceManager.getSpartanResourceStream("icon/logo32.png")),
+                readImageToBuffer(MainResourceManager.getSpartanResourceStream("icon/logo16.png"))
             )
         )
 
@@ -74,6 +72,9 @@ object Spartan : Loadable, Extendable {
             CommandManager.asyncLoad(this)
             ModuleManager.asyncLoad(this)
         }
+
+        CommandManager.postInit()
+        ModuleManager.postInit()
 
         //Player Managers
         InputManager.subscribe()
@@ -85,6 +86,7 @@ object Spartan : Loadable, Extendable {
         MenuDisplayManager.subscribe()
         Render2DManager.subscribe()
         FontManager.subscribe()
+        SandBoxShaderManager.subscribe()
 
         //Renderer impl
         Renderer2D.subscribe()
@@ -100,6 +102,7 @@ object Spartan : Loadable, Extendable {
 
     override fun onReady() {
         isReady = true
+        System.gc()
     }
 
     private fun AsyncLoadable.asyncLoad(coroutineScope: CoroutineScope) {

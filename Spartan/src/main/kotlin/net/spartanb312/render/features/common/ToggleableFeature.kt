@@ -24,9 +24,11 @@ interface ToggleableFeature {
 
     fun enable() {
         if (isDisabled) {
-            isEnabled = true
-            if (isMainThread) onEnable()
-            else SpartanCore.addTask(SpartanCore.Executors.Main) {
+            if (isMainThread) {
+                isEnabled = true
+                onEnable()
+            } else SpartanCore.addTask(SpartanCore.Executors.Main) {
+                isEnabled = true
                 onEnable()
             }
         }
@@ -34,9 +36,11 @@ interface ToggleableFeature {
 
     fun disable() {
         if (isEnabled) {
-            isDisabled = true
-            if (isMainThread) onDisable()
-            else SpartanCore.addTask(SpartanCore.Executors.Main) {
+            if (isMainThread) {
+                isDisabled = true
+                onDisable()
+            } else SpartanCore.addTask(SpartanCore.Executors.Main) {
+                isDisabled = true
                 onDisable()
             }
         }

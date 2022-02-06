@@ -13,6 +13,10 @@ const val MF_SUFFIX = ".MF"
 const val SPARTAN_RESOURCE_SUFFIX = ".spres"
 const val SPARTAN_RESOURCE_INFO_SUFFIX = "sprinfo"
 
+//Image format
+const val JPG_SUFFIX = ".jpg"
+const val PNG_SUFFIX = ".png"
+
 private val TEMP_DIR: String = System.getProperty("java.io.tmpdir")
 
 fun String.readFiles(suffix: String, ignoreCase: Boolean = true, block: (File) -> Unit) {

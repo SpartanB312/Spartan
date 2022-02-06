@@ -9,9 +9,15 @@ class WrappedScreen(rendererIn: ScreenRenderer) : SpartanScreen() {
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): WrappedScreen = this
 
-    fun setAndUse(screenRenderer: ScreenRenderer) {
+    fun setAndUse(screenRenderer: ScreenRenderer): WrappedScreen {
         renderer = screenRenderer
         mc.displayGuiScreen(this)
+        return this
+    }
+
+    fun set(screenRenderer: ScreenRenderer): WrappedScreen {
+        renderer = screenRenderer
+        return this
     }
 
 }

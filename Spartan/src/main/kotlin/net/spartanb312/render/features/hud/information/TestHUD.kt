@@ -12,7 +12,7 @@ object TestHUD : HUDModule(
     name = "TestHud",
     x = 100,
     y = 100,
-    category = Category.Information,
+    category = Category.InformationHUD,
     description = "This is description"
 ) {
 
@@ -26,7 +26,7 @@ object TestHUD : HUDModule(
                 ColorRGB(0, 255, 0),
             )
         }
-        drawString("Hello world", 1, 1)
+        drawString("Hello World", 1, 1)
         legacy2D {
             drawGradientRect(
                 200, 200, 300, 300,

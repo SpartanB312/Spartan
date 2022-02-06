@@ -137,6 +137,9 @@ class RawResourceCache(private val jarName: String) {
     fun useResourcesIfValid(): RawResourceCache {
         if (valid) {
             ResourceCenter.newResourceManager(jarName, managerName, this)
+        } else {
+            resources.clear()
+            classes.clear()
         }
         return this
     }
@@ -148,6 +151,7 @@ fun RawResourceCache.build(block: (RawResourceCache) -> Unit): RawResourceCache 
 
 open class ResourceManager(val name: String) {
 
+    private val bytesMap = mutableMapOf<String, ByteArray>()
     private val cachedResources = mutableMapOf<String, URL>()
 
     fun cacheResource(name: String, bytes: ByteArray) {

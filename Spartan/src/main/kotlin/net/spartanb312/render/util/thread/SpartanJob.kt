@@ -1,30 +1,41 @@
 package net.spartanb312.render.util.thread
 
-import java.util.concurrent.atomic.AtomicBoolean
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-
 open class SpartanJob(private val task: () -> Unit) {
 
-    protected val started = AtomicBoolean(false)
-    private val finished = AtomicBoolean(false)
+    @Volatile
+    var state = State.Waiting
+        protected set
+
+    fun launch() {
+        if (state == State.Waiting) state = State.Launched
+    }
 
     fun execute() {
-        if (!started.getAndSet(true)) {
+        if (state == State.Launched) {
+            state = State.Running
             task.invoke()
-            finished.set(true)
+            state = State.Finished
         }
     }
 
-    fun reset() {
-        if (finished.get() && !started.get()) {
-            started.set(false)
-            finished.set(false)
+    fun launchAndExecute() {
+        launch()
+        execute()
+    }
+
+    open fun reset() {
+        if (state == State.Finished) {
+            state = State.Waiting
         }
     }
 
-    val isStarted get() = started.get()
-    val isFinished get() = finished.get()
+    enum class State {
+        Waiting,
+        Launched,
+        Finished,
+        Running,
+        Suspended,
+        Stopped
+    }
 
 }

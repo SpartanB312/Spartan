@@ -101,6 +101,7 @@ abstract class AbstractFontRenderer(
 
         //Make it possible to draw series of objects without toggling prepareGL releaseGL frequently.bcs JNI consumes cpu time
         GLStateManager.texture2d(false)
+        GLStateManager.useProgram(0)
     }
 
     //Xiaro forgot to times scale
@@ -184,5 +185,144 @@ abstract class AbstractFontRenderer(
             "source han sans k",
         )
     }
+
+    fun drawString(
+        charSequence: CharSequence,
+        posX: Float = 0.0f,
+        posY: Float = 0.0f,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(charSequence, posX, posY, color, scale, false)
+
+    fun drawStringWithShadow(
+        charSequence: CharSequence,
+        posX: Float = 0.0f,
+        posY: Float = 0.0f,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(charSequence, posX, posY, color, scale, true)
+
+    fun drawCenteredString(
+        charSequence: CharSequence,
+        posX: Float = 0.0f,
+        posY: Float = 0.0f,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(
+        charSequence,
+        posX - getWidth(charSequence.toString(), scale) / 2f,
+        posY - getHeight(scale) / 2f,
+        color,
+        scale,
+        false
+    )
+
+    fun drawCenteredStringWithShadow(
+        charSequence: CharSequence,
+        posX: Float = 0.0f,
+        posY: Float = 0.0f,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(
+        charSequence,
+        posX - getWidth(charSequence.toString(), scale) / 2f,
+        posY - getHeight(scale) / 2f,
+        color,
+        scale,
+        true
+    )
+
+    fun drawString(
+        charSequence: CharSequence,
+        posX: Double = 0.0,
+        posY: Double = 0.0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(charSequence, posX.toFloat(), posY.toFloat(), color, scale, false)
+
+    fun drawStringWithShadow(
+        charSequence: CharSequence,
+        posX: Double = 0.0,
+        posY: Double = 0.0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(charSequence, posX.toFloat(), posY.toFloat(), color, scale, true)
+
+    fun drawCenteredString(
+        charSequence: CharSequence,
+        posX: Double = 0.0,
+        posY: Double = 0.0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(
+        charSequence,
+        posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+        posY.toFloat() - getHeight(scale) / 2f,
+        color,
+        scale,
+        false
+    )
+
+    fun drawCenteredStringWithShadow(
+        charSequence: CharSequence,
+        posX: Double = 0.0,
+        posY: Double = 0.0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(
+        charSequence,
+        posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+        posY.toFloat() - getHeight(scale) / 2f,
+        color,
+        scale,
+        true
+    )
+
+    fun drawString(
+        charSequence: CharSequence,
+        posX: Int = 0,
+        posY: Int = 0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0F,
+    ) = drawString(charSequence, posX.toFloat(), posY.toFloat(), color, scale, false)
+
+    fun drawStringWithShadow(
+        charSequence: CharSequence,
+        posX: Int = 0,
+        posY: Int = 0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0F,
+    ) = drawString(charSequence, posX.toFloat(), posY.toFloat(), color, scale, true)
+
+    fun drawCenteredString(
+        charSequence: CharSequence,
+        posX: Int = 0,
+        posY: Int = 0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(
+        charSequence,
+        posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+        posY.toFloat() - getHeight(scale) / 2f,
+        color,
+        scale,
+        false
+    )
+
+    fun drawCenteredStringWithShadow(
+        charSequence: CharSequence,
+        posX: Int = 0,
+        posY: Int = 0,
+        color: ColorRGB = ColorRGB(255, 255, 255),
+        scale: Float = 1.0f,
+    ) = drawString(
+        charSequence,
+        posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+        posY.toFloat() - getHeight(scale) / 2f,
+        color,
+        scale,
+        true
+    )
+
 
 }

@@ -2,7 +2,6 @@ package net.spartanb312.render.util.thread
 
 import net.spartanb312.render.core.common.timming.TickTimer
 import net.spartanb312.render.features.SpartanCore
-import java.util.concurrent.atomic.AtomicBoolean
 
 class RepeatJob(
     private val mode: SpartanCore.Executors,
@@ -11,24 +10,29 @@ class RepeatJob(
 ) : SpartanJob(task) {
 
     private val timer = TickTimer()
-    private val available = AtomicBoolean(true)
-    private val repeating = AtomicBoolean(true)
-    private val stopped = AtomicBoolean(false)
 
-    fun suspend() = repeating.set(false)
-
-    fun resume() = repeating.set(true)
-
-    fun tryRun() {
-        if (isFinished) available.set(true)
-        if (timer.tick(delayTime) && available.getAndSet(false)) {
-            if (!started.getAndSet(true)) {
-                SpartanCore.addTask(mode, this)
-            }
-        } else return
+    fun suspend() {
+        if (state != State.Suspended && state != State.Stopped) state = State.Suspended
     }
 
-    val isRepeating get() = repeating.get() && !stopped.get()
-    val isRunning get() = isRepeating && isStarted && !isFinished
+    fun resume() {
+        if (state == State.Suspended) state = State.Waiting
+    }
+
+    fun stop() {
+        state = State.Stopped
+    }
+
+    //Return : should remove
+    fun tryRun(): Boolean {
+        if (state == State.Stopped) return true
+        if (state == State.Finished) state = State.Waiting
+        if (timer.tick(delayTime) && state == State.Waiting) {
+            launch()
+            timer.reset()
+            SpartanCore.addTask(mode, this)
+        }
+        return false
+    }
 
 }

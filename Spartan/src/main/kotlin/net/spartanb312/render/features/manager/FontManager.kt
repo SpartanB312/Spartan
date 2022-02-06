@@ -1,6 +1,7 @@
 package net.spartanb312.render.features.manager
 
 import net.spartanb312.render.graphics.api.font.createFont
+import net.spartanb312.render.graphics.api.font.createFontRenderer
 import net.spartanb312.render.graphics.api.font.linkTo
 import net.spartanb312.render.graphics.api.font.renderer.AbstractFontRenderer
 import net.spartanb312.render.graphics.api.font.setting.FontSetting
@@ -15,7 +16,7 @@ object FontManager {
     val mainFontSetting = FontSetting()
     private val cachedFontRenderers = mutableMapOf<String, LinkedSettableFontRenderer>()
 
-    val mainFontRenderer = ResourceCenter.getSpartanResourceStream("font/Microsoft YaHei UI.ttc")!!
+    val mainFont = ResourceCenter.getSpartanResourceStream("font/Microsoft YaHei UI.ttc")!!
         .generateFontRenderer(
             fontName = "MainFont",
             fontSetting = mainFontSetting,
@@ -24,9 +25,11 @@ object FontManager {
             textureSize = 8192,
         ).also { cachedFontRenderers["Microsoft YaHei UI"] = it }
 
+    val haloFont = createFontRenderer("Halo.ttf", 128F, 8192)
+
     @JvmStatic
     fun String.getFontRendererByName(): LinkedSettableFontRenderer =
-        cachedFontRenderers.getOrDefault(this, mainFontRenderer)
+        cachedFontRenderers.getOrDefault(this, mainFont)
 
     @JvmStatic
     fun InputStream.generateFontRenderer(

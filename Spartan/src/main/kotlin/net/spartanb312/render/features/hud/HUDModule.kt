@@ -18,7 +18,7 @@ abstract class HUDModule(
     width: Int = 0,
     priority: Int = 1000,
     layer: Int = 0,
-    visibility: Boolean = false,
+    visibility: Boolean = true,
     keyBind: Int = Keyboard.KEY_NONE
 ) : AbstractModule(name, alias, category, description, priority, keyBind, visibility), Render2DObject {
 

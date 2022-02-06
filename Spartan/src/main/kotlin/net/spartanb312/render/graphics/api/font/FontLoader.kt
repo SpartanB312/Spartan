@@ -15,9 +15,9 @@ fun createFont(type: Int, path: String): Font = Font.createFont(type, ResourceCe
 
 fun createFontRenderer(
     name: String,
-    size: Float,
-    textureSize: Int,
-    type: Int,
+    size: Float = 64F,
+    textureSize: Int = 2048,
+    type: Int = Font.TRUETYPE_FONT,
     pathGroup: String = "assets/spartan/font/"
 ): ExtendedFontRenderer {
     val font = try {
@@ -32,9 +32,9 @@ fun createFontRenderer(
 
 fun createFontRenderer(
     inputStream: InputStream,
-    size: Float,
-    textureSize: Int,
-    type: Int,
+    size: Float = 64F,
+    textureSize: Int = 2048,
+    type: Int = Font.TRUETYPE_FONT,
 ): ExtendedFontRenderer {
     val font = try {
         inputStream.createFont(type)

@@ -10,7 +10,7 @@ import java.awt.image.DataBuffer
 
 object TextureUtils {
 
-    private val buffer = GLAllocation.createDirectByteBuffer(0x4000000)
+    private val buffer = GLAllocation.createDirectByteBuffer(0x8000000)
     private val intBuffer = buffer.asIntBuffer()
 
     fun uploadRGBA(bufferedImage: BufferedImage, format: Int) {

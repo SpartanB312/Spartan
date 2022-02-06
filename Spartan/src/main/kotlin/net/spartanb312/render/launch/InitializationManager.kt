@@ -357,6 +357,11 @@ object InitializationManager {
     fun onTweak() {
         scanJars()
         scanResources()
+        mods.forEach {
+            if (it.priority == Int.MAX_VALUE && !it.isCore) it.priority = Int.MAX_VALUE - 1
+        }
+        mods.sortedByDescending { it.priority + if (it.isCore) Int.MAX_VALUE else 0 + it.coreModPriority }
+        System.gc()
         started = true
         mods.forEach { (it.instance ?: it.loadableInstance)?.apply { MainEventBus.subscribe(this) } }
         mods.loadMixins()

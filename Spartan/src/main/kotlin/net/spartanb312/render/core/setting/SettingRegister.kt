@@ -213,6 +213,14 @@ fun <T> AbstractSetting<T>.invisible(): AbstractSetting<T> = this.apply {
     visibilities.add(FALSE)
 }
 
+fun <T> AbstractSetting<T>.des(description: String): AbstractSetting<T> = this.apply {
+    this.description = description
+}
+
+fun <T> AbstractSetting<T>.at(block: (T) -> Boolean): AbstractSetting<T> = this.apply {
+    visibilities.add { block(this.value) }
+}
+
 fun <T> AbstractSetting<T>.atValue(value: T): AbstractSetting<T> = this.apply {
     visibilities.add { this.value == value }
 }

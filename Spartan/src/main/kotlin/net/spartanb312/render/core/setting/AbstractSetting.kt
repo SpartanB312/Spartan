@@ -9,17 +9,17 @@ abstract class AbstractSetting<T> : Nameable, ReadWriteProperty<Any?, T> {
 
     abstract override val name: String
     abstract val defaultValue: T
-    abstract val description: String
+    abstract var description: String
     abstract var value: T
 
     val visibilities = mutableListOf<() -> Boolean>()
-    val currentVisibility = visibilities.all { it.invoke() }
+    val isVisible get() = visibilities.all { it.invoke() }
 
     //Async update Visibility
-    private val isVisible0 = AsyncUpdateValue { currentVisibility }
-    val isVisible by isVisible0
+    private val asyncVisible0 = AsyncUpdateValue { isVisible }
+    val asyncVisible by asyncVisible0
 
-    fun updateVisibility() = isVisible0.update()
+    fun updateVisibility() = asyncVisible0.update()
 
     val isModified get() = this.value != this.defaultValue
 

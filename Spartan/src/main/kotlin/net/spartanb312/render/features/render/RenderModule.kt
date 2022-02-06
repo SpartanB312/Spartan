@@ -10,6 +10,6 @@ open class RenderModule(
     category: Category,
     description: String,
     priority: Int = 1000,
-    visibility: Boolean = false,
+    visibility: Boolean = true,
     keyBind: Int = Keyboard.KEY_NONE
 ) : AbstractModule(name, alias, category, description, priority, keyBind, visibility)

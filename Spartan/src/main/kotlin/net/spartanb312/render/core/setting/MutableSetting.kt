@@ -3,7 +3,7 @@ package net.spartanb312.render.core.setting
 open class MutableSetting<T : Any>(
     final override val name: String,
     valueIn: T,
-    override val description: String = "",
+    override var description: String = "",
     visibility: (() -> Boolean),
 ) : AbstractSetting<T>(){
 

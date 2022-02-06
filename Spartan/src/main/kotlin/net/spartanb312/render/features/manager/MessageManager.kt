@@ -26,11 +26,13 @@ object MessageManager : Helper {
     init {
         listener<PacketEvent.Send> {
             if (it.packet is CPacketChatMessage) {
-                if (it.packet.message.runCommand()) it.cancel()
-                ChatEvent(it.packet.message).let { event ->
+                var message = it.packet.message
+                modifiers.forEach { cm -> message = cm.modifier(message) }
+                if (message.runCommand()) it.cancel()
+                ChatEvent(message).let { event ->
                     event.post()
                     if (event.cancelled
-                        || filters.toList().any { cf -> cf.isEnabled && !cf.filter.invoke(it.packet.message) }
+                        || filters.toList().any { cf -> cf.isEnabled && !cf.filter.invoke(message) }
                     ) it.cancel()
                     else it.packet.setMessage(event.message)
                 }
@@ -86,19 +88,19 @@ object MessageManager : Helper {
     }
 
     @JvmStatic
-    fun printNoSpamInfo(message: String, deleteId: Int) =
+    fun printNoSpamInfo(message: String, deleteId: Int = DELETE_ID) =
         printRawNoSpamMessage("${GRAY}[${GOLD}${MOD_NAME}${GRAY}] ${RESET}$message", deleteId)
 
     @JvmStatic
-    fun printNoSpamWarning(message: String, deleteId: Int) =
+    fun printNoSpamWarning(message: String, deleteId: Int = DELETE_ID) =
         printRawNoSpamMessage("${GRAY}[${GOLD}${BOLD}Warning${GRAY}] ${RESET}$message", deleteId)
 
     @JvmStatic
-    fun printNoSpamError(message: String, deleteId: Int) =
+    fun printNoSpamError(message: String, deleteId: Int = DELETE_ID) =
         printRawNoSpamMessage("${GRAY}[${DARK_RED}${BOLD}Error${GRAY}] ${RESET}$message", deleteId)
 
     @JvmStatic
-    fun printNoSpamDebug(message: String, deleteId: Int) =
+    fun printNoSpamDebug(message: String, deleteId: Int = DELETE_ID) =
         printRawNoSpamMessage("${GRAY}[${GRAY}${BOLD}Debug${GRAY}] ${RESET}$message", deleteId)
 
 }

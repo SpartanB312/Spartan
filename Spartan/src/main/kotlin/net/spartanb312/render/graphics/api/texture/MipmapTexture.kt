@@ -22,7 +22,7 @@ class MipmapTexture(
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, levels)
 
-            TextureUtils.uploadRGBA(bufferedImage, format)
+            ImageUtil.uploadImage(bufferedImage, format, width, height)
             glGenerateMipmap(GL_TEXTURE_2D)
         }
     }

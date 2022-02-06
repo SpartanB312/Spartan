@@ -28,6 +28,26 @@ object ClassUtils {
         }
     }
 
+    inline fun <reified T> List<Class<*>>.getAnnotatedClasses(
+        startWith: Array<String> = arrayOf(
+            "java.",
+            "sun",
+            "org.lwjgl",
+            "org.apache.logging",
+            "net.minecraft",
+            "mixin"
+        ),
+        crossinline block: (String) -> Boolean = { true }
+    ): List<Class<*>> where T : Annotation {
+        return list {
+            this@getAnnotatedClasses.filter {
+                startWith.none { ex -> it.name.startsWith(ex) } && block(it.name) && it.isAnnotationPresent(T::class.java)
+            }.forEach {
+                yield(it)
+            }
+        }
+    }
+
     inline fun <reified T> String.getAnnotatedClasses(
         classLoader: ClassLoader = Thread.currentThread().contextClassLoader,
         startWith: Array<String> = arrayOf(

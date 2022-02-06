@@ -4,8 +4,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.spartanb312.render.core.common.extension.runIf
 import net.spartanb312.render.core.common.math.Vec2d
-import net.spartanb312.render.features.manager.MessageManager
-import net.spartanb312.render.launch.Logger
 
 /**
  * Author B_312
@@ -44,7 +42,7 @@ inline fun ExecutionScope.onCall(
             true
         } catch (exception: Exception) {
             if (!ignoreException) exception.printStackTrace()
-            Logger.error("Error while executing command ${command.name}.Syntax : ${command.syntax}")
+            command.showSyntax()
             false
         }
     } else false
@@ -159,7 +157,7 @@ inline fun <T> ExecutionScope.execute(
     true
 } catch (exception: Exception) {
     if (!ignoreException) exception.printStackTrace()
-    MessageManager.printError("Error while executing command ${command.name}.Syntax : ${command.syntax}")
+    command.showSyntax()
     false
 }
 

@@ -28,7 +28,12 @@ object ModuleManager : StandaloneConfigurable(
         AsyncLoadable.classes.await().findTypedClasses<AbstractModule>().forEach {
             it.instance?.let { instance -> register(instance) }
         }
+    }
 
+    override fun postInit() {
+        AsyncLoadable.glContextRequiredClasses.findTypedClasses<AbstractModule>().forEach {
+            it.instance?.let { instance -> register(instance) }
+        }
         modules.sortBy { it.name }
         HUDs.sortBy { it.name }
         renderers.sortBy { it.name }
@@ -55,5 +60,13 @@ object ModuleManager : StandaloneConfigurable(
             }
         }
     }
+
+    fun getModule(name: String): AbstractModule? = modules.find { it.name.equals(name, true) }
+
+    fun getHUD(name: String): HUDModule? = HUDs.find { it.name.equals(name, true) }
+
+    fun getRenderer(name: String): RenderModule? = renderers.find { it.name.equals(name, true) }
+
+    fun getUtility(name: String): UtilityModule? = utilities.find { it.name.equals(name, true) }
 
 }

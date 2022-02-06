@@ -24,9 +24,14 @@ object CommandManager : StandaloneConfigurable(
         AsyncLoadable.classes.await().findTypedClasses<Command>().forEach {
             it.instance?.let { instance -> commands.add(instance) }
         }
-        commands.sortBy { it.name }
     }
 
+    override fun postInit() {
+        AsyncLoadable.glContextRequiredClasses.findTypedClasses<Command>().forEach {
+            it.instance?.let { instance -> commands.add(instance) }
+        }
+        commands.sortBy { it.name }
+    }
 
     fun String.runCommand(): Boolean {
         val cachedPrefix = commandPrefix
@@ -36,7 +41,7 @@ object CommandManager : StandaloneConfigurable(
 
         array.getOrNull(0)?.let {
             commands.forEach { command ->
-                if (command.prefix.equals(it, true)) {
+                if (command.prefix.equals(it, true) || command.prefixAlias.any { al -> al.equals(it, true) }) {
                     with(command) {
                         ExecutionScope(array.removeFirstToArray(1), command).onCall()
                     }

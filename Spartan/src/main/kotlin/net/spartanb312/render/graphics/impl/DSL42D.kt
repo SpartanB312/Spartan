@@ -8,10 +8,13 @@ import net.spartanb312.render.core.common.extension.map
 import net.spartanb312.render.core.common.graphics.ColorRGB
 import net.spartanb312.render.core.common.math.Vec2d
 import net.spartanb312.render.core.common.math.Vec2f
+import net.spartanb312.render.features.manager.ResolutionHelper
 import net.spartanb312.render.graphics.api.I2DRenderer
 import net.spartanb312.render.graphics.api.font.setting.LinkedSettableFontRenderer
 import net.spartanb312.render.graphics.impl.legacy.Legacy2DRenderer
 import net.spartanb312.render.graphics.impl.vao.VAO2DRenderer
+import net.spartanb312.render.util.mc
+import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP
 
@@ -27,22 +30,90 @@ open class Render2DScope(
 )
 
 @Render2DMark
-inline fun Render2DScope.matrix(block: () -> Unit) {
+inline fun scissor(
+    x: Int,
+    y: Int,
+    x1: Int,
+    y1: Int,
+    sr: ScaledResolution = ResolutionHelper.resolution,
+    block: () -> Unit
+) {
+    glScissor(x, y, x1, y1, sr)
+    glEnable(GL_SCISSOR_TEST)
+    block()
+    glDisable(GL_SCISSOR_TEST)
+}
+
+@Render2DMark
+inline fun scissor(
+    x: Float,
+    y: Float,
+    x1: Float,
+    y1: Float,
+    sr: ScaledResolution = ResolutionHelper.resolution,
+    block: () -> Unit
+) = scissor(x.toInt(), y.toInt(), x1.toInt(), y1.toInt(), sr, block)
+
+@Render2DMark
+inline fun scissor(
+    x: Double,
+    y: Double,
+    x1: Double,
+    y1: Double,
+    sr: ScaledResolution = ResolutionHelper.resolution,
+    block: () -> Unit
+) = scissor(x.toInt(), y.toInt(), x1.toInt(), y1.toInt(), sr, block)
+
+fun glScissor(x: Int, y: Int, x1: Int, y1: Int, sr: ScaledResolution = ResolutionHelper.resolution) {
+    GL11.glScissor(
+        (x * sr.scaleFactor),
+        (mc.displayHeight - y1 * sr.scaleFactor),
+        ((x1 - x) * sr.scaleFactor),
+        ((y1 - y) * sr.scaleFactor)
+    )
+}
+
+@Render2DMark
+inline fun matrix(block: () -> Unit) {
     glPushMatrix()
     block()
     glPopMatrix()
 }
 
 @Render2DMark
-inline fun Render2DScope.translate(
+inline fun translate(
     transX: Double,
     transY: Double,
     transZ: Double = 0.0,
-    block: Render2DScope.() -> Unit
+    block: () -> Unit
 ) {
     glTranslated(transX, transY, transZ)
     block()
     glTranslated(-transX, -transY, -transZ)
+}
+
+@Render2DMark
+inline fun translate(
+    transX: Float,
+    transY: Float,
+    transZ: Float = 0F,
+    block: () -> Unit
+) {
+    glTranslatef(transX, transY, transZ)
+    block()
+    glTranslatef(-transX, -transY, -transZ)
+}
+
+@Render2DMark
+inline fun translate(
+    transX: Int,
+    transY: Int,
+    transZ: Int = 0,
+    block: () -> Unit
+) {
+    glTranslatef(transX.toFloat(), transY.toFloat(), transZ.toFloat())
+    block()
+    glTranslatef(-transX.toFloat(), -transY.toFloat(), -transZ.toFloat())
 }
 
 @Render2DMark
@@ -99,6 +170,38 @@ fun Render2DScope.drawStringWithShadow(
 ) = fontRenderer.drawString(charSequence, posX, posY, color, scale, true)
 
 @Render2DMark
+fun Render2DScope.drawCenteredString(
+    charSequence: CharSequence,
+    posX: Float = 0.0f,
+    posY: Float = 0.0f,
+    color: ColorRGB = ColorRGB(255, 255, 255),
+    scale: Float = 1.0f,
+) = fontRenderer.drawString(
+    charSequence,
+    posX - getWidth(charSequence.toString(), scale) / 2f,
+    posY - getHeight(scale) / 2f,
+    color,
+    scale,
+    false
+)
+
+@Render2DMark
+fun Render2DScope.drawCenteredStringWithShadow(
+    charSequence: CharSequence,
+    posX: Float = 0.0f,
+    posY: Float = 0.0f,
+    color: ColorRGB = ColorRGB(255, 255, 255),
+    scale: Float = 1.0f,
+) = fontRenderer.drawString(
+    charSequence,
+    posX - getWidth(charSequence.toString(), scale) / 2f,
+    posY - getHeight(scale) / 2f,
+    color,
+    scale,
+    true
+)
+
+@Render2DMark
 fun Render2DScope.drawStringInJava(
     string: String,
     posX: Float,
@@ -135,6 +238,38 @@ fun Render2DScope.drawStringWithShadow(
 ) = fontRenderer.drawString(charSequence, posX.toFloat(), posY.toFloat(), color, scale, true)
 
 @Render2DMark
+fun Render2DScope.drawCenteredString(
+    charSequence: CharSequence,
+    posX: Double = 0.0,
+    posY: Double = 0.0,
+    color: ColorRGB = ColorRGB(255, 255, 255),
+    scale: Float = 1.0f,
+) = fontRenderer.drawString(
+    charSequence,
+    posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+    posY.toFloat() - getHeight(scale) / 2f,
+    color,
+    scale,
+    false
+)
+
+@Render2DMark
+fun Render2DScope.drawCenteredStringWithShadow(
+    charSequence: CharSequence,
+    posX: Double = 0.0,
+    posY: Double = 0.0,
+    color: ColorRGB = ColorRGB(255, 255, 255),
+    scale: Float = 1.0f,
+) = fontRenderer.drawString(
+    charSequence,
+    posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+    posY.toFloat() - getHeight(scale) / 2f,
+    color,
+    scale,
+    true
+)
+
+@Render2DMark
 fun Render2DScope.drawStringInJava(
     string: String,
     posX: Double,
@@ -169,6 +304,38 @@ fun Render2DScope.drawStringWithShadow(
     color: ColorRGB = ColorRGB(255, 255, 255),
     scale: Float = 1.0F,
 ) = fontRenderer.drawString(charSequence, posX.toFloat(), posY.toFloat(), color, scale, true)
+
+@Render2DMark
+fun Render2DScope.drawCenteredString(
+    charSequence: CharSequence,
+    posX: Int = 0,
+    posY: Int = 0,
+    color: ColorRGB = ColorRGB(255, 255, 255),
+    scale: Float = 1.0f,
+) = fontRenderer.drawString(
+    charSequence,
+    posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+    posY.toFloat() - getHeight(scale) / 2f,
+    color,
+    scale,
+    false
+)
+
+@Render2DMark
+fun Render2DScope.drawCenteredStringWithShadow(
+    charSequence: CharSequence,
+    posX: Int = 0,
+    posY: Int = 0,
+    color: ColorRGB = ColorRGB(255, 255, 255),
+    scale: Float = 1.0f,
+) = fontRenderer.drawString(
+    charSequence,
+    posX.toFloat() - getWidth(charSequence.toString(), scale) / 2f,
+    posY.toFloat() - getHeight(scale) / 2f,
+    color,
+    scale,
+    true
+)
 
 @Render2DMark
 fun Render2DScope.drawStringInJava(
