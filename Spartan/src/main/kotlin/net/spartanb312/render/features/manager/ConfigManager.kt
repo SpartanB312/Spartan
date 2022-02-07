@@ -37,6 +37,9 @@ object ConfigManager {
     fun loadUtilitiesConfigs() = ModuleManager.utilities.forEach { it.loadConfig() }
 
     @JvmStatic
+    fun loadSettingConfigs() = ModuleManager.settings.forEach { it.loadConfig() }
+
+    @JvmStatic
     fun loadOtherConfigs() = otherConfigs.forEach { it.loadConfig() }
 
     @JvmStatic
@@ -63,6 +66,9 @@ object ConfigManager {
 
     @JvmStatic
     fun saveUtilitiesConfigs() = ModuleManager.utilities.forEach { it.saveConfig() }
+
+    @JvmStatic
+    fun saveSettingConfigs() = ModuleManager.settings.forEach { it.saveConfig() }
 
     @JvmStatic
     fun saveOtherConfigs() = otherConfigs.forEach { it.saveConfig() }
@@ -93,10 +99,12 @@ object ConfigManager {
     fun resetUtilitiesConfigs() = ModuleManager.utilities.forEach { it.resetConfig() }
 
     @JvmStatic
+    fun resetSettingConfigs() = ModuleManager.settings.forEach { it.resetConfig() }
+
+    @JvmStatic
     fun resetOtherConfigs() = otherConfigs.forEach { it.resetConfig() }
 
     @JvmStatic
     fun resetLanguages() = LanguageManager.resetLanguages()
-
 
 }

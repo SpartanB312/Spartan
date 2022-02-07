@@ -19,9 +19,9 @@ abstract class AbstractModule(
     private val defaultVisibility = if (visibility) Visibility.ON else Visibility.OFF
 
     /**
-     * Implements ToggleableFeature
+     * Implements ToggleableFeature by delegating a setting
      */
-    override var isEnabled = false
+    override var isEnabled by setting("Enabled", false)
 
     /**
      * Some private properties

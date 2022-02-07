@@ -82,7 +82,7 @@ object ResourceCenter : ResourceManager(GLOBAL) {
                     //If resource is not null put it in the inner map
                     if (res != null) innerMap[resourceName] =
                         MutablePair(res, System.currentTimeMillis() + RESERVE_TIME)
-                    res
+                    res ?: solveCompatibilityMode(resourceName)
                 }
             } else {
                 val newInnerMap = mutableMapOf<String, MutablePair<URL, Long>>()
@@ -91,7 +91,7 @@ object ResourceCenter : ResourceManager(GLOBAL) {
                 val res = targetManager.getResource(resourceName)
                 if (res != null) newInnerMap[resourceName] =
                     MutablePair(res, System.currentTimeMillis() + RESERVE_TIME)
-                return res
+                return res ?: solveCompatibilityMode(resourceName)
             }
         } else {
             //Find resource in Global resource manager
@@ -103,7 +103,7 @@ object ResourceCenter : ResourceManager(GLOBAL) {
                 if (res != null) return res
             }
         }
-        return null
+        return solveCompatibilityMode(resourceName)
     }
 
     @JvmStatic
@@ -146,6 +146,10 @@ class RawResourceCache(private val jarName: String) {
 
 }
 
+private fun solveCompatibilityMode(name: String): URL? =
+    if (InitializationManager.isCompatibilityMode) ResourceCenter::class.java.getResource("/$name")
+    else null
+
 fun RawResourceCache.build(block: (RawResourceCache) -> Unit): RawResourceCache =
     this.also(block).useResourcesIfValid()
 
@@ -172,7 +176,7 @@ open class ResourceManager(val name: String) {
         }
     }
 
-    fun getResource(name: String): URL? = cachedResources.getOrDefault(name, null)
+    fun getResource(name: String): URL? = cachedResources.getOrDefault(name, solveCompatibilityMode(name))
 
 }
 

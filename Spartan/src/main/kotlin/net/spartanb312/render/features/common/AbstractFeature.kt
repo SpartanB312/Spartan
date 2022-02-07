@@ -17,18 +17,18 @@ abstract class AbstractFeature(
 ) : Nameable, Alias, IStandaloneConfigManagerProvider<AbstractFeature> {
 
     val description by TextContainer(
-        "${category.displayName}_${category.generalCategory.displayName}_${name}_description",
+        "${category.generalCategory.lowerCase}_${category.lowerCase}_${name}_description",
         description
     ).also { it.register() }
 
     val displayName by TextContainer(
-        "${category.displayName}_${category.generalCategory.displayName}_${name}_name",
+        "${category.generalCategory.lowerCase}_${category.lowerCase}_${name}_name",
         name
     ).also { it.register() }
 
     override val containerName = name
     override val settings = mutableListOf<AbstractSetting<*>>()
     override val configManager =
-        "$DEFAULT_CONFIG_GROUP/features/${category.generalCategory.lowerCase}/${category.lowerCase}".create()
+        "${DEFAULT_CONFIG_GROUP}features/${category.generalCategory.lowerCase}/${category.lowerCase}".create()
 
 }

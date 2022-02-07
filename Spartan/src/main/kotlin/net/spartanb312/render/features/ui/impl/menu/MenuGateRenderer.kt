@@ -18,29 +18,46 @@ object MenuGateRenderer : ScreenRenderer {
     //TODO:make an account system
     var isLoggedIn = false
 
-    private val effectFont = EffectFont(FontManager.haloFont)
+    private val logo = EffectFont.Shining(FontManager.haloFont)
+    private val pressKey = EffectFont.Shining(FontManager.smallFont)
+    private val test = EffectFont.Rainbow(FontManager.haloFont)
 
     override fun onInit() {
         if (isLoggedIn) DisplayManager.Renderers.MAIN_MENU.displayRenderer()
         Background.resetBackground()
-        effectFont.reset()
+        logo.reset()
+        pressKey.reset()
+        test.reset()
     }
 
     override fun onRender(mouseX: Int, mouseY: Int, partialTicks: Float) {
         Background.drawBackground()
         val scale = min(ResolutionHelper.scaledWidth / 2560F, ResolutionHelper.scaledHeight / 1440F) * 1.3f
-        effectFont.drawShining(
+        logo.draw(
             word = "HALO",
             x = ResolutionHelper.scaledWidth / 2f,
             y = ResolutionHelper.scaledHeight * 0.8f / 2f,
             scale = scale,
             shadow = false,
             centered = true,
-            baseColor = ColorRGB(80, 230, 255),
+            baseColor = ColorRGB(80, 160, 220),
             layerColor = ColorRGB(255, 255, 255, 200),
             minSpeed = 0.045f,
             maxSpeed = 0.065f,
             updateTime = 3000
+        )
+        pressKey.draw(
+            word = "Press any key to start",
+            x = ResolutionHelper.scaledWidth / 2f,
+            y = ResolutionHelper.scaledHeight * 0.65f,
+            scale = scale,
+            shadow = true,
+            centered = true,
+            baseColor = ColorRGB(200, 200, 200, 200),
+            layerColor = ColorRGB(255, 255, 255, 255),
+            minSpeed = 0.045f,
+            maxSpeed = 0.065f,
+            updateTime = 2000
         )
     }
 

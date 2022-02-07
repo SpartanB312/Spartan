@@ -6,7 +6,10 @@ import net.spartanb312.render.launch.transform.SpartanClassTransformer
 class FMLCoreMod : IFMLLoadingPlugin {
 
     init {
+        Configs.loadConfig()
         Logger.info("Loading Spartan InitializationManager")
+        InitializationManager.init()
+        Logger.info("Tweaking Spartan Mods")
         InitializationManager.onTweak()
     }
 

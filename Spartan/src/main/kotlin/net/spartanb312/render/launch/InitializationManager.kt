@@ -5,6 +5,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.launchwrapper.LaunchClassLoader
+import net.spartanb312.render.Spartan
 import net.spartanb312.render.Spartan.DEFAULT_FILE_GROUP
 import net.spartanb312.render.core.common.ClassUtils.getAnnotatedClasses
 import net.spartanb312.render.core.common.extension.remove
@@ -29,6 +30,8 @@ object InitializationManager {
 
     private val mods = mutableSetOf<LoadableMod>()
     private val extensions = mutableSetOf<LoadableMod.ExtensionDLC>()
+
+    var isCompatibilityMode = false; private set
 
     //Exclusions
     private val excludedClasses = mutableSetOf("WorldListener")
@@ -82,34 +85,47 @@ object InitializationManager {
                                 ?.filter { it.startsWith("LaunchClass") || it.startsWith("ExcludedClasses") }
                                 ?.forEach {
                                     try {
-                                        if (it.startsWith("LaunchClass:")) {
-                                            launchClasses.add(it.substringAfter("LaunchClass: ").remove(" "))
-                                        } else if (it.startsWith("LaunchClasses:")) {
-                                            it.substringAfter("LaunchClasses:").apply {
-                                                split(",").forEach { unit ->
-                                                    unit.apply {
-                                                        if (contains("'")) {
-                                                            launchClasses.add(substringAfter("'").substringBefore("'"))
+                                        when {
+                                            it.startsWith("LaunchClass:") -> {
+                                                launchClasses.add(it.substringAfter("LaunchClass: ").remove(" "))
+                                            }
+                                            it.startsWith("LaunchClasses:") -> {
+                                                it.substringAfter("LaunchClasses:").apply {
+                                                    split(",").forEach { unit ->
+                                                        unit.apply {
+                                                            if (contains("'")) {
+                                                                launchClasses.add(substringAfter("'").substringBefore("'"))
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        } else if (it.startsWith("ExcludedClasses")) {
-                                            it.substringAfter("ExcludedClasses:").apply {
-                                                split(",").forEach { unit ->
-                                                    unit.apply {
-                                                        if (contains("'")) {
-                                                            excludedClasses.add(substringAfter("'").substringBefore("'"))
+                                            it.startsWith("ExcludedClasses") -> {
+                                                it.substringAfter("ExcludedClasses:").apply {
+                                                    split(",").forEach { unit ->
+                                                        unit.apply {
+                                                            if (contains("'")) {
+                                                                excludedClasses.add(
+                                                                    substringAfter("'").substringBefore(
+                                                                        "'"
+                                                                    )
+                                                                )
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        } else if (it.startsWith("ExcludedPackages")) {
-                                            it.substringAfter("ExcludedPackages:").apply {
-                                                split(",").forEach { unit ->
-                                                    unit.apply {
-                                                        if (contains("'")) {
-                                                            excludedPackage.add(substringAfter("'").substringBefore("'"))
+                                            it.startsWith("ExcludedPackages") -> {
+                                                it.substringAfter("ExcludedPackages:").apply {
+                                                    split(",").forEach { unit ->
+                                                        unit.apply {
+                                                            if (contains("'")) {
+                                                                excludedPackage.add(
+                                                                    substringAfter("'").substringBefore(
+                                                                        "'"
+                                                                    )
+                                                                )
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -173,7 +189,7 @@ object InitializationManager {
             }
         }
 
-        findExtensions()
+        if (Configs.extensions && !Configs.compatibilityMode) findExtensions()
     }
 
     private fun findExtensions() {
@@ -354,7 +370,15 @@ object InitializationManager {
     private var started = false
 
     @JvmStatic
-    fun onTweak() {
+    fun init() {
+        if (Configs.compatibilityMode) {
+            Logger.warn("Spartan is running on compatibility mode!")
+            isCompatibilityMode = true
+            compatibilityMode()
+        } else normalLoad()
+    }
+
+    private fun normalLoad() {
         scanJars()
         scanResources()
         mods.forEach {
@@ -365,6 +389,23 @@ object InitializationManager {
         started = true
         mods.forEach { (it.instance ?: it.loadableInstance)?.apply { MainEventBus.subscribe(this) } }
         mods.loadMixins()
+    }
+
+    private fun compatibilityMode() {
+        scanResources()
+        mods.add(
+            LoadableMod(
+                Spartan::class.java.name,
+                Spartan::class.java.getAnnotation(Mod::class.java),
+                Spartan,
+                Spartan,
+                Spartan::class.java.getAnnotation(CoreMod::class.java)
+            )
+        )
+    }
+
+    @JvmStatic
+    fun onTweak() {
         mods.forEach { it.loadableInstance?.onTweak() }
         InitEvent.Tweak.post()
     }

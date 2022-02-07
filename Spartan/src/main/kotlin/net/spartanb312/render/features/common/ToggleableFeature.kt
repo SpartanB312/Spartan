@@ -1,7 +1,6 @@
 package net.spartanb312.render.features.common
 
 import net.spartanb312.render.features.SpartanCore
-import net.spartanb312.render.util.thread.isMainThread
 
 interface ToggleableFeature {
 
@@ -24,10 +23,7 @@ interface ToggleableFeature {
 
     fun enable() {
         if (isDisabled) {
-            if (isMainThread) {
-                isEnabled = true
-                onEnable()
-            } else SpartanCore.addTask(SpartanCore.Executors.Main) {
+            SpartanCore.onMain {
                 isEnabled = true
                 onEnable()
             }
@@ -36,10 +32,7 @@ interface ToggleableFeature {
 
     fun disable() {
         if (isEnabled) {
-            if (isMainThread) {
-                isDisabled = true
-                onDisable()
-            } else SpartanCore.addTask(SpartanCore.Executors.Main) {
+            SpartanCore.onMain {
                 isDisabled = true
                 onDisable()
             }

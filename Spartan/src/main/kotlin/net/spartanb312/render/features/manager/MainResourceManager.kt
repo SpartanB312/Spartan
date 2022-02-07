@@ -7,7 +7,7 @@ import java.net.URL
 
 object MainResourceManager {
 
-    private var resourceManager = ResourceCenter.getManager(Spartan.MOD_ID)!!
+    private var resourceManager = ResourceCenter.getManager(Spartan.MOD_ID) ?: ResourceCenter
 
     @JvmStatic
     fun getResource(resourceName: String): URL? = resourceManager.getResource(resourceName)

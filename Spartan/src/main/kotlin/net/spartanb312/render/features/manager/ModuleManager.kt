@@ -1,27 +1,22 @@
 package net.spartanb312.render.features.manager
 
-import net.spartanb312.render.Spartan
 import net.spartanb312.render.core.common.ClassUtils.findTypedClasses
 import net.spartanb312.render.core.common.ClassUtils.instance
-import net.spartanb312.render.core.config.provider.StandaloneConfigurable
 import net.spartanb312.render.features.common.AbstractModule
 import net.spartanb312.render.features.common.AsyncLoadable
 import net.spartanb312.render.features.hud.HUDModule
 import net.spartanb312.render.features.render.RenderModule
+import net.spartanb312.render.features.setting.SettingModule
 import net.spartanb312.render.features.utility.UtilityModule
 import net.spartanb312.render.launch.Logger
 
-object ModuleManager : StandaloneConfigurable(
-    "${Spartan.DEFAULT_CONFIG_GROUP}/managers/",
-    "ModuleManager"
-), AsyncLoadable {
-
-    private val enabledUtilities by setting("EnabledUtilities", true)
+object ModuleManager : AsyncLoadable {
 
     val modules = mutableListOf<AbstractModule>()
     val HUDs = mutableListOf<HUDModule>()
     val renderers = mutableListOf<RenderModule>()
     val utilities = mutableListOf<UtilityModule>()
+    val settings = mutableListOf<SettingModule>()
 
     override suspend fun init() {
         Logger.info("Initializing ModuleManager")
@@ -53,11 +48,14 @@ object ModuleManager : StandaloneConfigurable(
                 modules.add(module)
             }
             is UtilityModule -> {
-                if (enabledUtilities) {
-                    utilities.add(module)
-                    modules.add(module)
-                }
+                utilities.add(module)
+                modules.add(module)
             }
+            is SettingModule -> {
+                settings.add(module)
+                modules.add(module)
+            }
+            else -> modules.add(module)
         }
     }
 
@@ -68,5 +66,7 @@ object ModuleManager : StandaloneConfigurable(
     fun getRenderer(name: String): RenderModule? = renderers.find { it.name.equals(name, true) }
 
     fun getUtility(name: String): UtilityModule? = utilities.find { it.name.equals(name, true) }
+
+    fun getSetting(name: String): SettingModule? = settings.find { it.name.equals(name, true) }
 
 }
