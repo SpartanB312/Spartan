@@ -21,7 +21,7 @@ class StandaloneConfig(
 
     override fun loadConfig() {
         if (configFile.exists()) {
-            jsonMap.readSettings(container.settings)
+            configFile.jsonMap.readSettings(container.settings)
         } else saveConfig()
     }
 

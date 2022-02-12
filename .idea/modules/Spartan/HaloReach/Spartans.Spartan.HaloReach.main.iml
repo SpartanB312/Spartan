@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager">
+    <output url="file:///production/Spartans.Spartan.HaloReach.main" />
+    <output-test url="file:///test/Spartans.Spartan.HaloReach.main" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../Spartan/HaloReach/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../../../Spartan/HaloReach/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../Spartan/HaloReach/src/main/resources" type="java-resource" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

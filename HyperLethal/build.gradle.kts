@@ -15,7 +15,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("net.minecraftforge.gradle:ForgeGradle:4.+")
+        classpath("net.minecraftforge.gradle:ForgeGradle:5.+")
         classpath("org.spongepowered:mixingradle:0.7-SNAPSHOT")
     }
 }
@@ -63,7 +63,7 @@ dependencies {
         exclude(mapOf("module" to moduleName))
 
 
-    minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2855")
+    minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2860")
 
     library("org.spongepowered:mixin:0.8-SNAPSHOT") {
         exclude("commons-io")
@@ -90,7 +90,7 @@ dependencies {
     implementation("com.github.cabaletta:baritone:1.2.14")
     jarOnly("cabaletta:baritone-api:1.2")
 
-    annotationProcessor("org.spongepowered:mixin:0.8.2:processor") {
+    annotationProcessor("org.spongepowered:mixin:0.8.3:processor") {
         exclude("gson")
     }
 

@@ -20,7 +20,7 @@ object Render2DManager : Helper {
     private val mutex = Mutex()
 
     init {
-        listener<Render2DEvent> { event ->
+        listener<Render2DEvent>(Int.MAX_VALUE, true) { event ->
             runBlocking {
                 mutex.withLock {
                     val renderScope = Render2DScope(

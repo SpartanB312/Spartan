@@ -17,4 +17,8 @@ interface IStandaloneConfigManagerProvider<T> : IConfigContainer<T> {
 
     fun resetConfig() = configManager.resetConfig()
 
+    fun redirect(path: String) = configManager.redirect(path)
+
+    fun resetPath() = configManager.resetPath()
+
 }

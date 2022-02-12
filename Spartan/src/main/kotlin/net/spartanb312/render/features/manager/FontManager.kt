@@ -26,7 +26,7 @@ object FontManager {
         ).also { cachedFontRenderers["Microsoft YaHei UI"] = it }
 
     val haloFont = createFontRenderer("Halo.ttf", 128F, 8192)
-    val smallFont = createFontRenderer("Microsoft YaHei UI.ttc", 32F, 1024)
+    val infoFont = createFontRenderer("Microsoft YaHei UI.ttc", 64F, 2048)
 
     @JvmStatic
     fun String.getFontRendererByName(): LinkedSettableFontRenderer =

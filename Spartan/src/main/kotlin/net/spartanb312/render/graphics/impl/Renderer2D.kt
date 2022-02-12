@@ -23,7 +23,7 @@ object Renderer2D {
     var renderer by AsyncUpdateValue {
         if (currentRenderMode == RenderMode.Legacy) Legacy2DRenderer else VAO2DRenderer
     }.also { r ->
-        listener<GameLoopEvent.Pre> {
+        listener<GameLoopEvent.Pre>(Int.MAX_VALUE, true) {
             r.update()
         }
     }

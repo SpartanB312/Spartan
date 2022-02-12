@@ -26,7 +26,7 @@ class GroupConfig(
 
     override fun loadConfig() {
         if (configFile.exists()) {
-            val map = jsonMap
+            val map = configFile.jsonMap
             containers.forEach {
                 map[it.containerName]?.asJsonObject?.readSettings(it.settings)
             }

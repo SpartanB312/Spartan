@@ -6,7 +6,7 @@ import net.spartanb312.render.features.manager.ResolutionHelper
 import net.spartanb312.render.features.setting.ui.Background
 import net.spartanb312.render.features.ui.DisplayManager
 import net.spartanb312.render.features.ui.DisplayManager.displayRenderer
-import net.spartanb312.render.features.ui.item.EffectFont
+import net.spartanb312.render.features.ui.item.font.EffectFont
 import net.spartanb312.render.features.ui.wrapper.ScreenRenderer
 import kotlin.math.min
 
@@ -19,15 +19,12 @@ object MenuGateRenderer : ScreenRenderer {
     var isLoggedIn = false
 
     private val logo = EffectFont.Shining(FontManager.haloFont)
-    private val pressKey = EffectFont.Shining(FontManager.smallFont)
-    private val test = EffectFont.Rainbow(FontManager.haloFont)
+    private val pressKey = EffectFont.Shining(FontManager.infoFont)
 
     override fun onInit() {
         if (isLoggedIn) DisplayManager.Renderers.MAIN_MENU.displayRenderer()
-        Background.resetBackground()
         logo.reset()
         pressKey.reset()
-        test.reset()
     }
 
     override fun onRender(mouseX: Int, mouseY: Int, partialTicks: Float) {
@@ -50,7 +47,7 @@ object MenuGateRenderer : ScreenRenderer {
             word = "Press any key to start",
             x = ResolutionHelper.scaledWidth / 2f,
             y = ResolutionHelper.scaledHeight * 0.65f,
-            scale = scale,
+            scale = scale * 0.5f,
             shadow = true,
             centered = true,
             baseColor = ColorRGB(200, 200, 200, 200),
@@ -62,11 +59,13 @@ object MenuGateRenderer : ScreenRenderer {
     }
 
     override fun onMouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
-
+        isLoggedIn = true
+        DisplayManager.Renderers.MAIN_MENU.displayRenderer()
     }
 
-    override fun onMouseReleased(mouseX: Int, mouseY: Int, state: Int) {
-
+    override fun onKeyTyped(typedChar: Char, keyCode: Int) {
+        isLoggedIn = true
+        DisplayManager.Renderers.MAIN_MENU.displayRenderer()
     }
 
 }

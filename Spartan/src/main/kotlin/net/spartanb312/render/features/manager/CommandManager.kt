@@ -8,7 +8,7 @@ import net.spartanb312.render.core.config.provider.StandaloneConfigurable
 import net.spartanb312.render.features.command.Command
 import net.spartanb312.render.features.command.ExecutionScope
 import net.spartanb312.render.features.common.AsyncLoadable
-import net.spartanb312.render.features.manager.ConfigManager.register
+import net.spartanb312.render.features.manager.ConfigManager.registerConfigs
 import net.spartanb312.render.launch.Logger
 
 object CommandManager : StandaloneConfigurable(
@@ -17,7 +17,7 @@ object CommandManager : StandaloneConfigurable(
 ), AsyncLoadable {
 
     init {
-        register()
+        registerConfigs()
     }
 
     val commands = mutableListOf<Command>()

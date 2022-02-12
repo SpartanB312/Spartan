@@ -7,7 +7,7 @@ class KeyBind(vararg var key: Int, val action: () -> Unit) : Convertable<KeyBind
 
     companion object {
 
-        fun KeyBind.converter0(): KeyBind.() -> String = {
+        fun converter0(): KeyBind.() -> String = {
             val str = StringBuilder()
             key.forEachIndexed { index, it ->
                 if (index != key.size - 1) str.append("$it+")

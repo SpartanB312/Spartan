@@ -6,18 +6,15 @@ import kotlin.math.min
 
 interface Component {
 
-    var x: Double
-    var y: Double
-    var width: Double
-    var height: Double
+    var x: Float
+    var y: Float
+    var width: Float
+    var height: Float
 
     fun Render2DScope.onRender() {
     }
 
     fun onKeyTyped(typedChar: Char, keyCode: Int) {
-    }
-
-    fun onKeyInput() {
     }
 
     fun onMouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int): Boolean = false
@@ -26,9 +23,6 @@ interface Component {
     }
 
     fun onMouseMove(mouseX: Int, mouseY: Int, clickedMouseButton: Int, timeSinceLastClick: Long) {
-    }
-
-    fun onMouseInput() {
     }
 
     fun isHoovered(mouseX: Int, mouseY: Int): Boolean {

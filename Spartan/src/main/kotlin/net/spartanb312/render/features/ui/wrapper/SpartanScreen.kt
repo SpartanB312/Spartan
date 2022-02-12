@@ -10,33 +10,39 @@ abstract class SpartanScreen : GuiScreen() {
 
     abstract val screenRenderer: ScreenRenderer
 
-    override fun doesGuiPauseGame(): Boolean = screenRenderer.doPause()
+    final override fun doesGuiPauseGame(): Boolean = screenRenderer.doPause()
 
-    override fun initGui() =
+    final override fun initGui() =
         screenRenderer.onInit()
 
-    override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) =
+    final override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) =
         screenRenderer.onRender(mouseX, mouseY, partialTicks)
 
-    override fun onGuiClosed() =
+    final override fun onGuiClosed() =
         screenRenderer.onClosed()
 
-    override fun keyTyped(typedChar: Char, keyCode: Int) =
+    final override fun keyTyped(typedChar: Char, keyCode: Int) =
         screenRenderer.onKeyTyped(typedChar, keyCode)
 
-    override fun handleKeyboardInput() =
-        screenRenderer.onKeyInput()
+    final override fun handleKeyboardInput() {
+        if (screenRenderer.overrideKeyInput()) with(screenRenderer) {
+            onKeyInput()
+        } else super.handleKeyboardInput()
+    }
 
-    override fun mouseClickMove(mouseX: Int, mouseY: Int, clickedMouseButton: Int, timeSinceLastClick: Long) =
+    final override fun mouseClickMove(mouseX: Int, mouseY: Int, clickedMouseButton: Int, timeSinceLastClick: Long) =
         screenRenderer.onMouseMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick)
 
-    override fun mouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) =
+    final override fun mouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) =
         screenRenderer.onMouseClicked(mouseX, mouseY, mouseButton)
 
-    override fun mouseReleased(mouseX: Int, mouseY: Int, state: Int) =
+    final override fun mouseReleased(mouseX: Int, mouseY: Int, state: Int) =
         screenRenderer.onMouseReleased(mouseX, mouseY, state)
 
-    override fun handleMouseInput() =
-        screenRenderer.onMouseInput()
+    final override fun handleMouseInput() {
+        if (screenRenderer.overrideMouseInput()) with(screenRenderer) {
+            onMouseInput()
+        } else super.handleMouseInput()
+    }
 
 }

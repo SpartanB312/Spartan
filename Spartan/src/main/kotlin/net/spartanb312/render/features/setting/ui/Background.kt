@@ -49,7 +49,7 @@ object Background : SettingModule(
     /**
      * General
      */
-    private var renderMode by setting("RenderMode", RenderMode.Shader)
+    private var renderMode by setting("RenderMode", RenderMode.Picture)
         .des("The render mode of background")
     var fpsLimit by setting("FPS Limit", 60, 0..300, 5)
         .des("Limit the fps")

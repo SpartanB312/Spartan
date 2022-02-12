@@ -21,7 +21,7 @@ object FontRenderer {
     var renderer by AsyncUpdateValue {
         currentFontName.getFontRendererByName()
     }.also { r ->
-        listener<GameLoopEvent.Pre> {
+        listener<GameLoopEvent.Pre>(Int.MAX_VALUE, true) {
             if (shouldUpdate) r.update()
         }
     }

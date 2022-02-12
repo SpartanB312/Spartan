@@ -9,10 +9,25 @@ object ConfigManager {
     private val otherConfigs = mutableListOf<Config>()
 
     @JvmStatic
-    fun IStandaloneConfigManagerProvider<*>.register() = otherConfigs.add(configManager)
+    fun IStandaloneConfigManagerProvider<*>.registerConfigs() = otherConfigs.add(configManager)
 
     @JvmStatic
-    fun Config.register() = otherConfigs.add(this)
+    fun Config.registerConfigs() = otherConfigs.add(this)
+
+    /**
+     * Path of configs
+     */
+    @JvmStatic
+    fun redirectPath(path: String) {
+        ModuleManager.modules.forEach { it.redirect(path) }
+        otherConfigs.forEach { it.redirect(path) }
+    }
+
+    @JvmStatic
+    fun resetPath() {
+        ModuleManager.modules.forEach { it.resetPath() }
+        otherConfigs.forEach { it.resetPath() }
+    }
 
     /**
      * Load config

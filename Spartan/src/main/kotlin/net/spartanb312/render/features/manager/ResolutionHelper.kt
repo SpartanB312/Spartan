@@ -13,7 +13,7 @@ object ResolutionHelper {
     var resolution by AsyncUpdateValue {
         ScaledResolution(mc)
     }.also { r ->
-        listener<AsyncTickEvent> {
+        listener<AsyncTickEvent>(Int.MAX_VALUE, true) {
             if (mc.player == null || mc.world == null) {
                 r.update()
             }

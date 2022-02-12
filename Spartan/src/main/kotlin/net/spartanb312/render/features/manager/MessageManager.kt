@@ -24,7 +24,7 @@ object MessageManager : Helper {
     private val modifiers = mutableSetOf<ChatModifier>()
 
     init {
-        listener<PacketEvent.Send> {
+        listener<PacketEvent.Send>(Int.MAX_VALUE, true) {
             if (it.packet is CPacketChatMessage) {
                 var message = it.packet.message
                 modifiers.forEach { cm -> message = cm.modifier(message) }

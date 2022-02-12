@@ -8,7 +8,6 @@ import net.spartanb312.render.Spartan.MOD_ID
 import net.spartanb312.render.Spartan.MOD_NAME
 import net.spartanb312.render.Spartan.MOD_VERSION
 import net.spartanb312.render.features.SpartanCore
-import net.spartanb312.render.features.SpartanCore.subscribe
 import net.spartanb312.render.features.common.AsyncLoadable
 import net.spartanb312.render.features.manager.*
 import net.spartanb312.render.features.manager.ingame.InventoryManager
@@ -75,23 +74,24 @@ object Spartan : Loadable, Extendable {
 
         CommandManager.postInit()
         ModuleManager.postInit()
+        FriendManager
 
         //Player Managers
-        InputManager.subscribe()
-        InventoryManager.subscribe()
-        MessageManager.subscribe()
+        InputManager
+        InventoryManager
+        MessageManager
 
         //Renderer managers
-        ResolutionHelper.subscribe()
-        MenuDisplayManager.subscribe()
-        Render2DManager.subscribe()
-        FontManager.subscribe()
-        SandBoxShaderManager.subscribe()
+        ResolutionHelper
+        MenuDisplayManager
+        Render2DManager
+        FontManager
+        SandBoxShaderManager
 
         //Renderer impl
-        Renderer2D.subscribe()
-        FontRenderer.subscribe()
-        DisplayManager.subscribe()
+        Renderer2D
+        FontRenderer
+        DisplayManager
 
         ConfigManager.loadAll()
     }
