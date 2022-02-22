@@ -127,6 +127,8 @@ sealed class EffectFont(
             x: Float,
             y: Float,
             offset: Float,
+            xRate: Float = 0f,
+            yRate: Float = 0f,
             mouseX: Int,
             mouseY: Int,
             scale: Float = 1F,
@@ -149,8 +151,8 @@ sealed class EffectFont(
             }
             fontRenderer.drawString(
                 word,
-                posX + offset * offsetRate,
-                posY + offset * offsetRate,
+                posX + offset * offsetRate * xRate,
+                posY + offset * offsetRate * yRate,
                 baseColor.mix(nextColor, offsetRate),
                 scale,
                 shadow

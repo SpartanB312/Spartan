@@ -1,6 +1,7 @@
 package net.spartanb312.render.features.ui.impl.menu
 
 import net.minecraft.client.gui.GuiMultiplayer
+import net.minecraft.client.gui.GuiOptions
 import net.minecraft.client.gui.GuiWorldSelection
 import net.spartanb312.render.core.common.graphics.ColorRGB
 import net.spartanb312.render.features.manager.FontManager
@@ -8,6 +9,7 @@ import net.spartanb312.render.features.manager.ResolutionHelper
 import net.spartanb312.render.features.setting.ui.Background
 import net.spartanb312.render.features.ui.DisplayManager
 import net.spartanb312.render.features.ui.item.SpecialItemContentDefImpl
+import net.spartanb312.render.features.ui.item.button.EffectButton
 import net.spartanb312.render.features.ui.item.font.EffectFont
 import net.spartanb312.render.features.ui.item.withButton
 import net.spartanb312.render.features.ui.wrapper.ScreenRenderer
@@ -17,10 +19,12 @@ import kotlin.math.min
 object MainMenuRenderer : ScreenRenderer, SpecialItemContentDefImpl() {
 
     private val logo = EffectFont.Shining(FontManager.haloFont).register()
-    private val singlePlayer = EffectFont.Hoover(FontManager.infoFont).register()
+    private val singlePlayer = EffectButton.RectWavePulseButton("Single Player").register()
         .withButton { mc.displayGuiScreen(GuiWorldSelection(DisplayManager.screen)) }
-    private val multiPlayer = EffectFont.Hoover(FontManager.infoFont).register()
+    private val multiPlayer = EffectButton.RectWavePulseButton("Multi Player").register()
         .withButton { mc.displayGuiScreen(GuiMultiplayer(DisplayManager.screen)) }
+    private val settings = EffectButton.RectWavePulseButton("Settings").register()
+        .withButton { mc.displayGuiScreen(GuiOptions(DisplayManager.screen, mc.gameSettings)) }
 
     override fun onInit() {
         resetAllItems()
@@ -41,40 +45,35 @@ object MainMenuRenderer : ScreenRenderer, SpecialItemContentDefImpl() {
             maxSpeed = 0.065f,
             updateTime = 3000
         )
-        val space = FontManager.infoFont.getHeight(scale * 0.5f)
+        val space = FontManager.infoFont.getHeight(scale * 0.5f) * 1.2f
         val startX = ResolutionHelper.scaledWidth * 0.05f
         var startY = ResolutionHelper.scaledHeight * 0.9f - space
         multiPlayer.draw(
-            word = "Multi Player",
             x = startX,
             y = startY,
-            offset = 2f,
             mouseX = mouseX,
             mouseY = mouseY,
             scale = scale * 0.5f,
-            shadow = true,
-            baseColor = ColorRGB(220, 220, 220, 220),
-            nextColor = ColorRGB(255, 255, 255, 255),
-            speed = 0.045f,
-            updateTime = 16
+            partialTicks = partialTicks
         )
         startY -= space
         singlePlayer.draw(
-            word = "Single Player",
             x = startX,
             y = startY,
-            offset = 2f,
             mouseX = mouseX,
             mouseY = mouseY,
             scale = scale * 0.5f,
-            shadow = true,
-            baseColor = ColorRGB(220, 220, 220, 220),
-            nextColor = ColorRGB(255, 255, 255, 255),
-            speed = 0.045f,
-            updateTime = 16
+            partialTicks = partialTicks
         )
         startY -= space
-
+        settings.draw(
+            x = startX,
+            y = startY,
+            mouseX = mouseX,
+            mouseY = mouseY,
+            scale = scale * 0.5f,
+            partialTicks = partialTicks
+        )
     }
 
     override fun onMouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {

@@ -1,7 +1,5 @@
 package net.spartanb312.render.features.ui.wrapper
 
-import net.minecraft.client.gui.GuiScreen
-
 interface ScreenRenderer {
 
     fun doPause(): Boolean = false
@@ -22,7 +20,7 @@ interface ScreenRenderer {
     fun onKeyTyped(typedChar: Char, keyCode: Int) {
     }
 
-    fun GuiScreen.onKeyInput() {
+    fun onKeyInput() {
     }
 
     fun onMouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
@@ -34,7 +32,7 @@ interface ScreenRenderer {
     fun onMouseMove(mouseX: Int, mouseY: Int, clickedMouseButton: Int, timeSinceLastClick: Long) {
     }
 
-    fun GuiScreen.onMouseInput() {
+    fun onMouseInput() {
     }
 
 }

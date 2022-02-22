@@ -1,5 +1,6 @@
 package net.spartanb312.render.features.ui.item
 
+import net.spartanb312.render.features.ui.item.button.EffectButton
 import net.spartanb312.render.features.ui.item.font.EffectFont
 
 /**
@@ -28,6 +29,23 @@ inline fun <T : EffectFont> T.onClick(crossinline block: EffectFont.(mouseX: Int
     }
 
 inline fun <T : EffectFont> T.withButton(buttonId: Int = 0, crossinline block: EffectFont.() -> Unit): T =
+    checkClick { mouseX, mouseY, button ->
+        if (isHoovered(mouseX, mouseY) && button == buttonId) {
+            block()
+            true
+        } else false
+    }
+
+fun <T : EffectButton> T.checkClick(block: EffectButton.(mouseX: Int, mouseY: Int, button: Int) -> Boolean): T =
+    this.also { it.action = block }
+
+inline fun <T : EffectButton> T.onClick(crossinline block: EffectButton.(mouseX: Int, mouseY: Int, button: Int) -> Unit): T =
+    checkClick { mouseX, mouseY, button ->
+        block(mouseX, mouseY, button)
+        true
+    }
+
+inline fun <T : EffectButton> T.withButton(buttonId: Int = 0, crossinline block: EffectButton.() -> Unit): T =
     checkClick { mouseX, mouseY, button ->
         if (isHoovered(mouseX, mouseY) && button == buttonId) {
             block()
