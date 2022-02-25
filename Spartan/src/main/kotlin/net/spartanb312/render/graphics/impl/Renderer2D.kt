@@ -42,7 +42,7 @@ object Renderer2D {
         x: Double,
         y: Double,
         size: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawPoint0(x, y, size, color)
 
     @JvmStatic
@@ -50,7 +50,7 @@ object Renderer2D {
         x: Int,
         y: Int,
         size: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawPoint0(x.toDouble(), y.toDouble(), size, color)
 
     @JvmStatic
@@ -58,7 +58,7 @@ object Renderer2D {
         x: Float,
         y: Float,
         size: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawPoint0(x.toDouble(), y.toDouble(), size, color)
 
     /**
@@ -72,7 +72,7 @@ object Renderer2D {
         endY: Double,
         width: Float = 1F,
         color1: ColorRGB,
-        color2: ColorRGB = color1
+        color2: ColorRGB = color1,
     ) = renderer.drawLine0(startX, startY, endX, endY, width, color1, color2)
 
     @JvmStatic
@@ -83,7 +83,7 @@ object Renderer2D {
         endY: Int,
         width: Float = 1F,
         color1: ColorRGB,
-        color2: ColorRGB = color1
+        color2: ColorRGB = color1,
     ) = renderer.drawLine0(
         startX.toDouble(),
         startY.toDouble(),
@@ -102,7 +102,7 @@ object Renderer2D {
         endY: Float,
         width: Float = 1F,
         color1: ColorRGB,
-        color2: ColorRGB = color1
+        color2: ColorRGB = color1,
     ) = renderer.drawLine0(
         startX.toDouble(),
         startY.toDouble(),
@@ -119,7 +119,7 @@ object Renderer2D {
         end: Vec2d,
         width: Float = 1F,
         color1: ColorRGB,
-        color2: ColorRGB = color1
+        color2: ColorRGB = color1,
     ) = renderer.drawLine0(start.x, start.y, end.x, end.y, width, color1, color2)
 
     @JvmStatic
@@ -128,7 +128,7 @@ object Renderer2D {
         end: Vec2f,
         width: Float = 1F,
         color1: ColorRGB,
-        color2: ColorRGB = color1
+        color2: ColorRGB = color1,
     ) = renderer.drawLine0(
         start.x.toDouble(),
         start.y.toDouble(),
@@ -143,28 +143,28 @@ object Renderer2D {
     fun drawLinesStrip(
         vertexArray: Array<Vec2d>,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesStrip0(vertexArray, width, color)
 
     @JvmStatic
     fun drawLinesLoop(
         vertexArray: Array<Vec2d>,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesLoop0(vertexArray, width, color)
 
     @JvmStatic
     fun drawLinesStrip(
         vertexArray: Array<Vec2f>,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesStrip0(vertexArray.map { it.toVec2d() }, width, color)
 
     @JvmStatic
     fun drawLinesLoop(
         vertexArray: Array<Vec2f>,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesLoop0(vertexArray.map { it.toVec2d() }, width, color)
 
     /**
@@ -178,7 +178,7 @@ object Renderer2D {
         pos2Y: Double,
         pos3X: Double,
         pos3Y: Double,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangle0(pos1X, pos1Y, pos2X, pos2Y, pos3X, pos3Y, color)
 
     @JvmStatic
@@ -189,7 +189,7 @@ object Renderer2D {
         pos2Y: Int,
         pos3X: Int,
         pos3Y: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangle0(
         pos1X.toDouble(),
         pos1Y.toDouble(),
@@ -208,7 +208,7 @@ object Renderer2D {
         pos2Y: Float,
         pos3X: Float,
         pos3Y: Float,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangle0(
         pos1X.toDouble(),
         pos1Y.toDouble(),
@@ -224,7 +224,7 @@ object Renderer2D {
         pos1: Vec2d,
         pos2: Vec2d,
         pos3: Vec2d,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangle0(
         pos1.x,
         pos1.y,
@@ -240,7 +240,7 @@ object Renderer2D {
         pos1: Vec2f,
         pos2: Vec2f,
         pos3: Vec2f,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangle0(
         pos1.x.toDouble(),
         pos1.y.toDouble(),
@@ -261,7 +261,7 @@ object Renderer2D {
         pos3X: Double,
         pos3Y: Double,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangleOutline0(pos1X, pos1Y, pos2X, pos2Y, pos3X, pos3Y, width, color)
 
     @JvmStatic
@@ -273,7 +273,7 @@ object Renderer2D {
         pos3X: Int,
         pos3Y: Int,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangleOutline0(
         pos1X.toDouble(),
         pos1Y.toDouble(),
@@ -294,7 +294,7 @@ object Renderer2D {
         pos3X: Float,
         pos3Y: Float,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangleOutline0(
         pos1X.toDouble(),
         pos1Y.toDouble(),
@@ -312,7 +312,7 @@ object Renderer2D {
         pos2: Vec2d,
         pos3: Vec2d,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangleOutline0(
         pos1.x,
         pos1.y,
@@ -330,7 +330,7 @@ object Renderer2D {
         pos2: Vec2f,
         pos3: Vec2f,
         width: Float = 1F,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawTriangleOutline0(
         pos1.x.toDouble(),
         pos1.y.toDouble(),
@@ -351,7 +351,7 @@ object Renderer2D {
         startY: Double,
         endX: Double,
         endY: Double,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRect0(startX, startY, endX, endY, color)
 
     @JvmStatic
@@ -360,7 +360,7 @@ object Renderer2D {
         startY: Int,
         endX: Int,
         endY: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRect0(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), color)
 
     @JvmStatic
@@ -369,21 +369,21 @@ object Renderer2D {
         startY: Float,
         endX: Float,
         endY: Float,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRect0(startX.toDouble(), startY.toDouble(), endX.toDouble(), endY.toDouble(), color)
 
     @JvmStatic
     fun drawRect(
         start: Vec2d,
         end: Vec2d,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRect0(start.x, start.y, end.x, end.y, color)
 
     @JvmStatic
     fun drawRect(
         start: Vec2f,
         end: Vec2f,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRect0(start.x.toDouble(), start.y.toDouble(), end.x.toDouble(), end.y.toDouble(), color)
 
     //Gradient Rectangle
@@ -398,7 +398,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ) = renderer.drawGradientRect0(startX, startY, endX, endY, color1, color2, color3, color4)
 
     @JvmStatic
@@ -410,7 +410,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ) = renderer.drawGradientRect0(
         startX.toDouble(),
         startY.toDouble(),
@@ -431,7 +431,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ) = renderer.drawGradientRect0(
         startX.toDouble(),
         startY.toDouble(),
@@ -450,7 +450,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ) = renderer.drawGradientRect0(start.x, start.y, end.x, end.y, color1, color2, color3, color4)
 
     @JvmStatic
@@ -460,7 +460,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ) = renderer.drawGradientRect0(
         start.x.toDouble(),
         start.y.toDouble(),
@@ -649,7 +649,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB = color1,
         color3: ColorRGB = color1,
-        color4: ColorRGB = color1
+        color4: ColorRGB = color1,
     ) = renderer.drawRectOutline0(startX, startY, endX, endY, width, color1, color2, color3, color4)
 
     @JvmStatic
@@ -662,7 +662,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB = color1,
         color3: ColorRGB = color1,
-        color4: ColorRGB = color1
+        color4: ColorRGB = color1,
     ) = renderer.drawRectOutline0(
         startX.toDouble(),
         startY.toDouble(),
@@ -685,7 +685,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB = color1,
         color3: ColorRGB = color1,
-        color4: ColorRGB = color1
+        color4: ColorRGB = color1,
     ) = renderer.drawRectOutline0(
         startX.toDouble(),
         startY.toDouble(),
@@ -706,7 +706,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB = color1,
         color3: ColorRGB = color1,
-        color4: ColorRGB = color1
+        color4: ColorRGB = color1,
     ) = renderer.drawRectOutline0(start.x, start.y, end.x, end.y, width, color1, color2, color3, color4)
 
     @JvmStatic
@@ -717,7 +717,7 @@ object Renderer2D {
         color1: ColorRGB,
         color2: ColorRGB = color1,
         color3: ColorRGB = color1,
-        color4: ColorRGB = color1
+        color4: ColorRGB = color1,
     ) = renderer.drawRectOutline0(
         start.x.toDouble(),
         start.y.toDouble(),
@@ -925,7 +925,7 @@ object Renderer2D {
         endY: Double,
         radius: Float,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRect0(startX, startY, endX, endY, radius, segments, color)
 
     @JvmStatic
@@ -936,7 +936,7 @@ object Renderer2D {
         endY: Int,
         radius: Float,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRect0(
         startX.toDouble(),
         startY.toDouble(),
@@ -955,7 +955,7 @@ object Renderer2D {
         endY: Float,
         radius: Float,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRect0(
         startX.toDouble(),
         startY.toDouble(),
@@ -972,7 +972,7 @@ object Renderer2D {
         end: Vec2d,
         radius: Float,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRect0(
         start.x,
         start.y,
@@ -989,7 +989,7 @@ object Renderer2D {
         end: Vec2f,
         radius: Float,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRect0(
         start.x.toDouble(),
         start.y.toDouble(),
@@ -1009,7 +1009,7 @@ object Renderer2D {
         radius: Float,
         width: Float = 1F,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRectOutline0(startX, startY, endX, endY, radius, width, segments, color)
 
     @JvmStatic
@@ -1021,7 +1021,7 @@ object Renderer2D {
         radius: Float,
         width: Float = 1F,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRectOutline0(
         startX.toDouble(),
         startY.toDouble(),
@@ -1042,7 +1042,7 @@ object Renderer2D {
         radius: Float,
         width: Float = 1F,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRectOutline0(
         startX.toDouble(),
         startY.toDouble(),
@@ -1061,7 +1061,7 @@ object Renderer2D {
         radius: Float,
         width: Float = 1F,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRectOutline0(
         start.x,
         start.y,
@@ -1080,7 +1080,7 @@ object Renderer2D {
         radius: Float,
         width: Float = 1F,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawRoundedRectOutline0(
         start.x.toDouble(),
         start.y.toDouble(),
@@ -1099,7 +1099,7 @@ object Renderer2D {
         radius: Float,
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawArc0(centerX, centerY, radius, angleRange, segments, color)
 
     @JvmStatic
@@ -1109,7 +1109,7 @@ object Renderer2D {
         radius: Float,
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawArc0(centerX.toDouble(), centerY.toDouble(), radius, angleRange, segments, color)
 
     @JvmStatic
@@ -1119,7 +1119,7 @@ object Renderer2D {
         radius: Float,
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawArc0(centerX.toDouble(), centerY.toDouble(), radius, angleRange, segments, color)
 
     @JvmStatic
@@ -1128,7 +1128,7 @@ object Renderer2D {
         radius: Float,
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawArc0(center.x, center.y, radius, angleRange, segments, color)
 
     @JvmStatic
@@ -1137,7 +1137,7 @@ object Renderer2D {
         radius: Float,
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawArc0(center.x.toDouble(), center.y.toDouble(), radius, angleRange, segments, color)
 
     @JvmStatic
@@ -1148,7 +1148,7 @@ object Renderer2D {
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
         lineWidth: Float = 1f,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesStrip0(getArcVertices(centerX, centerY, radius, angleRange, segments), lineWidth, color)
 
     @JvmStatic
@@ -1159,7 +1159,7 @@ object Renderer2D {
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
         lineWidth: Float = 1f,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesStrip0(
         getArcVertices(centerX.toDouble(), centerY.toDouble(), radius, angleRange, segments),
         lineWidth,
@@ -1174,7 +1174,7 @@ object Renderer2D {
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
         lineWidth: Float = 1f,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesStrip0(
         getArcVertices(centerX.toDouble(), centerY.toDouble(), radius, angleRange, segments),
         lineWidth,
@@ -1188,7 +1188,7 @@ object Renderer2D {
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
         lineWidth: Float = 1f,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesStrip0(getArcVertices(center.x, center.y, radius, angleRange, segments), lineWidth, color)
 
     @JvmStatic
@@ -1198,7 +1198,7 @@ object Renderer2D {
         angleRange: Pair<Float, Float>,
         segments: Int = 0,
         lineWidth: Float = 1f,
-        color: ColorRGB
+        color: ColorRGB,
     ) = renderer.drawLinesStrip0(
         getArcVertices(center.x.toDouble(), center.y.toDouble(), radius, angleRange, segments),
         lineWidth,
@@ -1210,8 +1210,8 @@ object Renderer2D {
         centerX: Double,
         centerY: Double,
         radius: Float,
-        angleRange: Pair<Float, Float>,
-        segments: Int
+        angleRange: Pair<Float, Float> = Pair(0f, 360f),
+        segments: Int = 0,
     ): Array<Vec2d> {
         val range = max(angleRange.first, angleRange.second) - min(angleRange.first, angleRange.second)
         val seg = MathUtils.calcSegments(segments, radius.toDouble(), range)

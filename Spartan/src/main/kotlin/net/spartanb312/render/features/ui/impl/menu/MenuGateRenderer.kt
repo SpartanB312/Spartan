@@ -8,6 +8,7 @@ import net.spartanb312.render.features.ui.DisplayManager
 import net.spartanb312.render.features.ui.DisplayManager.displayRenderer
 import net.spartanb312.render.features.ui.item.font.EffectFont
 import net.spartanb312.render.features.ui.wrapper.ScreenRenderer
+import net.spartanb312.render.graphics.impl.GLStateManager
 import kotlin.math.min
 
 /**
@@ -28,6 +29,7 @@ object MenuGateRenderer : ScreenRenderer {
     }
 
     override fun onRender(mouseX: Int, mouseY: Int, partialTicks: Float) {
+        GLStateManager.smooth(true)
         Background.drawBackground()
         val scale = min(ResolutionHelper.scaledWidth / 2560F, ResolutionHelper.scaledHeight / 1440F) * 1.3f
         logo.draw(

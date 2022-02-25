@@ -9,6 +9,6 @@ import net.spartanb312.render.core.config.provider.StandaloneConfigurable
 object Configs : StandaloneConfigurable(DEFAULT_FILE_GROUP, "Configs") {
 
     val compatibilityMode by setting("Compatibility Mode", true)
-    val extensions by setting("Extensions", true)
+    val extensions by setting("Extensions Support", true)
 
 }

@@ -1,5 +1,7 @@
 package net.spartanb312.render.core.common.graphics
 
+import org.lwjgl.opengl.GL11
+
 @JvmInline
 value class ColorRGB(val rgba: Int) {
 
@@ -20,6 +22,24 @@ value class ColorRGB(val rgba: Int) {
     constructor(r: Float, g: Float, b: Float, a: Float) :
             this((r * 255.0f).toInt(), (g * 255.0f).toInt(), (b * 255.0f).toInt(), (a * 255.0f).toInt())
 
+    companion object {
+        val WHITE = ColorRGB(255, 255, 255)
+        val BLACK = ColorRGB(0, 0, 0)
+        val DARK_BLUE = ColorRGB(0, 0, 170)
+        val DARK_GREEN = ColorRGB(0, 170, 0)
+        val DARK_AQUA = ColorRGB(0, 170, 170)
+        val DARK_RED = ColorRGB(170, 0, 0)
+        val DARK_PURPLE = ColorRGB(170, 0, 170)
+        val GOLD = ColorRGB(250, 170, 0)
+        val GRAY = ColorRGB(170, 170, 170)
+        val DARK_GRAY = ColorRGB(85, 85, 85)
+        val BLUE = ColorRGB(85, 85, 255)
+        val GREEN = ColorRGB(85, 255, 85)
+        val AQUA = ColorRGB(85, 255, 255)
+        val RED = ColorRGB(255, 85, 85)
+        val LIGHT_PURPLE = ColorRGB(255, 85, 255)
+        val YELLOW = ColorRGB(255, 255, 85)
+    }
 
     // Int color
     val r: Int
@@ -107,5 +127,7 @@ value class ColorRGB(val rgba: Int) {
     override fun toString(): String {
         return "$r, $g, $b, $a"
     }
+
+    fun glColor() = GL11.glColor4f(rFloat, gFloat, bFloat, aFloat)
 
 }

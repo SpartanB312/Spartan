@@ -5,6 +5,7 @@ import net.spartanb312.render.core.common.math.Vec2d
 import net.spartanb312.render.graphics.api.I2DRenderer
 import net.spartanb312.render.graphics.api.shader.Shader
 import net.spartanb312.render.graphics.impl.GLStateManager
+import net.spartanb312.render.graphics.impl.Render2DMark
 import net.spartanb312.render.graphics.impl.Renderer2D
 import net.spartanb312.render.graphics.impl.vao.vertex.VertexObject
 import net.spartanb312.render.graphics.impl.vao.vertex.useVao
@@ -22,8 +23,9 @@ object VAO2DRenderer : I2DRenderer {
     override fun drawPoint0(x: Double, y: Double, size: Float, color: ColorRGB): I2DRenderer {
         GLStateManager.pointSmooth(true)
         glPointSize(size)
-        put(x, y, color)
-        draw(GL_POINT)
+        GL_POINTS.vaoDraw {
+            put(x, y, color)
+        }
         GLStateManager.pointSmooth(false)
         return this
     }
@@ -35,13 +37,14 @@ object VAO2DRenderer : I2DRenderer {
         endY: Double,
         width: Float,
         color1: ColorRGB,
-        color2: ColorRGB
+        color2: ColorRGB,
     ): I2DRenderer {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        put(startX, startY, color1)
-        put(endX, endY, color2)
-        draw(GL_LINE)
+        GL_LINES.vaoDraw {
+            put(startX, startY, color1)
+            put(endX, endY, color2)
+        }
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -49,10 +52,11 @@ object VAO2DRenderer : I2DRenderer {
     override fun drawLinesStrip0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB): I2DRenderer {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        for (v in vertexArray) {
-            put(v.x, v.y, color)
+        GL_LINE_STRIP.vaoDraw {
+            for (v in vertexArray) {
+                put(v.x, v.y, color)
+            }
         }
-        draw(GL_LINE_STRIP)
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -60,10 +64,11 @@ object VAO2DRenderer : I2DRenderer {
     override fun drawLinesLoop0(vertexArray: Array<Vec2d>, width: Float, color: ColorRGB): I2DRenderer {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        for (v in vertexArray) {
-            put(v.x, v.y, color)
+        GL_LINE_LOOP.vaoDraw {
+            for (v in vertexArray) {
+                put(v.x, v.y, color)
+            }
         }
-        draw(GL_LINE_LOOP)
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -75,12 +80,13 @@ object VAO2DRenderer : I2DRenderer {
         pos2Y: Double,
         pos3X: Double,
         pos3Y: Double,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
-        put(pos1X, pos1Y, color)
-        put(pos2X, pos2Y, color)
-        put(pos3X, pos3Y, color)
-        draw(GL_TRIANGLES)
+        GL_TRIANGLES.vaoDraw {
+            put(pos1X, pos1Y, color)
+            put(pos2X, pos2Y, color)
+            put(pos3X, pos3Y, color)
+        }
         return this
     }
 
@@ -92,24 +98,26 @@ object VAO2DRenderer : I2DRenderer {
         pos3X: Double,
         pos3Y: Double,
         width: Float,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        put(pos1X, pos1Y, color)
-        put(pos2X, pos2Y, color)
-        put(pos3X, pos3Y, color)
-        draw(GL_LINE_STRIP)
+        GL_LINE_STRIP.vaoDraw {
+            put(pos1X, pos1Y, color)
+            put(pos2X, pos2Y, color)
+            put(pos3X, pos3Y, color)
+        }
         GLStateManager.lineSmooth(false)
         return this
     }
 
     override fun drawRect0(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB): I2DRenderer {
-        put(endX, startY, color)
-        put(startX, startY, color)
-        put(endX, endY, color)
-        put(startX, endY, color)
-        draw(GL_TRIANGLE_STRIP)
+        GL_TRIANGLE_STRIP.vaoDraw {
+            put(endX, startY, color)
+            put(startX, startY, color)
+            put(endX, endY, color)
+            put(startX, endY, color)
+        }
         return this
     }
 
@@ -121,13 +129,14 @@ object VAO2DRenderer : I2DRenderer {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ): I2DRenderer {
-        put(endX, startY, color1)
-        put(startX, startY, color2)
-        put(startX, endY, color3)
-        put(endX, endY, color4)
-        draw(GL_QUADS)
+        GL_QUADS.vaoDraw {
+            put(endX, startY, color1)
+            put(startX, startY, color2)
+            put(startX, endY, color3)
+            put(endX, endY, color4)
+        }
         return this
     }
 
@@ -140,15 +149,16 @@ object VAO2DRenderer : I2DRenderer {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ): I2DRenderer {
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        put(endX, startY, color1)
-        put(startX, startY, color2)
-        put(startX, endY, color3)
-        put(endX, endY, color4)
-        draw(GL_LINE_LOOP)
+        GL_LINE_LOOP.vaoDraw {
+            put(endX, startY, color1)
+            put(startX, startY, color2)
+            put(startX, endY, color3)
+            put(endX, endY, color4)
+        }
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -160,7 +170,7 @@ object VAO2DRenderer : I2DRenderer {
         endY: Double,
         radius: Float,
         segments: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         return this
     }
@@ -173,7 +183,7 @@ object VAO2DRenderer : I2DRenderer {
         radius: Float,
         width: Float,
         segments: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         return this
     }
@@ -184,13 +194,14 @@ object VAO2DRenderer : I2DRenderer {
         radius: Float,
         angleRange: Pair<Float, Float>,
         segments: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         val arcVertices = Renderer2D.getArcVertices(centerX, centerY, radius, angleRange, segments)
-        for (v in arcVertices) {
-            put(v.x, v.y, color)
+        GL_TRIANGLE_FAN.vaoDraw {
+            for (v in arcVertices) {
+                put(v.x, v.y, color)
+            }
         }
-        draw(GL_TRIANGLE_FAN)
         return this
     }
 
@@ -216,6 +227,13 @@ object VAO2DRenderer : I2DRenderer {
         }
 
         vertexSize = 0
+    }
+
+
+    @Render2DMark
+    inline fun Int.vaoDraw(block: VAO2DRenderer.() -> Unit) {
+        this@VAO2DRenderer.block()
+        draw(this)
     }
 
     private object DrawShader : Shader(

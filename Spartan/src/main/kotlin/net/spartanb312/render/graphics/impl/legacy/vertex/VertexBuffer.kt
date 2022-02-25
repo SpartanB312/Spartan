@@ -11,6 +11,7 @@ import net.spartanb312.render.core.common.graphics.ColorUtils.r
 import net.spartanb312.render.core.common.math.Vec2d
 import net.spartanb312.render.core.common.math.Vec2f
 import net.spartanb312.render.core.common.math.Vec3f
+import net.spartanb312.render.graphics.impl.Render2DMark
 
 /**
  * Use minecraft buffer builder to draw
@@ -22,6 +23,13 @@ object VertexBuffer {
 
     fun begin(mode: Int) {
         buffer.begin(mode, DefaultVertexFormats.POSITION_COLOR)
+    }
+
+    @Render2DMark
+    inline fun Int.begin(block: VertexBuffer.() -> Unit) {
+        begin(this)
+        this@VertexBuffer.block()
+        end()
     }
 
     /**

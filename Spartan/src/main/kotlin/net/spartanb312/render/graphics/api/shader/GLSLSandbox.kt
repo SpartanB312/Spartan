@@ -12,9 +12,9 @@ open class GLSLSandbox(fragShaderPath: String) : Shader(
     fragShaderPath
 ) {
 
-    private val timeUniform = glGetUniformLocation(id, "time")
-    private val mouseUniform = glGetUniformLocation(id, "mouse")
-    private val resolutionUniform = glGetUniformLocation(id, "resolution")
+    val timeUniform = glGetUniformLocation(id, "time")
+    val mouseUniform = glGetUniformLocation(id, "mouse")
+    val resolutionUniform = glGetUniformLocation(id, "resolution")
 
     fun render(width: Float, height: Float, mouseX: Float, mouseY: Float, initTime: Long) {
         use {

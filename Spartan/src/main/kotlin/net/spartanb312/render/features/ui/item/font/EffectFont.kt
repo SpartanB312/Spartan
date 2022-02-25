@@ -12,7 +12,7 @@ import net.spartanb312.render.graphics.impl.scissor
 
 sealed class EffectFont(
     protected val fontRenderer: AbstractFontRenderer,
-    var action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null
+    var action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null,
 ) : SpecialItem {
 
     var width = 0f
@@ -22,7 +22,7 @@ sealed class EffectFont(
 
     class Shining(
         fontRenderer: AbstractFontRenderer,
-        action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null
+        action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null,
     ) : EffectFont(fontRenderer, action) {
 
         private var shiningStart = 0F
@@ -40,7 +40,7 @@ sealed class EffectFont(
             layerColor: ColorRGB,
             minSpeed: Float,
             maxSpeed: Float,
-            updateTime: Int
+            updateTime: Int,
         ) {
             width = fontRenderer.getWidth(word, scale)
             height = fontRenderer.getHeight(scale)
@@ -70,7 +70,7 @@ sealed class EffectFont(
 
     class Rainbow(
         fontRenderer: AbstractFontRenderer,
-        action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null
+        action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null,
     ) : EffectFont(fontRenderer, action) {
 
         private var startTime = System.currentTimeMillis()
@@ -86,7 +86,7 @@ sealed class EffectFont(
             cycle: Int,
             hueOffsetMultiplier: Float,
             saturation: Int = 255,
-            brightness: Int = 255
+            brightness: Int = 255,
         ) {
             width = fontRenderer.getWidth(word, scale)
             height = fontRenderer.getHeight(scale)
@@ -116,7 +116,7 @@ sealed class EffectFont(
 
     class Hoover(
         fontRenderer: AbstractFontRenderer,
-        action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null
+        action: (EffectFont.(mouseX: Int, mouseY: Int, button: Int) -> Boolean)? = null,
     ) : EffectFont(fontRenderer, action) {
 
         private var offsetRate = 0f
@@ -129,15 +129,16 @@ sealed class EffectFont(
             offset: Float,
             xRate: Float = 0f,
             yRate: Float = 0f,
-            mouseX: Int,
-            mouseY: Int,
+            mouseX: Int = 0,
+            mouseY: Int = 0,
+            isHoovered: Boolean = false,
             scale: Float = 1F,
             shadow: Boolean = false,
             centered: Boolean = false,
             baseColor: ColorRGB,
             nextColor: ColorRGB,
             speed: Float,
-            updateTime: Int
+            updateTime: Int,
         ) {
             width = fontRenderer.getWidth(word, scale)
             height = fontRenderer.getHeight(scale)
@@ -145,7 +146,7 @@ sealed class EffectFont(
             posY = if (centered) y - fontRenderer.getHeight(scale) / 2f else y
             updateTimer.passedAndRun(updateTime) {
                 offsetRate = offsetRate.converge(
-                    if (isHoovered(mouseX, mouseY)) 1f else 0f,
+                    if (isHoovered || isHoovered(mouseX, mouseY)) 1f else 0f,
                     speed
                 )
             }

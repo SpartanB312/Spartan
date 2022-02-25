@@ -5,7 +5,7 @@ import net.spartanb312.render.core.common.math.Vec2d
 import net.spartanb312.render.graphics.api.I2DRenderer
 import net.spartanb312.render.graphics.impl.GLStateManager
 import net.spartanb312.render.graphics.impl.Renderer2D
-import net.spartanb312.render.graphics.impl.legacy.vertex.VertexBuffer
+import net.spartanb312.render.graphics.impl.legacy.vertex.VertexBuffer.begin
 import org.lwjgl.opengl.GL11.*
 
 /**
@@ -18,9 +18,9 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.useProgram(0)
         GLStateManager.pointSmooth(true)
         glPointSize(size)
-        VertexBuffer.begin(GL_POINT)
-        VertexBuffer.put(x, y, color)
-        VertexBuffer.end()
+        GL_POINTS.begin {
+            put(x, y, color)
+        }
         GLStateManager.pointSmooth(false)
         return this
     }
@@ -32,15 +32,15 @@ object Legacy2DRenderer : I2DRenderer {
         endY: Double,
         width: Float,
         color1: ColorRGB,
-        color2: ColorRGB
+        color2: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE)
-        VertexBuffer.put(startX, startY, color1)
-        VertexBuffer.put(endX, endY, color2)
-        VertexBuffer.end()
+        GL_LINES.begin {
+            put(startX, startY, color1)
+            put(endX, endY, color2)
+        }
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -49,11 +49,11 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_STRIP)
-        for (v in vertexArray) {
-            VertexBuffer.put(v.x, v.y, color)
+        GL_LINE_STRIP.begin {
+            for (v in vertexArray) {
+                put(v.x, v.y, color)
+            }
         }
-        VertexBuffer.end()
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -62,11 +62,11 @@ object Legacy2DRenderer : I2DRenderer {
         GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_LOOP)
-        for (v in vertexArray) {
-            VertexBuffer.put(v.x, v.y, color)
+        GL_LINE_LOOP.begin {
+            for (v in vertexArray) {
+                put(v.x, v.y, color)
+            }
         }
-        VertexBuffer.end()
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -78,14 +78,14 @@ object Legacy2DRenderer : I2DRenderer {
         pos2Y: Double,
         pos3X: Double,
         pos3Y: Double,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
-        VertexBuffer.begin(GL_TRIANGLES)
-        VertexBuffer.put(pos1X, pos1Y, color)
-        VertexBuffer.put(pos2X, pos2Y, color)
-        VertexBuffer.put(pos3X, pos3Y, color)
-        VertexBuffer.end()
+        GL_TRIANGLES.begin {
+            put(pos1X, pos1Y, color)
+            put(pos2X, pos2Y, color)
+            put(pos3X, pos3Y, color)
+        }
         return this
     }
 
@@ -97,28 +97,28 @@ object Legacy2DRenderer : I2DRenderer {
         pos3X: Double,
         pos3Y: Double,
         width: Float,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_STRIP)
-        VertexBuffer.put(pos1X, pos1Y, color)
-        VertexBuffer.put(pos2X, pos2Y, color)
-        VertexBuffer.put(pos3X, pos3Y, color)
-        VertexBuffer.end()
+        GL_LINE_STRIP.begin {
+            put(pos1X, pos1Y, color)
+            put(pos2X, pos2Y, color)
+            put(pos3X, pos3Y, color)
+        }
         GLStateManager.lineSmooth(false)
         return this
     }
 
     override fun drawRect0(startX: Double, startY: Double, endX: Double, endY: Double, color: ColorRGB): I2DRenderer {
         GLStateManager.useProgram(0)
-        VertexBuffer.begin(GL_TRIANGLE_STRIP)
-        VertexBuffer.put(endX, startY, color)
-        VertexBuffer.put(startX, startY, color)
-        VertexBuffer.put(endX, endY, color)
-        VertexBuffer.put(startX, endY, color)
-        VertexBuffer.end()
+        GL_TRIANGLE_STRIP.begin {
+            put(endX, startY, color)
+            put(startX, startY, color)
+            put(endX, endY, color)
+            put(startX, endY, color)
+        }
         return this
     }
 
@@ -130,15 +130,15 @@ object Legacy2DRenderer : I2DRenderer {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
-        VertexBuffer.begin(GL_QUADS)
-        VertexBuffer.put(endX, startY, color1)
-        VertexBuffer.put(startX, startY, color2)
-        VertexBuffer.put(startX, endY, color3)
-        VertexBuffer.put(endX, endY, color4)
-        VertexBuffer.end()
+        GL_QUADS.begin {
+            put(endX, startY, color1)
+            put(startX, startY, color2)
+            put(startX, endY, color3)
+            put(endX, endY, color4)
+        }
         return this
     }
 
@@ -151,17 +151,17 @@ object Legacy2DRenderer : I2DRenderer {
         color1: ColorRGB,
         color2: ColorRGB,
         color3: ColorRGB,
-        color4: ColorRGB
+        color4: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
         GLStateManager.lineSmooth(true)
         glLineWidth(width)
-        VertexBuffer.begin(GL_LINE_LOOP)
-        VertexBuffer.put(endX, startY, color1)
-        VertexBuffer.put(startX, startY, color2)
-        VertexBuffer.put(startX, endY, color3)
-        VertexBuffer.put(endX, endY, color4)
-        VertexBuffer.end()
+        GL_LINE_LOOP.begin {
+            put(endX, startY, color1)
+            put(startX, startY, color2)
+            put(startX, endY, color3)
+            put(endX, endY, color4)
+        }
         GLStateManager.lineSmooth(false)
         return this
     }
@@ -173,7 +173,7 @@ object Legacy2DRenderer : I2DRenderer {
         endY: Double,
         radius: Float,
         segments: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
         return this
@@ -187,7 +187,7 @@ object Legacy2DRenderer : I2DRenderer {
         radius: Float,
         width: Float,
         segments: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
         return this
@@ -199,15 +199,15 @@ object Legacy2DRenderer : I2DRenderer {
         radius: Float,
         angleRange: Pair<Float, Float>,
         segments: Int,
-        color: ColorRGB
+        color: ColorRGB,
     ): I2DRenderer {
         GLStateManager.useProgram(0)
         val arcVertices = Renderer2D.getArcVertices(centerX, centerY, radius, angleRange, segments)
-        VertexBuffer.begin(GL_TRIANGLE_FAN)
-        for (v in arcVertices) {
-            VertexBuffer.put(v.x, v.y, color)
+        GL_TRIANGLE_FAN.begin {
+            for (v in arcVertices) {
+                put(v.x, v.y, color)
+            }
         }
-        VertexBuffer.end()
         return this
     }
 

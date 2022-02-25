@@ -2,6 +2,7 @@ package net.spartanb312.render.graphics.impl
 
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
+import net.spartanb312.render.core.common.graphics.ColorRGB
 import net.spartanb312.render.util.Helper
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
@@ -135,5 +136,10 @@ object GLStateManager : Helper {
         GlStateManager.loadIdentity()
         GlStateManager.translate(0.0f, 0.0f, -2000.0f)
     }
+
+    fun color(colorRGB: ColorRGB) = colorRGB.glColor()
+
+    fun resetColor() = GL11.glColor4f(1f, 1f, 1f, 1f)
+
 
 }

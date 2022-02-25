@@ -1,24 +1,5 @@
 package net.spartanb312.render.core.common.math.matrix
 
-fun main() {
-    DoubleMatrix(
-        rows = 3,
-        columns = 4,
-        init = { x: Int, y: Int ->
-            (x + y).toDouble()
-        }
-    ).print()
-        .addMultipliedRow(1, 2, 1.0)
-        .print()
-        .transpose()
-        .print()
-        .plusRow(4, 10.0)
-        .print()
-        .transpose()
-        .print()
-
-}
-
 /**
  * Do you like Higher Algebra?
  */

@@ -17,6 +17,8 @@ value class Vec2f private constructor(val bits: Long) {
 
     constructor(x: Double, y: Double) : this(x.toFloat(), y.toFloat())
 
+    constructor(x: Int, y: Int) : this(x.toFloat(), y.toFloat())
+
     constructor(vec2d: Vec2d) : this(vec2d.x.toFloat(), vec2d.y.toFloat())
 
     val x: Float

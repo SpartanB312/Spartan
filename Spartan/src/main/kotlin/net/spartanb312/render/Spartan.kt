@@ -22,6 +22,7 @@ import org.lwjgl.opengl.Display
 /**
  * From the beginning to the end
  * An opensource HUD Mod for Minecraft
+ * Still under developing
  */
 @Mod(
     name = MOD_NAME,

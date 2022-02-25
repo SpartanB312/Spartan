@@ -27,6 +27,7 @@ object FontManager {
 
     val haloFont = createFontRenderer("Halo.ttf", 128F, 8192)
     val infoFont = createFontRenderer("Microsoft YaHei UI.ttc", 64F, 2048)
+    val hollowFont = createFontRenderer("Hollow.ttf", 128F, 4096)
 
     @JvmStatic
     fun String.getFontRendererByName(): LinkedSettableFontRenderer =
@@ -38,7 +39,7 @@ object FontManager {
         fontSetting: FontSetting,
         type: Int,
         size: Float,
-        textureSize: Int
+        textureSize: Int,
     ): LinkedSettableFontRenderer = try {
         this.createFont(type)
     } catch (e: Exception) {
@@ -55,7 +56,7 @@ object FontManager {
         fontSetting: FontSetting,
         type: Int,
         size: Float,
-        textureSize: Int
+        textureSize: Int,
     ): LinkedSettableFontRenderer = try {
         createFont(type, this)
     } catch (e: Exception) {
