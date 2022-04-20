@@ -7,6 +7,7 @@ import net.spartanb312.render.core.event.inner.listener
 import net.spartanb312.render.features.common.Render2DObject
 import net.spartanb312.render.features.event.render.Render2DEvent
 import net.spartanb312.render.features.hud.HUDModule
+import net.spartanb312.render.features.manager.functional.WindowBlurShader
 import net.spartanb312.render.graphics.impl.FontRenderer
 import net.spartanb312.render.graphics.impl.Render2DScope
 import net.spartanb312.render.graphics.impl.Renderer2D
@@ -42,6 +43,7 @@ object Render2DManager : Helper {
                 }
             }
         }
+        WindowBlurShader
     }
 
     fun register(obj: Render2DObject) = runBlocking {

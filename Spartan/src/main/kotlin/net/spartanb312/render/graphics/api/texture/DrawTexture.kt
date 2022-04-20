@@ -4,7 +4,7 @@ import net.spartanb312.render.core.common.extension.ceilToInt
 import net.spartanb312.render.core.common.extension.floorToInt
 import net.spartanb312.render.core.common.graphics.ColorRGB
 import net.spartanb312.render.features.manager.TextureManager.drawTexture
-import net.spartanb312.render.features.ui.item.SpecialItem
+import net.spartanb312.render.graphics.impl.item.SpecialItem
 import net.spartanb312.render.graphics.api.shader.GLSLSandbox
 import net.spartanb312.render.graphics.impl.GLStateManager
 import net.spartanb312.render.graphics.impl.scissor

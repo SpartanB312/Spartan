@@ -9,6 +9,10 @@ const val CLASS_SUFFIX = ".class"
 const val JSON_SUFFIX = ".json"
 const val MF_SUFFIX = ".MF"
 
+//Music format
+const val MP3_SUFFIX = ".mp3"
+const val OGG_SUFFIX = ".ogg"
+
 //Spartan format
 const val SPARTAN_RESOURCE_SUFFIX = ".spres"
 const val SPARTAN_RESOURCE_INFO_SUFFIX = "sprinfo"

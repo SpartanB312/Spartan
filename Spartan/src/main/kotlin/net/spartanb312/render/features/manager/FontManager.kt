@@ -7,7 +7,6 @@ import net.spartanb312.render.graphics.api.font.renderer.AbstractFontRenderer
 import net.spartanb312.render.graphics.api.font.setting.FontSetting
 import net.spartanb312.render.graphics.api.font.setting.LinkedSettableFontRenderer
 import net.spartanb312.render.launch.Logger
-import net.spartanb312.render.launch.ResourceCenter
 import java.awt.Font
 import java.io.InputStream
 
@@ -16,7 +15,7 @@ object FontManager {
     val mainFontSetting = FontSetting()
     private val cachedFontRenderers = mutableMapOf<String, LinkedSettableFontRenderer>()
 
-    val mainFont = ResourceCenter.getSpartanResourceStream("font/Microsoft YaHei UI.ttc")!!
+    val mainFont = MainResourceManager.getSpartanResourceStream("font/Microsoft YaHei UI.ttc")!!
         .generateFontRenderer(
             fontName = "MainFont",
             fontSetting = mainFontSetting,

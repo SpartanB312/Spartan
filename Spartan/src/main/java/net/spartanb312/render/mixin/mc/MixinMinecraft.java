@@ -11,6 +11,7 @@ import net.spartanb312.render.features.manager.InputManager;
 import net.spartanb312.render.features.manager.MainThreadExecutor;
 import net.spartanb312.render.features.setting.ui.Background;
 import net.spartanb312.render.features.ui.DisplayManager;
+import net.spartanb312.render.features.ui.wrapper.DelegateRenderer;
 import net.spartanb312.render.launch.InitializationManager;
 import net.spartanb312.render.util.WrapperKt;
 import org.lwjgl.input.Keyboard;
@@ -18,6 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -100,7 +102,7 @@ public class MixinMinecraft {
     @Inject(method = "displayGuiScreen", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", shift = At.Shift.AFTER))
     private void displayGuiScreen(CallbackInfo callbackInfo) {
         if (currentScreen instanceof net.minecraft.client.gui.GuiMainMenu || (currentScreen != null && currentScreen.getClass().getName().startsWith("net.labymod") && currentScreen.getClass().getSimpleName().equals("ModGuiMainMenu"))) {
-            currentScreen = DisplayManager.INSTANCE.getScreen().set(DisplayManager.Renderers.MENU_GATE);
+            currentScreen = DisplayManager.INSTANCE.getScreen().set(new DelegateRenderer(DisplayManager.Renderers.MENU_GATE, null));
             ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
             currentScreen.setWorldAndResolution(Minecraft.getMinecraft(), scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
             skipRenderWorld = false;

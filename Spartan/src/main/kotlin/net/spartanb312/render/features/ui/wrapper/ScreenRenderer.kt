@@ -1,6 +1,9 @@
 package net.spartanb312.render.features.ui.wrapper
 
-interface ScreenRenderer {
+import net.spartanb312.render.graphics.impl.interfaces.*
+
+interface ScreenRenderer : Closable, Initializer, KeyTypeListener, MouseClickListener, MouseMoveListener,
+    MouseReleaseListener, Renderer {
 
     fun doPause(): Boolean = false
 
@@ -8,28 +11,27 @@ interface ScreenRenderer {
 
     fun overrideKeyInput(): Boolean = false
 
-    fun onInit() {
+    override fun onInit() {
     }
 
-    fun onRender(mouseX: Int, mouseY: Int, partialTicks: Float) {
+    override fun onRender(mouseX: Int, mouseY: Int, partialTicks: Float) {
     }
 
-    fun onClosed() {
+    override fun onClosed() {
     }
 
-    fun onKeyTyped(typedChar: Char, keyCode: Int) {
+    override fun onKeyTyped(typedChar: Char, keyCode: Int) {
     }
+
+    override fun onMouseReleased(mouseX: Int, mouseY: Int, state: Int) {
+    }
+
+    override fun onMouseMove(mouseX: Int, mouseY: Int, clickedMouseButton: Int, timeSinceLastClick: Long) {
+    }
+
+    override fun onMouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int): Boolean = false
 
     fun onKeyInput() {
-    }
-
-    fun onMouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
-    }
-
-    fun onMouseReleased(mouseX: Int, mouseY: Int, state: Int) {
-    }
-
-    fun onMouseMove(mouseX: Int, mouseY: Int, clickedMouseButton: Int, timeSinceLastClick: Long) {
     }
 
     fun onMouseInput() {

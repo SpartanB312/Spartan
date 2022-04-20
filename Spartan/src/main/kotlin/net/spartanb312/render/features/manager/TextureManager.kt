@@ -3,7 +3,7 @@ package net.spartanb312.render.features.manager
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.spartanb312.render.core.common.graphics.ColorRGB
-import net.spartanb312.render.features.ui.item.other.IconDisplay
+import net.spartanb312.render.graphics.impl.item.other.IconDisplay
 import net.spartanb312.render.graphics.api.texture.DrawTexture
 import net.spartanb312.render.graphics.api.texture.MipmapTexture
 import net.spartanb312.render.graphics.impl.GLStateManager

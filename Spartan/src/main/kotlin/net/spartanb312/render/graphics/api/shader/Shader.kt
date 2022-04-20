@@ -37,7 +37,7 @@ open class Shader(
     }
 
     private fun createShader(path: String, shaderType: Int): Int {
-        val srcString = ResourceCenter.getResourceAsStream(path)!!.readBytes().decodeToString()
+        val srcString = ResourceCenter.getBytes(path)!!.decodeToString()
         val shaderId = glCreateShader(shaderType)
 
         glShaderSource(shaderId, srcString)

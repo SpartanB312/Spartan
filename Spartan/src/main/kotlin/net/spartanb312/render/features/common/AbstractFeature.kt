@@ -14,7 +14,7 @@ abstract class AbstractFeature(
     override val alias: Array<String> = arrayOf(),
     val category: Category,
     description: String
-) : Nameable, Alias, IStandaloneConfigManagerProvider<AbstractFeature> {
+) : Nameable, Alias, Notifier, IStandaloneConfigManagerProvider<AbstractFeature> {
 
     val description by TextContainer(
         "${category.generalCategory.lowerCase}_${category.lowerCase}_${name}_description",

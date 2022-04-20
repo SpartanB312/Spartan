@@ -47,7 +47,8 @@ object MessageManager : Helper {
     fun addFilter(filter: (String) -> Boolean): Boolean = filters.add(ChatFilter(filter = filter))
     fun removeModifier(modifier: (String) -> String): Boolean = modifiers.add(ChatModifier(modifier = modifier))
 
-    private const val DELETE_ID = 69420
+
+    const val DELETE_ID = 69420
 
     @JvmStatic
     fun printRawMessage(message: String) {

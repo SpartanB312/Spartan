@@ -1,5 +1,19 @@
 package net.spartanb312.render.core.common.math.matrix
 
+fun main() {
+    DoubleMatrix(3, 4) { c, r ->
+        c + r + 1.0
+    }.apply {
+        print()
+        transpose().print()
+        //4c3r
+        for (i in 1..3) {
+            addMultipliedColumn(i + 1, i, 2.0)
+        }
+        print()
+    }
+}
+
 /**
  * Do you like Higher Algebra?
  */

@@ -4,14 +4,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import net.spartanb312.render.Spartan
 import net.spartanb312.render.core.common.timming.Counter
 import net.spartanb312.render.core.common.timming.TickTimer
 import net.spartanb312.render.core.common.timming.passedAndRun
 import net.spartanb312.render.core.event.inner.MainEventBus
 import net.spartanb312.render.core.event.inner.SpartanScope
+import net.spartanb312.render.features.common.SafeScope
 import net.spartanb312.render.features.event.client.TickEvent
 import net.spartanb312.render.features.manager.MainThreadExecutor
-import net.spartanb312.render.features.manager.ingame.SafeScope
 import net.spartanb312.render.util.mc
 import net.spartanb312.render.util.thread.*
 import java.util.concurrent.CopyOnWriteArraySet
@@ -63,7 +64,7 @@ object SpartanCore {
              */
             tickTimer.passedAndRun(tickLength) {
                 TickEvent.Async.Pre.post()
-                mc.world?.let {
+                if (Spartan.isReady) mc.world?.let {
                     SafeScope.updateAsync(it.loadedEntityList.toList(), it.playerEntities.toList())
                 }
                 TickEvent.Async.Post.post()

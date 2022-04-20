@@ -1,5 +1,6 @@
 package net.spartanb312.render.graphics.api.texture
 
+import net.minecraft.client.audio.SoundManager
 import net.minecraft.client.renderer.GLAllocation
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL12

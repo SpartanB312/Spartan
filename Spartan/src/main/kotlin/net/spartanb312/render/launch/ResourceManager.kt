@@ -2,6 +2,7 @@ package net.spartanb312.render.launch
 
 import net.spartanb312.render.core.common.MutablePair
 import net.spartanb312.render.core.io.nextTempFile
+import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.net.URL
@@ -12,6 +13,8 @@ object ResourceCenter : ResourceManager(GLOBAL) {
 
     private val resourceManagers = mutableMapOf<String, ResourceManager>() //JarName ResourceManager
     private val classesNameCache = mutableMapOf<String, String>() //ClassName JarName
+
+    private val cachedBytes = mutableMapOf<String, ByteArray>() //ResourceName Bytes
 
     private const val RESERVE_TIME = 60000L
     private const val UPDATE_TIME = 60000L
@@ -40,6 +43,21 @@ object ResourceCenter : ResourceManager(GLOBAL) {
             }
         }.start()
     }
+
+    @JvmStatic
+    fun getBytes(name: String): ByteArray? = cachedBytes[name] ?: GLOBAL.getResourceAsStream(name)?.readBytes()
+
+    @JvmStatic
+    fun cacheBytes(name: String, bytes: ByteArray) = cachedBytes.put(name, bytes)
+
+    @JvmStatic
+    fun cacheBytes(name: String, inputStream: InputStream) = cacheBytes(name, inputStream.readBytes())
+
+    @JvmStatic
+    fun cacheBytes(name: String, url: URL) = cacheBytes(name, url.openStream().readBytes())
+
+    @JvmStatic
+    fun cacheBytes(name: String) = cacheBytes(name, ResourceCenter.getResource(name)!!)
 
     @JvmStatic
     fun newResourceManager(jarName: String, managerName: String, rawResourceCache: RawResourceCache) {
@@ -157,6 +175,11 @@ open class ResourceManager(val name: String) {
 
     private val cachedResources = mutableMapOf<String, URL>()
 
+    fun cacheResource(path: String, fatherFile: File) {
+        cachedResources[path] = URL("jar:file:/${fatherFile.absolutePath.replace("\\", "/")}!/$path")
+    }
+
+    //Create a temp file for the file bytes
     fun cacheResource(name: String, bytes: ByteArray) {
         nextTempFile.apply {
             try {

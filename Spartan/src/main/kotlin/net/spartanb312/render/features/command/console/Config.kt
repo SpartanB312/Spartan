@@ -5,6 +5,7 @@ import net.spartanb312.render.features.command.ExecutionScope
 import net.spartanb312.render.features.command.match
 import net.spartanb312.render.features.common.Category
 import net.spartanb312.render.features.manager.ConfigManager
+import net.spartanb312.render.features.manager.MessageManager
 
 object Config : Command(
     name = "Config",
@@ -16,14 +17,17 @@ object Config : Command(
     override fun ExecutionScope.onCall() {
 
         match("load") {
+            infoNS("Loaded config.")
             ConfigManager.loadAll()
         }
 
         match("save") {
+            infoNS("Saved config.")
             ConfigManager.saveAll()
         }
 
         match("reset") {
+            infoNS("Reset config.")
             ConfigManager.resetAll()
         }
 

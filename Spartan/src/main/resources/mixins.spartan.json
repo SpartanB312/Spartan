@@ -6,6 +6,7 @@
   "refmap": "mixins.spartan.refmap.json",
   "client": [
     "accessor.AccessorMinecraft",
+    "audio.MixinMusicTicker",
     "mc.MixinIntegratedServer",
     "mc.MixinMinecraft",
     "network.MixinGuiConnecting",

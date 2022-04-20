@@ -1,6 +1,6 @@
 package net.spartanb312.render.graphics.api.texture
 
-import net.spartanb312.render.features.manager.MainResourceManager
+import net.spartanb312.render.launch.ResourceCenter
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.GL_TEXTURE_2D
 import org.lwjgl.opengl.GL11.glTexParameteri
@@ -18,7 +18,7 @@ class MipmapTexture(
     companion object {
         @JvmStatic
         fun from(path: String, format: Int = GL11.GL_RGBA, levels: Int = 3): MipmapTexture? {
-            val input = MainResourceManager.getResource(path) ?: return null
+            val input = ResourceCenter.getResource(path) ?: return null
             return MipmapTexture(ImageIO.read(input), format, levels)
         }
     }

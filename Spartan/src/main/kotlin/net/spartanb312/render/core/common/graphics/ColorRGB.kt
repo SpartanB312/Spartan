@@ -16,11 +16,19 @@ value class ColorRGB(val rgba: Int) {
                         (a and 255)
             )
 
+    //Without range check
     constructor(r: Float, g: Float, b: Float) :
             this((r * 255.0f).toInt(), (g * 255.0f).toInt(), (b * 255.0f).toInt())
 
     constructor(r: Float, g: Float, b: Float, a: Float) :
             this((r * 255.0f).toInt(), (g * 255.0f).toInt(), (b * 255.0f).toInt(), (a * 255.0f).toInt())
+
+    //With range check
+    constructor(r: Float, g: Float, b: Float, a: Float, flag: Boolean) :
+            this(r.coerceIn(0.0f, 1.0f), g.coerceIn(0.0f, 1.0f), b.coerceIn(0.0f, 1.0f), a.coerceIn(0.0f, 1.0f))
+
+    constructor(r: Int, g: Int, b: Int, a: Int, flag: Boolean) :
+            this(r.coerceIn(0, 255), g.coerceIn(0, 255), b.coerceIn(0, 255), a.coerceIn(0, 255))
 
     companion object {
         val WHITE = ColorRGB(255, 255, 255)
@@ -84,21 +92,15 @@ value class ColorRGB(val rgba: Int) {
         get() = ColorUtils.rgbToLightness(r, g, b)
 
     // Modification
-    fun red(r: Int): ColorRGB {
-        return ColorRGB(rgba and 0xFFFFFF or (r shl 24))
-    }
+    fun red(r: Int): ColorRGB = ColorRGB(rgba and 0xFFFFFF or (r shl 24))
 
-    fun green(g: Int): ColorRGB {
-        return ColorRGB(rgba and -16711681 or (g shl 16))
-    }
+    fun green(g: Int): ColorRGB = ColorRGB(rgba and -16711681 or (g shl 16))
 
-    fun blue(b: Int): ColorRGB {
-        return ColorRGB(rgba and -65281 or (b shl 8))
-    }
+    fun blue(b: Int): ColorRGB = ColorRGB(rgba and -65281 or (b shl 8))
 
-    fun alpha(a: Int): ColorRGB {
-        return ColorRGB(rgba and -256 or a)
-    }
+    fun alpha(a: Int): ColorRGB = ColorRGB(rgba and -256 or a)
+
+    fun transparency(a: Int = this.a, rate: Double) = ColorRGB(rgba and -256 or ((a * rate).toInt()))
 
     // Misc
     fun mix(other: ColorRGB, ratio: Float): ColorRGB {
@@ -119,6 +121,9 @@ value class ColorRGB(val rgba: Int) {
             (a + other.a) / 2
         )
     }
+
+    fun blend(rate: Float, alpha: Boolean = false): ColorRGB =
+        ColorRGB((r * rate).toInt(), (g * rate).toInt(), (b * rate).toInt(), (if (alpha) a * rate else a).toInt(), true)
 
     fun toArgb() = ColorUtils.rgbaToArgb(rgba)
 

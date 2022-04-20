@@ -23,10 +23,10 @@ import java.util.zip.ZipInputStream
 object InitializationManager {
 
     const val SCAN_GROUP = "net.spartanb312"
-    private const val MINECRAFT_MODS_GROUP = "mods/"
-    private const val SPARTAN_EXTENSIONS_GROUP = DEFAULT_FILE_GROUP + "extensions/"
-    private const val SPARTAN_MODS_GROUP = DEFAULT_FILE_GROUP + "mods/"
-    private const val SPARTAN_RESOURCES_GROUP = DEFAULT_FILE_GROUP + "resources/"
+    const val MINECRAFT_MODS_GROUP = "mods/"
+    const val SPARTAN_EXTENSIONS_GROUP = DEFAULT_FILE_GROUP + "extensions/"
+    const val SPARTAN_MODS_GROUP = DEFAULT_FILE_GROUP + "mods/"
+    const val SPARTAN_RESOURCES_GROUP = DEFAULT_FILE_GROUP + "resources/"
 
     private val mods = mutableSetOf<LoadableMod>()
     private val extensions = mutableSetOf<LoadableMod.ExtensionDLC>()
@@ -138,7 +138,7 @@ object InitializationManager {
                                 }
                         } else if (!zipEntry.name.endsWith(CLASS_SUFFIX, true)) {
                             val tempBytes = zipStream.readBytes()
-                            ResourceCenter.cacheResource(zipEntry.name, tempBytes)
+                            ResourceCenter.cacheResource(zipEntry.name, this)
                             cache.resources[zipEntry.name] = tempBytes
 
                         } else if (zipEntry.name.endsWith(CLASS_SUFFIX, true)) {
@@ -189,7 +189,7 @@ object InitializationManager {
             }
         }
 
-        if (Configs.extensions && !Configs.compatibilityMode) findExtensions()
+        if (Configs.loadExtensions) findExtensions()
     }
 
     private fun findExtensions() {
@@ -207,7 +207,7 @@ object InitializationManager {
                                 resourceCache[tempClassName] = zipStream.readBytes()
                                 classes.add(Class.forName(tempClassName))
                             } else {
-                                ResourceCenter.cacheResource(zipEntry.name, zipStream.readBytes())
+                                ResourceCenter.cacheResource(zipEntry.name, file)
                             }
                         }
                     }
@@ -347,7 +347,7 @@ object InitializationManager {
                                     }
                             }
                             cache.resources[zipEntry.name] = tempBytes
-                            ResourceCenter.cacheResource(zipEntry.name, tempBytes)
+                            ResourceCenter.cacheResource(zipEntry.name, this)
                         }
                     }
                 }
@@ -371,7 +371,7 @@ object InitializationManager {
 
     @JvmStatic
     fun init() {
-        if (Configs.compatibilityMode) {
+        if (Configs.isCompatibilityMode) {
             Logger.warn("Spartan is running on compatibility mode!")
             isCompatibilityMode = true
             compatibilityMode()

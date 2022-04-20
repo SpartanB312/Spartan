@@ -21,7 +21,7 @@ import org.lwjgl.opengl.Display
 
 /**
  * From the beginning to the end
- * An opensource HUD Mod for Minecraft
+ * A render mod for Minecraft
  * Still under developing
  */
 @Mod(
@@ -93,6 +93,9 @@ object Spartan : Loadable, Extendable {
         Renderer2D
         FontRenderer
         DisplayManager
+
+        //Audio
+        SoundManager
 
         ConfigManager.loadAll()
     }

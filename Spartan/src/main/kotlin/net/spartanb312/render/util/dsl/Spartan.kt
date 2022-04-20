@@ -7,7 +7,7 @@ import net.spartanb312.render.features.event.client.ClientTickEvent
 import net.spartanb312.render.features.event.client.RenderTickEvent
 import net.spartanb312.render.features.event.render.Render2DEvent
 import net.spartanb312.render.features.event.render.Render3DEvent
-import net.spartanb312.render.features.manager.ingame.SafeScope
+import net.spartanb312.render.features.common.SafeScope
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

@@ -1,7 +1,9 @@
 package net.spartanb312.render.graphics.api.shader
 
+import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.OpenGlHelper.glGetUniformLocation
 import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import org.lwjgl.opengl.GL11.GL_QUADS
 import org.lwjgl.opengl.GL20.glUniform1f

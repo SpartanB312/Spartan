@@ -2,7 +2,7 @@ package net.spartanb312.render.features.event
 
 import net.spartanb312.render.core.event.*
 import net.spartanb312.render.core.event.inner.MainEventBus
-import net.spartanb312.render.features.manager.ingame.SafeScope
+import net.spartanb312.render.features.common.SafeScope
 import net.spartanb312.render.util.dsl.runSafe
 import net.spartanb312.render.util.dsl.runSafeSuspend
 
